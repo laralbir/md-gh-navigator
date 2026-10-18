@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1, 5.2 y 5.3 Completados ✅) → En curso hacia Hito 5.4 (Automatización CI/CD con GitHub Actions).
+Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1, 5.2, 5.3 y 5.4 Completados ✅) → En curso hacia Hito 5.5 (Tests E2E de Flujo Crítico y Auditoría Final).
 
 ---
 
@@ -100,7 +100,7 @@ Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1
 - [x] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
 - [x] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
 - [x] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases (`generateReleaseChecksums`)
-- [ ] Pipeline CI/CD en GitHub Actions activado por Git tags `v*` (construcción de AAB + APK y publicación automática del Release en GitHub)
+- [x] Pipeline CI/CD en GitHub Actions activado por Git tags `v*` (construcción de AAB + APK y publicación automática del Release en GitHub)
 - [ ] Preparación de ficha de Google Play Store:
   - [x] Icono de alta resolución (512x512)
   - [x] Gráfico de funciones (1024x500)

@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Diagram generator script `scripts/generate_guide_diagrams.py` producing 7 graphical user guide assets.
 - Complete R8 and ProGuard rules (`app/proguard-rules.pro`) ensuring reflection safety for Room database DAOs, Google Tink Keystore encryption, WebView JavaScript interfaces (`ReaderBridge`), AndroidSVG, and KotlinX serialization with log stripping in release builds.
 - Automated Gradle task `generateReleaseChecksums` computing and persisting SHA-256 verification checksums for release APKs and Android App Bundles (AAB).
-- Release build verification with resource shrinking (`isShrinkResources = true`) and code minification (`isMinifyEnabled = true`).
+- Automated GitHub Actions CI workflow (`.github/workflows/ci.yml`) validating all PRs and pushes to `develop` and `main` with automated tests and debug assembly.
+- Automated GitHub Actions CD Release pipeline (`.github/workflows/release.yml`) triggered on `v*` tags to compile signed release AABs and universal APKs, extract release notes from CHANGELOG, and publish GitHub Releases with SHA-256 checksums.
 
 ### Changed
 

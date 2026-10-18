@@ -95,13 +95,13 @@ flowchart TD
 - [x] Tarea Gradle para generación de hash SHA-256 de los binarios compilados (`generateReleaseChecksums`).
 - [x] Verificación de ejecución limpia de `./gradlew assembleRelease` y `./gradlew bundleRelease`.
 
-### Hito 5.4 — Automatización CI/CD con GitHub Actions (`feature/ci-cd-pipelines`)
-- [ ] Workflow `.github/workflows/ci.yml`:
+### Hito 5.4 — Automatización CI/CD con GitHub Actions (`feature/ci-cd-pipelines`) ✅
+- [x] Workflow `.github/workflows/ci.yml`:
   - Disparado en pushes y pull requests hacia `develop` y `main`.
   - Ejecuta `./gradlew lintDebug`, `./gradlew test` y `./gradlew assembleDebug`.
-- [ ] Workflow `.github/workflows/release.yml`:
+- [x] Workflow `.github/workflows/release.yml`:
   - Disparado en la creación de tags que comiencen con `v*`.
-  - Construye el AAB para Google Play y el APK universal firmado para GitHub Releases.
+  - Construye el AAB para Google Play y el APK universal firmado para GitHub Releases con `generateReleaseChecksums`.
   - Publica el GitHub Release con las notas extraídas de `docs/CHANGELOG.md` y adjunta el APK con su hash SHA-256.
 
 ### Hito 5.5 — Tests E2E de Flujo Crítico y Auditoría Final (`feature/e2e-testing-audit`)
