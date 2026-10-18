@@ -15,6 +15,7 @@ class StringResourcesParityTest {
         "feature/reader/src/main/res",
         "feature/navigator/src/main/res",
         "feature/tts/src/main/res",
+        "feature/annotations/src/main/res",
         "app/src/main/res"
     )
 

@@ -9,5 +9,7 @@
     <string name="reader_loading_doc">Loading document…</string>
     <string name="reader_unknown_error">Unknown error</string>
     <string name="reader_tts_button">Read aloud (TTS)</string>
+    <string name="reader_bookmarks_button">Bookmarks &amp; Annotations</string>
+    <string name="reader_add_bookmark_quick">Add bookmark</string>
 </resources>
 
