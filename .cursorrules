@@ -1,0 +1,19 @@
+# Proyecto: MD GitHub Navigator
+# App Android nativa en Kotlin con Jetpack Compose
+
+Lee .ai/CONTEXT.md para el contexto del proyecto.
+Lee .ai/CONVENTIONS.md para las convenciones de código.
+Lee .ai/TASKS.md para las tareas actuales.
+
+Desarrollo agéntico con SSD: Análisis → Plan → Tareas → Implementación.
+Soporte para subagentes en paralelo.
+
+Reglas:
+- Kotlin + Jetpack Compose + Material 3
+- Clean Architecture + MVI
+- TDD: tests antes de la implementación
+- Conventional Commits
+- No hacer commits sin consentimiento del usuario
+- Persistir toda configuración
+- Nunca hardcodear secretos
+- Español por defecto en documentación
