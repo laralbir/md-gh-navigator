@@ -20,13 +20,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
     }
 }
 
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:datastore"))
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx)
@@ -40,12 +49,9 @@ dependencies {
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.okhttp.mockwebserver)
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
