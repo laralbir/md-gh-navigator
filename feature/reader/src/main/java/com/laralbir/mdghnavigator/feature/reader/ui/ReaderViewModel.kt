@@ -1,0 +1,69 @@
+package com.laralbir.mdghnavigator.feature.reader.ui
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.laralbir.mdghnavigator.core.database.dao.DocumentDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ReaderViewModel @Inject constructor(
+    private val documentDao: DocumentDao
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(ReaderUiState())
+    val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
+
+    private var loadJob: Job? = null
+
+    fun onIntent(intent: ReaderIntent) {
+        when (intent) {
+            is ReaderIntent.LoadDocument -> loadDocument(intent.documentId)
+            is ReaderIntent.UpdateScroll -> updateScroll(intent.progress, intent.scrollY)
+            is ReaderIntent.ToggleToc -> _uiState.update { it.copy(isTocOpen = !it.isTocOpen) }
+            is ReaderIntent.SetTocOpen -> _uiState.update { it.copy(isTocOpen = intent.isOpen) }
+            is ReaderIntent.ChangeTheme -> _uiState.update { it.copy(themeMode = intent.theme) }
+            is ReaderIntent.ChangeFontSize -> _uiState.update { it.copy(fontSize = intent.size) }
+        }
+    }
+
+    private fun loadDocument(documentId: String) {
+        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            documentDao.updateLastReadAt(documentId, System.currentTimeMillis())
+            documentDao.getDocumentById(documentId).collect { doc ->
+                if (doc != null) {
+                    _uiState.update {
+                        it.copy(
+                            document = doc,
+                            scrollProgress = doc.scrollProgress,
+                            scrollY = doc.scrollY,
+                            isLoading = false
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(isLoading = false, errorMessage = "Documento no encontrado")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateScroll(progress: Float, scrollY: Int) {
+        val currentDocId = _uiState.value.document?.id ?: return
+        _uiState.update {
+            it.copy(scrollProgress = progress, scrollY = scrollY)
+        }
+        viewModelScope.launch {
+            documentDao.updateScrollPosition(currentDocId, progress, scrollY)
+        }
+    }
+}
