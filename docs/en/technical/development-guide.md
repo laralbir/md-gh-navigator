@@ -43,6 +43,13 @@ git commit -m "test(datastore): add unit tests for Tink encryption"
 - **Branch cleanup:** All working branches (`feature/*`, `bugfix/*`) must be deleted locally (`git branch -d`) and remotely (`git push origin --delete`) immediately after being merged into `develop` or `main`.
 - **Continuous Changelog Maintenance:** The file `docs/CHANGELOG.md` must be progressively updated with notable changes under `[Unreleased]` following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### 3.2 Phase Promotion via Pull Request to Main
+- **One PR to main per implemented phase**: Whenever an entire development phase is completed in `develop` (all milestones implemented, 100% test pass rate), a formal Pull Request must be opened and merged from `develop` into `main`.
+- **Phase PR Requirements**:
+  1. Full test suite passing without errors (`./gradlew test`).
+  2. `docs/CHANGELOG.md` updated moving `[Unreleased]` entries to the new semantic version release (`vMAJOR.MINOR.PATCH`).
+  3. Creation and push of the corresponding Git tag triggering distribution releases (Google Play AAB and GitHub Releases APK).
+
 ---
 
 ## 4. Testing (TDD)

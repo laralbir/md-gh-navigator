@@ -317,3 +317,27 @@ A medida que el proyecto avanza a gran velocidad con múltiples ramas de caracte
    - Tan pronto como una rama (`feature/*`, `bugfix/*`, `release/*`) sea fusionada con éxito en `develop` o `main`, debe eliminarse tanto localmente (`git branch -d`) como en el repositorio remoto (`git push origin --delete`).
    - Las únicas ramas protegidas y permanentes son `main` y `develop`.
 
+---
+
+## ADR-018: Promoción a Main por Fases Implementadas mediante Pull Request (PR)
+
+**Estado:** Aprobado
+**Fecha:** 2026-10-18
+
+### Contexto
+Para garantizar que la rama `main` actúe como un reflejo fidedigno, inmutable y estable de cada versión entregable del producto, y evitar discrepancias o mezclas caóticas en producción, se requiere formalizar el procedimiento de integración del trabajo completado en `develop`.
+
+### Decisión
+1. **Un Pull Request a Main por Cada Fase Implementada:**
+   - Cada vez que se completen e implementen todos los hitos y especificaciones de una fase de desarrollo en la rama `develop`, se debe crear y fusionar un Pull Request formal desde `develop` hacia `main`.
+   - Se prohíbe el merge directo a `main` sin Pull Request o sin pasar por la validación de integración continua.
+2. **Criterios de Aceptación para la Fusión del PR:**
+   - **Pruebas Automatizadas:** 100% de la suite de pruebas unitarias e instrumentadas pasando en verde (`./gradlew test`).
+   - **Changelog Consolidado:** Las entradas acumuladas en la sección `[Unreleased]` de `docs/CHANGELOG.md` se consolidan y fechan bajo el encabezado de versión correspondiente (`## [vX.Y.Z] - YYYY-MM-DD`).
+   - **Etiquetado SemVer:** Creación y push del tag Git semántico (`vMAJOR.MINOR.PATCH`).
+   - **Disparo de Releases:** El tag dispara la generación automatizada de los artefactos de distribución (Android App Bundle para Google Play y APK universal firmado para GitHub Releases).
+3. **Preservación y Continuidad:**
+   - Las ramas `main` y `develop` nunca se eliminan (ramas protegidas permanentes).
+   - Tras la fusión, `develop` continúa abierta para la planificación e implementación de la siguiente fase del proyecto.
+
+

@@ -58,6 +58,7 @@ com.laralbir.mdghnavigator/
 - **PR titles:** Same as commit convention
 - **Ramas protegidas:** `main` y `develop` (nunca se borran).
 - **Limpieza de ramas:** Toda rama de trabajo (`feature/*`, `bugfix/*`, `release/*`) debe ser eliminada local (`git branch -d`) y remotamente (`git push origin --delete`) tan pronto como sea fusionada con éxito en `develop` o `main`.
+- **Promoción por fases mediante PR a main:** Por cada fase de desarrollo implementada y completada en `develop`, se debe abrir un Pull Request (PR) formal hacia `main`. No se permite merge directo sin PR, verificación completa de CI/CD, actualización de `docs/CHANGELOG.md` y etiquetado con tag de versión SemVer (`vMAJOR.MINOR.PATCH`).
 
 ## Documentation & Changelog
 

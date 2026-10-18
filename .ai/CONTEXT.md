@@ -32,6 +32,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
 - Git Flow branching + Conventional Commits
 - Limpieza obligatoria de ramas tras fusión: una vez integrada cualquier rama (`feature/*`, `bugfix/*`, `release/*`) en `develop` o `main`, debe eliminarse localmente (`git branch -d`) y en remoto (`git push origin --delete`). Las únicas ramas protegidas y permanentes son `main` y `develop`.
 - Mantenimiento continuo del Changelog: el archivo `docs/CHANGELOG.md` (bajo estándar Keep a Changelog y SemVer) debe actualizarse progresivamente con cada cambio relevante, nueva característica o corrección en la sección `[Unreleased]`.
+- Promoción a main por fase implementada mediante Pull Request (PR): Cada fase completada en `develop` (con todos sus hitos verdes, tests unitarios/UI al 100%, changelog actualizado y documentación completada) debe integrarse en la rama `main` mediante un Pull Request (PR) formal con sus correspondientes notas de versión y tag semántico SemVer (`vMAJOR.MINOR.PATCH`).
 - Desarrollo TDD-first
 - Seguridad-first para almacenamiento de credenciales (Tink + DataStore)
 - Soporte de renderizado de diagramas: Mermaid, D2, Graphviz, Excalidraw
@@ -51,7 +52,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
   1. **Google Play Store:** Android App Bundle (`.aab`) mediante Play App Signing
   2. **GitHub Releases:** Standalone universal APK (`.apk`) firmado con hash SHA-256
 - **Versionado:** SemVer 2.0 (`vX.Y.Z`) con tags de Git y generación de changelogs
-- **Estrategia de ramas:** Git Flow
+- **Estrategia de ramas:** Git Flow (desarrollo en `feature/*`, integración en `develop`; PR obligatoria de `develop` a `main` al completar cada fase con tag de versión y release)
 - **Convención de commits:** Conventional Commits v1.0.0
 
 ---
@@ -142,3 +143,4 @@ agy
 7. **Español** como idioma por defecto en documentación y comentarios de usuario
 8. **Gestión de Issues y RCA**: Usar `./scripts/review-issues.sh` y la skill `.agents/skills/github-issues-resolver/` para revisar issues del repo, analizar su causa raíz (RCA), redactar soluciones de código, contestar al issue y actualizar/cerrar su estado.
 9. **Paralelismo Seguro y Anti-Deadlock**: Lanzar subagentes en paralelo particionando el trabajo por módulos independientes y workspaces aislados, sin bucles de polling y con dependencias en DAG para aprovechar al máximo la CPU/GPU sin bloquear el sistema.
+10. **PR a Main por Fase Implementada**: Al culminar todos los hitos y suites de prueba de una fase de desarrollo en `develop`, preparar y someter un Pull Request formal de `develop` hacia `main`, asegurando que el changelog, la versión SemVer y las pruebas estén completamente validadas.

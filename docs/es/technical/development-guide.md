@@ -43,6 +43,13 @@ git commit -m "test(datastore): añadir tests unitarios para cifrado con Tink"
 - **Limpieza de ramas:** Toda rama (`feature/*`, `bugfix/*`) debe ser eliminada local y remotamente tras ser fusionada en `develop`.
 - **Mantenimiento Continuo del Changelog:** El fichero `docs/CHANGELOG.md` debe irse rellenando progresivamente con los cambios, siguiendo el estándar [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) en la sección `[Unreleased]`.
 
+### 3.2 Promoción por Fases mediante Pull Request a Main
+- **Una PR a main por fase implementada**: Cada vez que se culmine la implementación de una fase completa en `develop` (con todos sus hitos y suites de pruebas al 100% en verde), se debe abrir y fusionar un Pull Request formal desde `develop` hacia `main`.
+- **Requisitos de la PR de Fase**:
+  1. Suite de tests unitarios e instrumentados pasando sin errores (`./gradlew test`).
+  2. Actualización de `docs/CHANGELOG.md` convirtiendo las notas de `[Unreleased]` a la nueva versión semántica (`vMAJOR.MINOR.PATCH`).
+  3. Creación y push del tag Git correspondiente para disparar la publicación de releases (Google Play AAB y GitHub Releases APK).
+
 ---
 
 ## 4. Ejecución de Tests (TDD)
