@@ -8,11 +8,11 @@ data class GitHubRepoDto(
     val id: Long,
     val name: String,
     @SerialName("full_name") val fullName: String,
-    val private: Boolean,
+    val private: Boolean = false,
     val description: String? = null,
-    @SerialName("default_branch") val defaultBranch: String,
-    @SerialName("html_url") val htmlUrl: String,
-    val owner: GitHubOwnerDto
+    @SerialName("default_branch") val defaultBranch: String = "main",
+    @SerialName("html_url") val htmlUrl: String = "",
+    val owner: GitHubOwnerDto? = null
 )
 
 @Serializable
