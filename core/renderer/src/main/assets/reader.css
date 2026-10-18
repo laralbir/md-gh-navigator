@@ -1,0 +1,167 @@
+/* MD GitHub Navigator — Core eReader Stylesheet */
+:root {
+    --reader-bg: #FAF7F2;
+    --reader-text: #2C2420;
+    --reader-surface: #F3EDE4;
+    --reader-primary: #5D4037;
+    --reader-secondary: #795548;
+    --reader-border: #D3C4B8;
+    --reader-font-size: 18px;
+    --reader-line-height: 28px;
+    --reader-font-family: serif;
+    --reader-max-width: 840px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--reader-bg);
+    color: var(--reader-text);
+    font-family: var(--reader-font-family);
+    font-size: var(--reader-font-size);
+    line-height: var(--reader-line-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+#reader-container {
+    max-width: var(--reader-max-width);
+    margin: 0 auto;
+    padding: 24px 20px 100px 20px;
+}
+
+/* Tipografía de Encabezados */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--reader-text);
+    font-weight: 700;
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 1.75em;
+    border-bottom: 1px solid var(--reader-border);
+    padding-bottom: 0.3em;
+}
+
+h2 {
+    font-size: 1.45em;
+    border-bottom: 1px solid var(--reader-border);
+    padding-bottom: 0.2em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+/* Enlaces */
+a {
+    color: var(--reader-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+/* Bloques de Código y Sintaxis */
+pre {
+    background-color: var(--reader-surface);
+    border: 1px solid var(--reader-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 0.88em;
+    line-height: 1.5;
+}
+
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+    font-size: 0.9em;
+    background-color: var(--reader-surface);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Citas */
+blockquote {
+    border-left: 4px solid var(--reader-primary);
+    margin: 1.2em 0;
+    padding: 4px 0 4px 16px;
+    color: var(--reader-text);
+    opacity: 0.92;
+    font-style: italic;
+}
+
+/* Tablas */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+    overflow-x: auto;
+    display: block;
+}
+
+th, td {
+    border: 1px solid var(--reader-border);
+    padding: 10px 14px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--reader-surface);
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(128, 128, 128, 0.05);
+}
+
+/* Imágenes */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Listas */
+ul, ol {
+    padding-left: 1.6em;
+    margin: 1em 0;
+}
+
+li {
+    margin-bottom: 0.4em;
+}
+
+/* Contenedores de Diagramas (Mermaid, D2, Graphviz) */
+.diagram-container {
+    background-color: var(--reader-surface);
+    border: 1px solid var(--reader-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 1.5em 0;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.diagram-container svg {
+    max-width: 100%;
+    height: auto;
+}
