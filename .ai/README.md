@@ -77,6 +77,7 @@ Cualquier agente puede auditar, diagnosticar y resolver incidencias de [GitHub I
 | [CONVENTIONS.md](CONVENTIONS.md) | Convenciones de código, nombrado, estructura |
 | [TASKS.md](TASKS.md) | Backlog de tareas por fase |
 | [DECISIONS.md](DECISIONS.md) | Architecture Decision Records (ADRs) |
+| [plans/](plans/) | Planes detallados de implementación por fase (Fases 1 a 4) |
 
 ## Ficheros de Configuración por Agente
 
