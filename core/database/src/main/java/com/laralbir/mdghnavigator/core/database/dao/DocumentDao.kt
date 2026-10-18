@@ -27,6 +27,12 @@ interface DocumentDao {
     @Query("UPDATE documents SET scrollProgress = :progress, scrollY = :scrollY, lastReadTimestamp = :timestamp WHERE id = :id")
     suspend fun updateReadingProgress(id: String, progress: Float, scrollY: Int, timestamp: Long)
 
+    @Query("UPDATE documents SET scrollProgress = :progress, scrollY = :scrollY WHERE id = :id")
+    suspend fun updateScrollPosition(id: String, progress: Float, scrollY: Int)
+
+    @Query("UPDATE documents SET lastReadTimestamp = :timestamp WHERE id = :id")
+    suspend fun updateLastReadAt(id: String, timestamp: Long)
+
     @Query("UPDATE documents SET isFavorite = :isFavorite WHERE id = :id")
     suspend fun setFavorite(id: String, isFavorite: Boolean)
 
