@@ -34,3 +34,4 @@ sealed interface NavigatorIntent {
     data class SelectDocument(val document: DocumentEntity) : NavigatorIntent
     data class SelectTocItem(val tocItem: TocItemEntity) : NavigatorIntent
 }
+

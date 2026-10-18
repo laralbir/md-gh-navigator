@@ -126,3 +126,4 @@ class ReaderViewModelTest {
         assertEquals(1.25f, viewModel.uiState.value.fontSize)
     }
 }
+

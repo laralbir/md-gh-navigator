@@ -98,7 +98,7 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 - [ ] Generación de icono de la aplicación (Adaptive Icons para Android) y pantallas splash/launch
 - [ ] Tests E2E de flujos críticos de usuario (añadir repo -> sincronizar -> leer -> anotar -> reanudar)
 - [ ] Auditoría de seguridad final y optimización de rendimiento en tablet TCL NXTPAPER 11 Plus
-- [ ] Generación y verificación final de la documentación navegable completa (`/docs`)
+- [ ] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
 - [ ] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
 - [ ] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
 - [ ] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases

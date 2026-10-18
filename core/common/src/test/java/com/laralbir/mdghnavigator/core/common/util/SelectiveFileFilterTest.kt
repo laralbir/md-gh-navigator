@@ -48,3 +48,4 @@ class SelectiveFileFilterTest {
         assertFalse(filter.shouldCache(".idea/workspace.xml"))
     }
 }
+

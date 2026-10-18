@@ -38,3 +38,4 @@ class SelectiveFileFilter {
         return segments.any { ignoredDirectories.contains(it) }
     }
 }
+

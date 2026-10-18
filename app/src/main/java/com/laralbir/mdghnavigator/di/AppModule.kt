@@ -21,3 +21,4 @@ object AppModule {
     @Singleton
     fun provideSelectiveFileFilter(): SelectiveFileFilter = SelectiveFileFilter()
 }
+

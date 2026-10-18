@@ -21,3 +21,4 @@ sealed interface ReaderIntent {
     data class ChangeTheme(val theme: String) : ReaderIntent
     data class ChangeFontSize(val size: Float) : ReaderIntent
 }
+

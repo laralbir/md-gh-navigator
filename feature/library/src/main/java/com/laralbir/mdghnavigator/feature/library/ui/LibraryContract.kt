@@ -32,3 +32,4 @@ sealed interface LibraryIntent {
     data object CloseAddDialog : LibraryIntent
     data object ClearError : LibraryIntent
 }
+

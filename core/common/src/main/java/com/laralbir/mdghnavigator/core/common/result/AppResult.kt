@@ -13,3 +13,4 @@ sealed interface AppResult<out T> {
         val code: Int? = null
     ) : AppResult<Nothing>
 }
+

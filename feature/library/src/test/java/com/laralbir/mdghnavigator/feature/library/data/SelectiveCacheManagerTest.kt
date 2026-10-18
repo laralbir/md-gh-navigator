@@ -156,3 +156,4 @@ class SelectiveCacheManagerTest {
         assertEquals("# New Updated Content", capturedDoc.captured.content)
     }
 }
+

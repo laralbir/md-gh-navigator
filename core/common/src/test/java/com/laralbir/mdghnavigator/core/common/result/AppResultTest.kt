@@ -36,3 +36,4 @@ class AppResultTest {
         assertEquals(404, result.code)
     }
 }
+

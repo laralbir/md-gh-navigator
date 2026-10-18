@@ -147,3 +147,4 @@ class LibraryViewModelTest {
         coVerify(exactly = 1) { documentDao.deleteDocumentsForRepo("github:owner/repo") }
     }
 }
+

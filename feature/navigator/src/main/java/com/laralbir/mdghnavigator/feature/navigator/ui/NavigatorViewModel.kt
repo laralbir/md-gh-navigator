@@ -85,3 +85,4 @@ class NavigatorViewModel @Inject constructor(
         }
     }
 }
+
