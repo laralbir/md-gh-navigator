@@ -99,3 +99,17 @@ Para dar soporte a diagramas avanzados (**Mermaid**, **Graphviz/Viz.js**, **D2/W
 - **Puente JavaScript Bidireccional (`@JavascriptInterface`):**
   - **JS -> Android:** Notifica la posición del scroll porcentual, eventos de clic en hipervínculos, selección de texto para anotaciones y clics en imágenes para visualización a pantalla completa.
   - **Android -> JS:** Inyecta estilos CSS acordes al tema activo (Scholar, Paper, Neon Dev), tamaño de fuente configurado y comandos de navegación a encabezados.
+
+---
+
+## 5. Estrategia de Internacionalización (i18n) — (Fase 4 / v0.4.0)
+
+La aplicación implementa una arquitectura de localización nativa y escalable:
+1. **Resolución Jerárquica de Idiomas:**
+   - **Idioma del Sistema:** Android resuelve dinámicamente los recursos con `stringResource(R.string.*)` según el `Locale` del dispositivo.
+   - **Fallback a Inglés:** El calificador base `res/values/strings.xml` contiene las cadenas en inglés (`en`). Cualquier idioma del sistema sin traducción personalizada recurre transparentemente al inglés.
+   - **Soporte Inicial:** Español (`res/values-es/strings.xml`) e Inglés (`res/values/strings.xml`).
+2. **Preferencia de Idioma por Aplicación (Per-App Language):**
+   - Soporte nativo de la API de Android 13+ (`android.app.LocaleManager`) y `AppCompatDelegate.setApplicationLocales` para que el usuario pueda alternar entre español e inglés desde la pantalla de *Ajustes* (`:feature:settings`) sin alterar la configuración del sistema.
+3. **Externalización y Mantenibilidad:**
+   - Cero cadenas literales en código Kotlin/Compose. Todos los módulos de presentación (`:feature:*` y `:core:designsystem`) delegan en identificadores de recursos XML compilados.

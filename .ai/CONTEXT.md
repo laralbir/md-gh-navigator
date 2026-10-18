@@ -9,7 +9,7 @@
 **Min SDK:** 24 (Android 7.0 Nougat)
 **Target SDK:** 36 (Android 16)
 **Build System:** Gradle con Kotlin DSL
-**Idioma por defecto:** Español (documentación bilingüe ES/EN)
+**Internacionalización (i18n):** Multi-idioma (idioma del sistema por defecto, fallback a inglés 'en'; soporte inicial Español 'es' e Inglés 'en' planificado para v0.4.0)
 
 ## Dispositivo Principal de Pruebas
 
@@ -35,6 +35,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
 - Soporte de renderizado de diagramas: Mermaid, D2, Graphviz, Excalidraw
 - Documentación bilingüe (ES/EN), español por defecto
 - Guía de usuario con ejemplos gráficos: la documentación para el usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) debe incorporar capturas de pantalla, mockups de interfaz con marcos de dispositivo o diagramas visuales paso a paso para tablets (TCL NXTPAPER) y smartphones
+- Soporte multi-idioma de la aplicación (i18n, Fase 4 / v0.4.0): idioma del sistema por defecto, fallback automático a inglés ('values/strings.xml'), traducción completa inicial en Español ('values-es') e Inglés ('values'), y selector in-app en Ajustes
 - Preparación para Google Play Store: Android App Bundle (.aab), firma segura desacoplada, Data Safety form y optimización para tablets (TCL NXTPAPER) y móviles
 - Canal alternativo GitHub Releases: APKs standalone universales firmados para sideloading directo sin Google Play
 - Estrategia de versionado semántico estricto (SemVer `vMAJOR.MINOR.PATCH`) sincronizado con Git tags y cálculo determinista de `versionCode`
