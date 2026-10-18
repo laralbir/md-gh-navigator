@@ -21,7 +21,7 @@ import javax.inject.Singleton
 data class UserPreferences(
     val themeMode: String = "paper",
     val fontScale: Float = 1.0f,
-    val fontFamily: String = "literata",
+    val fontFamily: String = "inter",
     val languageCode: String = "system"
 )
 
@@ -55,7 +55,7 @@ class DataStoreUserPreferencesRepository @Inject constructor(
         UserPreferences(
             themeMode = prefs[PreferencesKeys.THEME_MODE] ?: "paper",
             fontScale = prefs[PreferencesKeys.FONT_SCALE] ?: 1.0f,
-            fontFamily = prefs[PreferencesKeys.FONT_FAMILY] ?: "literata",
+            fontFamily = prefs[PreferencesKeys.FONT_FAMILY] ?: "inter",
             languageCode = prefs[PreferencesKeys.LANGUAGE_CODE] ?: "system"
         )
     }

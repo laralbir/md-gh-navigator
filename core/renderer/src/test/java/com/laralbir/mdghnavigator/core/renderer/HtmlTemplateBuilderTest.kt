@@ -20,8 +20,8 @@ class HtmlTemplateBuilderTest {
             fontSizeSp = 18
         )
 
-        assertTrue(html.contains("--reader-bg: #FBF9F5"), "Should include Scholar light background color")
-        assertTrue(html.contains("--reader-text: #2D3748"), "Should include Scholar light text color")
+        assertTrue(html.contains("--reader-bg: #F8FAFC"), "Should include Scholar light background color")
+        assertTrue(html.contains("--reader-text: #0F172A"), "Should include Scholar light text color")
         assertTrue(html.contains("--reader-font-size: 18px"), "Should set 18px font size")
         assertTrue(html.contains("viewport"), "Must include mobile/tablet viewport meta tag")
         assertTrue(html.contains("Este es un documento de prueba"), "Raw markdown content must be embedded")
@@ -37,8 +37,8 @@ class HtmlTemplateBuilderTest {
             fontSizeSp = 20
         )
 
-        assertTrue(html.contains("--reader-bg: #1A202C"), "Should include Scholar dark background color")
-        assertTrue(html.contains("--reader-text: #E2E8F0"), "Should include Scholar dark text color")
+        assertTrue(html.contains("--reader-bg: #0F172A"), "Should include Scholar dark background color")
+        assertTrue(html.contains("--reader-text: #F8FAFC"), "Should include Scholar dark text color")
         assertTrue(html.contains("--reader-font-size: 20px"))
     }
 

@@ -31,13 +31,13 @@ class HtmlTemplateBuilder {
         themeMode: AppThemeMode,
         isDark: Boolean,
         fontSizeSp: Int = 18,
-        fontFamily: String = "serif"
+        fontFamily: String = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     ): String {
         val (bgColor, textColor, surfaceColor, primaryColor, borderColor) = when (themeMode) {
             AppThemeMode.SCHOLAR -> if (isDark) {
-                Quintet("#1A202C", "#E2E8F0", "#232A36", "#CBD5E0", "#4A5568")
+                Quintet("#0F172A", "#F8FAFC", "#1E293B", "#38BDF8", "#334155")
             } else {
-                Quintet("#FBF9F5", "#2D3748", "#F3EFE6", "#4A5568", "#CBD5E0")
+                Quintet("#F8FAFC", "#0F172A", "#F1F5F9", "#2563EB", "#CBD5E1")
             }
             AppThemeMode.PAPER -> if (isDark) {
                 Quintet("#0D1117", "#E6EDF3", "#161B22", "#58A6FF", "#30363D")
@@ -70,7 +70,7 @@ class HtmlTemplateBuilder {
             --reader-border: $borderColor;
             --reader-font-size: ${fontSizeSp}px;
             --reader-line-height: ${lineHeightPx}px;
-            --reader-font-family: $fontFamily, serif;
+            --reader-font-family: $fontFamily, sans-serif;
         }
         body {
             background-color: var(--reader-bg);

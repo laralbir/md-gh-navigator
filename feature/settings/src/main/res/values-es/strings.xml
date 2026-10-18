@@ -4,7 +4,7 @@
     <string name="settings_section_appearance">Apariencia</string>
     <string name="settings_theme">Tema de Lectura</string>
     <string name="settings_theme_paper">GitHub Modern (Limpio)</string>
-    <string name="settings_theme_scholar">Scholar (Papel marfil cálido)</string>
+    <string name="settings_theme_scholar">Slate (Gris neutro suave)</string>
     <string name="settings_theme_neon">Neon Dev (Terminal oscuro)</string>
     <string name="settings_typography">Tipografía</string>
     <string name="settings_font_literata">Literata (Serif)</string>

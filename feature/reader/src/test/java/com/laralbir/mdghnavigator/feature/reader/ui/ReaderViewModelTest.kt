@@ -117,7 +117,7 @@ class ReaderViewModelTest {
     @Test
     @DisplayName("ChangeTheme and ChangeFontSize update state")
     fun testAppearanceSettings() = runTest {
-        assertEquals("scholar", viewModel.uiState.value.themeMode)
+        assertEquals("paper", viewModel.uiState.value.themeMode)
         assertEquals(1.0f, viewModel.uiState.value.fontSize)
 
         viewModel.onIntent(ReaderIntent.ChangeTheme("neon"))

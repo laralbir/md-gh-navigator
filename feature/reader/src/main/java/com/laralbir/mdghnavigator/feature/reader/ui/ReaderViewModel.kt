@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.laralbir.mdghnavigator.core.common.util.ContentDecoder
 import com.laralbir.mdghnavigator.core.database.dao.DocumentDao
+import com.laralbir.mdghnavigator.core.datastore.UserPreferencesRepository
 import com.laralbir.mdghnavigator.feature.tts.TtsController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ReaderViewModel @Inject constructor(
     private val documentDao: DocumentDao,
-    val ttsController: TtsController? = null
+    val ttsController: TtsController? = null,
+    private val userPreferencesRepository: UserPreferencesRepository? = null
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReaderUiState())
@@ -25,14 +27,37 @@ class ReaderViewModel @Inject constructor(
 
     private var loadJob: Job? = null
 
+    init {
+        viewModelScope.launch {
+            userPreferencesRepository?.userPreferences?.collect { prefs ->
+                _uiState.update { current ->
+                    current.copy(
+                        themeMode = prefs.themeMode,
+                        fontSize = prefs.fontScale
+                    )
+                }
+            }
+        }
+    }
+
     fun onIntent(intent: ReaderIntent) {
         when (intent) {
             is ReaderIntent.LoadDocument -> loadDocument(intent.documentId)
             is ReaderIntent.UpdateScroll -> updateScroll(intent.progress, intent.scrollY)
             is ReaderIntent.ToggleToc -> _uiState.update { it.copy(isTocOpen = !it.isTocOpen) }
             is ReaderIntent.SetTocOpen -> _uiState.update { it.copy(isTocOpen = intent.isOpen) }
-            is ReaderIntent.ChangeTheme -> _uiState.update { it.copy(themeMode = intent.theme) }
-            is ReaderIntent.ChangeFontSize -> _uiState.update { it.copy(fontSize = intent.size) }
+            is ReaderIntent.ChangeTheme -> {
+                _uiState.update { it.copy(themeMode = intent.theme) }
+                viewModelScope.launch {
+                    userPreferencesRepository?.setThemeMode(intent.theme)
+                }
+            }
+            is ReaderIntent.ChangeFontSize -> {
+                _uiState.update { it.copy(fontSize = intent.size) }
+                viewModelScope.launch {
+                    userPreferencesRepository?.setFontScale(intent.size)
+                }
+            }
             is ReaderIntent.OpenImageViewer -> _uiState.update {
                 it.copy(
                     selectedImageUrl = intent.imageUrl,

@@ -9,7 +9,7 @@ data class ReaderUiState(
     val isLoading: Boolean = false,
     val isTocOpen: Boolean = false,
     val errorMessage: String? = null,
-    val themeMode: String = "scholar",
+    val themeMode: String = "paper",
     val fontSize: Float = 1.0f,
     val selectedImageUrl: String? = null,
     val selectedImageTitle: String? = null

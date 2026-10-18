@@ -31,13 +31,13 @@ class UserPreferencesRepositoryTest {
     }
 
     @Test
-    @DisplayName("Default preferences return paper theme, 1.0 scale, literata font and system language")
+    @DisplayName("Default preferences return paper theme, 1.0 scale, inter font and system language")
     fun testDefaultPreferences() = runTest {
         repository.userPreferences.test {
             val prefs = awaitItem()
             assertEquals("paper", prefs.themeMode)
             assertEquals(1.0f, prefs.fontScale)
-            assertEquals("literata", prefs.fontFamily)
+            assertEquals("inter", prefs.fontFamily)
             assertEquals("system", prefs.languageCode)
         }
     }
