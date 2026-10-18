@@ -42,6 +42,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
 - Preparación para Google Play Store: Android App Bundle (.aab), firma segura desacoplada, Data Safety form y optimización para tablets (TCL NXTPAPER) y móviles
 - Canal alternativo GitHub Releases: APKs standalone universales firmados para sideloading directo sin Google Play
 - Estrategia de versionado semántico estricto (SemVer `vMAJOR.MINOR.PATCH`) sincronizado con Git tags y cálculo determinista de `versionCode`
+- Concurrencia agéntica sin deadlocks: Uso intensivo y paralelo de subagentes para maximizar el aprovechamiento de CPU y GPU (compilación paralela, particionado modular, análisis concurrente), con workspaces aislados (`branch`/`share`), jerarquía acíclica estricta (DAG), timeouts defensivos y reactividad basada en eventos sin polling.
 
 ## Repositorio y Distribución
 
@@ -77,11 +78,38 @@ Este proyecto se desarrolla guiado por agentes IA con el siguiente ciclo:
 
 ### Ejecución con Subagentes en Paralelo
 
-Los agentes IA (especialmente Antigravity) pueden ejecutar múltiples tareas en paralelo usando subagentes. Esto es fundamental para la productividad del proyecto:
+Los agentes IA (especialmente Antigravity) pueden y deben ejecutar múltiples tareas en paralelo usando subagentes para exprimir al máximo la capacidad de cómputo del sistema sin comprometer su estabilidad ni generar interbloqueos:
 
-- **Subagentes de investigación** (`research`): Explorar el codebase, buscar documentación
-- **Subagentes de implementación** (`self`): Escribir código en ramas separadas
-- **Subagentes especializados** (custom): Tareas específicas como generación de iconos
+- **Subagentes de investigación** (`research`): Explorar el codebase, buscar documentación y analizar dependencias sin bloquear el hilo principal.
+- **Subagentes de implementación** (`self`): Escribir código, refactorizar y ejecutar suites de tests en ramas o workspaces aislados.
+- **Subagentes especializados** (custom): Tareas pesadas como generación de recursos gráficos, benchmarks o auditorías de accesibilidad.
+
+#### Aprovechamiento Óptimo de Hardware (CPU & GPU)
+
+1. **Saturación Eficiente de CPU**:
+   - Compilación y testing paralelo: Aprovechar los daemons de Gradle con `--parallel` y `--max-workers` adaptados al número de núcleos lógicos del sistema.
+   - Particionado modular ortogonal: Distribuir tareas concurrentes entre módulos desacoplados (e.g. un subagente en `:feature:reader` y otro en `:feature:library`), minimizando la contención de I/O en disco.
+   - Límite de concurrencia: Evitar lanzar más subagentes activos que hilos de CPU disponibles ($N_{workers} \le \text{CPU Cores} - 1$) para prevenir degradación por context switching excesivo.
+
+2. **Aceleración por GPU**:
+   - Renderizado y emulación: Priorizar la aceleración hardware de GPU para emuladores Android, previsualizaciones de Compose y procesamiento de imágenes y assets gráficos.
+   - Inferencia local: Si se utilizan modelos locales para tareas de soporte, asegurar la descarga a Metal/Vulkan/OpenCL liberando los núcleos de la CPU para compilación.
+
+#### Prevención Estricta de Deadlocks (Anti-Interbloqueo)
+
+Para garantizar que múltiples agentes y subagentes coexistan en paralelo sin llegar jamás a un *deadlock*, se aplican las siguientes 4 reglas fundamentales basadas en las condiciones de Coffman:
+
+1. **Aislamiento de Workspaces (Exclusión Mutua Sin Conflicto)**:
+   - Los subagentes que realizan escrituras de código NUNCA deben modificar simultáneamente los mismos ficheros en el mismo workspace.
+   - Deben trabajar en workspaces aislados (`Workspace: 'branch'` o `'share'`) o en módulos ortogonales independientes.
+2. **Eliminación de "Hold and Wait" (No Retención Activa)**:
+   - Ningún subagente debe retener bloqueos exclusivos (como locks de base de datos, puertos o el daemon de Gradle) mientras espera la respuesta o finalización de otro subagente.
+3. **Jerarquía Acíclica Estricta (Grafo Dirigido Sin Ciclos - DAG)**:
+   - La orquestación sigue una estructura estrictamente jerárquica: Agente Principal $\rightarrow$ Subagente $\rightarrow$ Tarea.
+   - Quedan prohibidas las dependencias circulares (Subagente A esperando a Subagente B mientras B espera a A).
+4. **Timeouts Defensivos y Despertar Reactivo (Sin Polling Activo)**:
+   - Toda comunicación inter-agente y ejecución asíncrona debe usar temporizadores defensivos con `TimerCondition` y el sistema de mensajería reactiva (`send_message`).
+   - Se prohíbe el sondeo activo en bucle (`busy-waiting` o `sleep`), permitiendo que el sistema despierte reactivamente al agente ante eventos reales.
 
 #### Desde Antigravity CLI (`agy`)
 
@@ -113,3 +141,4 @@ agy
 6. **Conventional Commits** para todos los mensajes de commit
 7. **Español** como idioma por defecto en documentación y comentarios de usuario
 8. **Gestión de Issues y RCA**: Usar `./scripts/review-issues.sh` y la skill `.agents/skills/github-issues-resolver/` para revisar issues del repo, analizar su causa raíz (RCA), redactar soluciones de código, contestar al issue y actualizar/cerrar su estado.
+9. **Paralelismo Seguro y Anti-Deadlock**: Lanzar subagentes en paralelo particionando el trabajo por módulos independientes y workspaces aislados, sin bucles de polling y con dependencias en DAG para aprovechar al máximo la CPU/GPU sin bloquear el sistema.

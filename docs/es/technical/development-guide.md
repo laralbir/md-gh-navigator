@@ -57,3 +57,19 @@ git commit -m "test(datastore): añadir tests unitarios para cifrado con Tink"
 # Ejecutar análisis de lint y formato de código
 ./gradlew ktlintCheck
 ```
+
+---
+
+## 5. Orquestación de Agentes en Paralelo y Anti-Deadlock
+
+Para maximizar el rendimiento computacional de la máquina local (CPU multi-núcleo y aceleración por GPU):
+
+1. **Paralelismo de Subagentes**: Se permite la ejecución concurrente de subagentes para tareas desacopladas (investigación, implementación de módulos ortogonales, generación de recursos).
+2. **Optimización de Hardware**:
+   - **CPU**: Compilación en paralelo con Gradle (`org.gradle.parallel=true`), limitando los subagentes concurrentes a $N \le \text{cores} - 1$ para evitar saturación del planificador.
+   - **GPU**: Delegación de aceleración de renderizado en emuladores y procesamiento gráfico.
+3. **Reglas Anti-Deadlock (Condiciones de Coffman)**:
+   - **Workspaces Aislados**: Los agentes de escritura operan en branches o módulos independientes sin colisión de ficheros.
+   - **Sin Bloqueos Activos (No Hold and Wait)**: Ningún agente retiene recursos compartidos exclusivos mientras aguarda respuestas externas.
+   - **Topología DAG**: Dependencias unidireccionales estrictas (Orquestador $\rightarrow$ Subagente) sin esperas circulares.
+   - **Event-Driven sin Polling**: Comunicación reactiva con timeouts defensivos evitando bucles de espera activa.

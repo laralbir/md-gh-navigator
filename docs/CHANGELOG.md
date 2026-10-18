@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Selective offline cache manager (`SelectiveCacheManager`) downloading only `.md` files and associated assets.
 - GitHub v3 remote data source with ETag support and Storage Access Framework (SAF) local folder repository provider.
 - Dual distribution pipelines: Google Play Store (AAB with Play App Signing) and GitHub Releases (standalone signed universal APK with SemVer and SHA-256).
+- Architectural specification for parallel agent/subagent orchestration maximizing CPU and GPU hardware utilization while preventing deadlocks (Coffman conditions, isolated workspaces, strict DAG hierarchy, event-driven reactive messaging).
 
 ### Changed
 - Upgraded Room `AppDatabase` to version 2 supporting unified annotations, bookmarks, and highlights with scroll progress.

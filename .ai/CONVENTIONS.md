@@ -63,3 +63,11 @@ com.laralbir.mdghnavigator/
 
 - **Bilingual Documentation:** All documentation must be preserved bilingually in Spanish (`docs/es/`) and English (`docs/en/`).
 - **Continuous Changelog Maintenance:** The file `docs/CHANGELOG.md` must be progressively updated with every notable change, feature, or bug fix under `## [Unreleased]` adhering to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) categories (`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`).
+
+## Concurrencia Agéntica y Prevención de Deadlocks
+
+- **Particionado Ortogonal de Tareas:** Los subagentes concurrentes deben trabajar en módulos o ficheros disjuntos para evitar conflictos y bloqueos de I/O.
+- **Workspaces Aislados:** Utilizar `Workspace: 'branch'` o `'share'` para subagentes que generen o modifiquen código.
+- **Topología DAG:** Orquestación jerárquica unidireccional sin ciclos de espera mutua (sin bucles A espera a B y B espera a A).
+- **Prohibición de Polling Activo:** Comunicación asíncrona basada en eventos reactivos (mensajes directos y eventos del sistema) con timeouts defensivos.
+- **Aprovechamiento Hardware (CPU/GPU):** Limitar la concurrencia activa a los hilos de CPU reales ($N \le \text{cores} - 1$) y delegar aceleración de render/emulación a la GPU.

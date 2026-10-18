@@ -57,3 +57,19 @@ git commit -m "test(datastore): add unit tests for Tink encryption"
 # Run lint and code style checks
 ./gradlew ktlintCheck
 ```
+
+---
+
+## 5. Parallel Agent Orchestration & Deadlock Prevention
+
+To maximize hardware utilization (multi-core CPU and GPU acceleration) without risking system deadlocks:
+
+1. **Subagent Concurrency**: Concurrent execution of subagents is encouraged for decoupled tasks (investigation, orthogonal feature implementations, graphics/assets generation).
+2. **Hardware Optimization**:
+   - **CPU**: Parallel Gradle builds (`org.gradle.parallel=true`) with worker concurrency capped at $N \le \text{cores} - 1$ to prevent scheduler thrashing.
+   - **GPU**: Offload emulator UI acceleration, canvas rendering, and local neural inference pipelines.
+3. **Anti-Deadlock Rules (Coffman Conditions)**:
+   - **Isolated Workspaces**: Writing subagents work on isolated git branches or disjoint modules without file write collisions.
+   - **No Hold and Wait**: Agents must not retain exclusive locks (database, daemon, ports) while awaiting external responses.
+   - **Strict DAG Topology**: Hierarchical orchestration (Parent Agent $\rightarrow$ Subagent) strictly prohibiting circular wait loops.
+   - **Event-Driven without Polling**: Asynchronous reactive messaging with defensive timeouts replacing busy-waiting loops.
