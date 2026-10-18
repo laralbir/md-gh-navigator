@@ -39,6 +39,8 @@ dependencies {
     implementation(project(":core:renderer"))
     implementation(project(":core:database"))
     implementation(project(":feature:navigator"))
+    implementation(project(":feature:tts"))
+    implementation(project(":feature:annotations"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
@@ -46,6 +48,9 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completada y Verificada ✅** → Listo para **Fase 4: Experiencia eReader & Herramientas Avanzadas**.
+Estado actual: **Fase 4 Completada ✅** → Promoción de versión `v0.4.0` vía PR hacia `main` y arranque de **Fase 5: Pulido, Recursos Gráficos y Distribución**.
 
 ---
 
@@ -13,7 +13,7 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 
 ---
 
-## Fase 1: Análisis y Decisiones de Arquitectura ✅
+## Fase 1: Análisis y Decisiones de Arquitectura ✅ ([Plan Detallado](plans/phase-1-analysis.md))
 - [x] Aprobación de ADR-001 (Kotlin 2.x) y ADR-002 (Jetpack Compose + Material 3)
 - [x] Aprobación de ADR-003 (Clean Architecture + MVI + Event-Driven)
 - [x] Aprobación de ADR-004 (Motor de renderizado híbrido Compose + WebView con JS/WASM local)
@@ -30,7 +30,7 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 
 ---
 
-## Fase 2: Plan & Arquitectura Base (Foundation) ✅
+## Fase 2: Plan & Arquitectura Base (Foundation) ✅ ([Plan Detallado](plans/phase-2-plan.md))
 
 ### 2.1 Estructura Gradle y Módulos ✅
 - [x] Configurar Gradle con Kotlin DSL y Version Catalog (`gradle/libs.versions.toml`)
@@ -70,7 +70,7 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 
 ---
 
-## Fase 3: Funcionalidades Core (Lectura y Repositorios) ✅
+## Fase 3: Funcionalidades Core (Lectura y Repositorios) ✅ ([Plan Detallado](plans/phase-3-plan.md))
 - [x] Implementación de `GitHubRemoteDataSource` (API GitHub v3) con soporte ETag para descargas incrementales
 - [x] Implementación de `LocalDirectoryRepository` (Storage Access Framework de Android)
 - [x] Selector de archivo principal de inicio (por defecto `README.md` de la raíz)
@@ -82,15 +82,13 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 
 ---
 
-## Fase 4: Experiencia eReader & Herramientas Avanzadas ⏳
-- [ ] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
-- [ ] Sistema de resaltado y anotaciones con persistencia local y exportación a Markdown
-- [ ] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose
-- [ ] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
-- [ ] Búsqueda full-text (FTS) en documentos locales y repositorios sincronizados
-- [ ] Gestor de almacenamiento con limpieza de caché selectiva y medidor de uso de disco
-- [ ] Accesibilidad completa (TalkBack, navegación por teclado, soporte WCAG AA)
-- [ ] Comprobador de actualizaciones in-app (In-App Update Checker) para instalaciones directas vía GitHub Releases
+## Fase 4: Experiencia eReader & Herramientas Avanzadas ✅ ([Plan Detallado](plans/phase-4-plan.md))
+- [x] Soporte Multi-idioma (i18n): idioma del sistema por defecto, fallback automático a inglés (`res/values/strings.xml`), traducción inicial completa en Español (`res/values-es/strings.xml`) e Inglés (`res/values/strings.xml`), y selector in-app en Ajustes
+- [x] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
+- [x] Sistema de marcadores (bookmarks), resaltados y anotaciones con panel unificado para navegación rápida, persistencia en Room y exportación a Markdown
+- [x] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose (`ZoomableImageViewer`, `ZoomState`)
+- [x] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
+- [x] Gestor de almacenamiento con limpieza de caché selectiva y medidor de uso de disco (`StorageManager`)
 
 ---
 

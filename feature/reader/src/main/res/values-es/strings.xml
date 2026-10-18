@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reader_title_default">Lector Markdown</string>
+    <string name="reader_toc_button">Índice de contenidos</string>
+    <string name="reader_change_theme">Cambiar tema</string>
+    <string name="reader_theme_scholar">Tema Scholar (NXTPAPER)</string>
+    <string name="reader_theme_paper">Tema Paper (Minimalista)</string>
+    <string name="reader_theme_neon">Tema Neon Dev (Alto Contraste)</string>
+    <string name="reader_loading_doc">Cargando documento…</string>
+    <string name="reader_unknown_error">Error desconocido</string>
+    <string name="reader_tts_button">Lectura en voz alta (TTS)</string>
+    <string name="reader_bookmarks_button">Marcadores y Anotaciones</string>
+    <string name="reader_add_bookmark_quick">Añadir marcador</string>
+    <string name="image_viewer_close">Cerrar visor de imágenes</string>
+    <string name="image_viewer_zoom_in">Ampliar imagen</string>
+    <string name="image_viewer_zoom_out">Reducir imagen</string>
+    <string name="image_viewer_zoom_reset">Restablecer zoom</string>
+    <string name="image_viewer_title_default">Vista previa de imagen</string>
+</resources>
+

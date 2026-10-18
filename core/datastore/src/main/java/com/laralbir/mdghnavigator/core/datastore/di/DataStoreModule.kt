@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Singleton
 
 private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_tokens")
+private val Context.userSettingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "user_settings")
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -63,6 +64,16 @@ object DataStoreModule {
                     if (value != null) mapOf(key to value) else emptyMap()
                 }
             }
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserPreferencesRepository(
+        @ApplicationContext context: Context
+    ): com.laralbir.mdghnavigator.core.datastore.UserPreferencesRepository {
+        return com.laralbir.mdghnavigator.core.datastore.DataStoreUserPreferencesRepository(
+            dataStore = context.userSettingsDataStore
         )
     }
 }

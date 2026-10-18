@@ -17,3 +17,6 @@ Reglas:
 - Persistir toda configuración
 - Nunca hardcodear secretos
 - Español por defecto en documentación
+- Revisión de issues y RCA con: ./scripts/review-issues.sh [list|view|comment|close]
+- Limpieza de ramas fusionadas (main y develop son las únicas protegidas)
+- Marcadores (bookmarks), anotaciones y resaltados en panel unificado para navegación rápida

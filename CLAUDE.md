@@ -28,6 +28,8 @@ Los agentes pueden orquestar **subagentes en paralelo** para tareas independient
 8. Nunca hardcodear secretos ni tokens
 9. KDoc para todas las APIs públicas
 10. Documentación bilingüe (docs/es/ y docs/en/), **español por defecto**
+11. **Limpieza de ramas**: Borrar ramas (`git branch -d` y `git push origin --delete`) tras fusionarlas en `develop` o `main` (solo `main` y `develop` son protegidas).
+12. Marcadores (Bookmarks), notas y destacados: soporte unificado para navegación rápida.
 
 ## Testing
 
@@ -35,3 +37,12 @@ Los agentes pueden orquestar **subagentes en paralelo** para tareas independient
 - Compose Testing para tests de UI
 - Espresso para tests E2E
 - Cobertura mínima objetivo: 80%
+
+## Gestión y Resolución de Issues (RCA)
+
+Para inspeccionar y resolver incidencias de GitHub:
+- Listar: `./scripts/review-issues.sh list`
+- Ver detalle: `./scripts/review-issues.sh view <numero>`
+- Analizar causa raíz (RCA) y proponer solución técnica
+- Comentar: `./scripts/review-issues.sh comment <numero> "<mensaje>"`
+- Cerrar: `./scripts/review-issues.sh close <numero> "<mensaje>"`

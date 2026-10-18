@@ -26,9 +26,12 @@ fun ComposeMarkdownReader(
     themeMode: AppThemeMode = LocalAppThemeMode.current,
     isDark: Boolean = isSystemInDarkTheme(),
     fontSizeSp: Int = 18,
+    targetScrollProgress: Float? = null,
+    targetHeadingId: String? = null,
     onScrollProgress: (progress: Float, scrollY: Int) -> Unit = { _, _ -> },
     onLinkClicked: (LinkTarget) -> Unit = {},
-    onHeadingsDetected: (List<HeadingItem>) -> Unit = {}
+    onHeadingsDetected: (List<HeadingItem>) -> Unit = {},
+    onImageClicked: (imageUrl: String, title: String) -> Unit = { _, _ -> }
 ) {
     val templateBuilder = remember { HtmlTemplateBuilder() }
     val linkClassifier = remember { MarkdownLinkClassifier() }
@@ -68,7 +71,8 @@ fun ComposeMarkdownReader(
                         val target = linkClassifier.classify(rawUrl)
                         onLinkClicked(target)
                     },
-                    onHeadingsDetectedCallback = onHeadingsDetected
+                    onHeadingsDetectedCallback = onHeadingsDetected,
+                    onImageClickedCallback = onImageClicked
                 )
                 addJavascriptInterface(bridge, "AndroidBridge")
 
@@ -77,6 +81,7 @@ fun ComposeMarkdownReader(
                     onLinkTargetResolved = onLinkClicked
                 )
 
+                tag = htmlContent
                 loadDataWithBaseURL(
                     "https://appassets.androidplatform.net/",
                     htmlContent,
@@ -87,13 +92,27 @@ fun ComposeMarkdownReader(
             }
         },
         update = { webView ->
-            webView.loadDataWithBaseURL(
-                "https://appassets.androidplatform.net/",
-                htmlContent,
-                "text/html",
-                "UTF-8",
-                null
-            )
+            if (webView.tag != htmlContent) {
+                webView.tag = htmlContent
+                webView.loadDataWithBaseURL(
+                    "https://appassets.androidplatform.net/",
+                    htmlContent,
+                    "text/html",
+                    "UTF-8",
+                    null
+                )
+            }
+            if (targetHeadingId != null) {
+                webView.evaluateJavascript(
+                    "window.ReaderApi && window.ReaderApi.scrollToHeading('$targetHeadingId');",
+                    null
+                )
+            } else if (targetScrollProgress != null) {
+                webView.evaluateJavascript(
+                    "window.ReaderApi && window.ReaderApi.scrollToProgress($targetScrollProgress);",
+                    null
+                )
+            }
         }
     )
 }

@@ -56,3 +56,19 @@ com.laralbir.mdghnavigator/
 - **Branches:** `feature/<ticket>-<short-description>`, `bugfix/<ticket>-<short-description>`
 - **Commits:** Conventional Commits format
 - **PR titles:** Same as commit convention
+- **Ramas protegidas:** `main` y `develop` (nunca se borran).
+- **Limpieza de ramas:** Toda rama de trabajo (`feature/*`, `bugfix/*`, `release/*`) debe ser eliminada local (`git branch -d`) y remotamente (`git push origin --delete`) tan pronto como sea fusionada con éxito en `develop` o `main`.
+- **Promoción por fases mediante PR a main:** Por cada fase de desarrollo implementada y completada en `develop`, se debe abrir un Pull Request (PR) formal hacia `main`. No se permite merge directo sin PR, verificación completa de CI/CD, actualización de `docs/CHANGELOG.md` y etiquetado con tag de versión SemVer (`vMAJOR.MINOR.PATCH`).
+
+## Documentation & Changelog
+
+- **Bilingual Documentation:** All documentation must be preserved bilingually in Spanish (`docs/es/`) and English (`docs/en/`).
+- **Continuous Changelog Maintenance:** The file `docs/CHANGELOG.md` must be progressively updated with every notable change, feature, or bug fix under `## [Unreleased]` adhering to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) categories (`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`).
+
+## Concurrencia Agéntica y Prevención de Deadlocks
+
+- **Particionado Ortogonal de Tareas:** Los subagentes concurrentes deben trabajar en módulos o ficheros disjuntos para evitar conflictos y bloqueos de I/O.
+- **Workspaces Aislados:** Utilizar `Workspace: 'branch'` o `'share'` para subagentes que generen o modifiquen código.
+- **Topología DAG:** Orquestación jerárquica unidireccional sin ciclos de espera mutua (sin bucles A espera a B y B espera a A).
+- **Prohibición de Polling Activo:** Comunicación asíncrona basada en eventos reactivos (mensajes directos y eventos del sistema) con timeouts defensivos.
+- **Aprovechamiento Hardware (CPU/GPU):** Limitar la concurrencia activa a los hilos de CPU reales ($N \le \text{cores} - 1$) y delegar aceleración de render/emulación a la GPU.

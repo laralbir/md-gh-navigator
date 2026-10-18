@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_tab_toc">Índice</string>
+    <string name="nav_tab_files">Archivos</string>
+    <string name="nav_toc_empty">Sin encabezados en este documento</string>
+    <string name="nav_files_search_placeholder">Buscar archivos…</string>
+    <string name="nav_files_search_clear">Limpiar búsqueda</string>
+    <string name="nav_files_empty">No se encontraron archivos markdown</string>
+</resources>
+

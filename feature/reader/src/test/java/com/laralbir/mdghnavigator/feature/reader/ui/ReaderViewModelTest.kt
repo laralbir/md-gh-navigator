@@ -16,6 +16,7 @@ import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -124,6 +125,23 @@ class ReaderViewModelTest {
 
         assertEquals("neon", viewModel.uiState.value.themeMode)
         assertEquals(1.25f, viewModel.uiState.value.fontSize)
+    }
+
+    @Test
+    @DisplayName("OpenImageViewer and CloseImageViewer toggle image modal in state")
+    fun testImageViewerToggles() = runTest {
+        assertNull(viewModel.uiState.value.selectedImageUrl)
+        assertNull(viewModel.uiState.value.selectedImageTitle)
+
+        viewModel.onIntent(ReaderIntent.OpenImageViewer("https://example.com/arch.png", "Architecture Diagram"))
+
+        assertEquals("https://example.com/arch.png", viewModel.uiState.value.selectedImageUrl)
+        assertEquals("Architecture Diagram", viewModel.uiState.value.selectedImageTitle)
+
+        viewModel.onIntent(ReaderIntent.CloseImageViewer)
+
+        assertNull(viewModel.uiState.value.selectedImageUrl)
+        assertNull(viewModel.uiState.value.selectedImageTitle)
     }
 }
 

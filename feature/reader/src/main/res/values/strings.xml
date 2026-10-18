@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reader_title_default">Markdown Reader</string>
+    <string name="reader_toc_button">Table of contents</string>
+    <string name="reader_change_theme">Change theme</string>
+    <string name="reader_theme_scholar">Scholar Theme (NXTPAPER)</string>
+    <string name="reader_theme_paper">Paper Theme (Minimalist)</string>
+    <string name="reader_theme_neon">Neon Dev Theme (High Contrast)</string>
+    <string name="reader_loading_doc">Loading document…</string>
+    <string name="reader_unknown_error">Unknown error</string>
+    <string name="reader_tts_button">Read aloud (TTS)</string>
+    <string name="reader_bookmarks_button">Bookmarks &amp; Annotations</string>
+    <string name="reader_add_bookmark_quick">Add bookmark</string>
+    <string name="image_viewer_close">Close image viewer</string>
+    <string name="image_viewer_zoom_in">Zoom in</string>
+    <string name="image_viewer_zoom_out">Zoom out</string>
+    <string name="image_viewer_zoom_reset">Reset zoom</string>
+    <string name="image_viewer_title_default">Image Preview</string>
+</resources>
+
