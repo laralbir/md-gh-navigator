@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":core:renderer"))
     implementation(project(":core:database"))
     implementation(project(":feature:navigator"))
+    implementation(project(":feature:tts"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

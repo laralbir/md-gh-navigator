@@ -3,6 +3,7 @@ package com.laralbir.mdghnavigator.feature.reader.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.laralbir.mdghnavigator.core.database.dao.DocumentDao
+import com.laralbir.mdghnavigator.feature.tts.TtsController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReaderViewModel @Inject constructor(
-    private val documentDao: DocumentDao
+    private val documentDao: DocumentDao,
+    val ttsController: TtsController? = null
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReaderUiState())
@@ -40,6 +42,7 @@ class ReaderViewModel @Inject constructor(
             documentDao.updateLastReadAt(documentId, System.currentTimeMillis())
             documentDao.getDocumentById(documentId).collect { doc ->
                 if (doc != null) {
+                    ttsController?.loadContent(doc.content)
                     _uiState.update {
                         it.copy(
                             document = doc,
@@ -65,6 +68,11 @@ class ReaderViewModel @Inject constructor(
         viewModelScope.launch {
             documentDao.updateScrollPosition(currentDocId, progress, scrollY)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        ttsController?.stop()
     }
 }
 
