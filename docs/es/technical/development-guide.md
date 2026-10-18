@@ -38,6 +38,11 @@ git commit -m "feat(reader): añadir soporte para zoom en diagramas Mermaid"
 git commit -m "test(datastore): añadir tests unitarios para cifrado con Tink"
 ```
 
+### 3.1 Limpieza de Ramas y Changelog
+- **Ramas protegidas:** `main` y `develop`.
+- **Limpieza de ramas:** Toda rama (`feature/*`, `bugfix/*`) debe ser eliminada local y remotamente tras ser fusionada en `develop`.
+- **Mantenimiento Continuo del Changelog:** El fichero `docs/CHANGELOG.md` debe irse rellenando progresivamente con los cambios, siguiendo el estándar [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) en la sección `[Unreleased]`.
+
 ---
 
 ## 4. Ejecución de Tests (TDD)

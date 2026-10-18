@@ -31,6 +31,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
 - No hacer commits ni pushes sin consentimiento explícito del usuario
 - Git Flow branching + Conventional Commits
 - Limpieza obligatoria de ramas tras fusión: una vez integrada cualquier rama (`feature/*`, `bugfix/*`, `release/*`) en `develop` o `main`, debe eliminarse localmente (`git branch -d`) y en remoto (`git push origin --delete`). Las únicas ramas protegidas y permanentes son `main` y `develop`.
+- Mantenimiento continuo del Changelog: el archivo `docs/CHANGELOG.md` (bajo estándar Keep a Changelog y SemVer) debe actualizarse progresivamente con cada cambio relevante, nueva característica o corrección en la sección `[Unreleased]`.
 - Desarrollo TDD-first
 - Seguridad-first para almacenamiento de credenciales (Tink + DataStore)
 - Soporte de renderizado de diagramas: Mermaid, D2, Graphviz, Excalidraw

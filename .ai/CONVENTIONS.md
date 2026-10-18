@@ -58,3 +58,8 @@ com.laralbir.mdghnavigator/
 - **PR titles:** Same as commit convention
 - **Ramas protegidas:** `main` y `develop` (nunca se borran).
 - **Limpieza de ramas:** Toda rama de trabajo (`feature/*`, `bugfix/*`, `release/*`) debe ser eliminada local (`git branch -d`) y remotamente (`git push origin --delete`) tan pronto como sea fusionada con éxito en `develop` o `main`.
+
+## Documentation & Changelog
+
+- **Bilingual Documentation:** All documentation must be preserved bilingually in Spanish (`docs/es/`) and English (`docs/en/`).
+- **Continuous Changelog Maintenance:** The file `docs/CHANGELOG.md` must be progressively updated with every notable change, feature, or bug fix under `## [Unreleased]` adhering to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) categories (`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`).
