@@ -28,6 +28,8 @@ Los agentes pueden orquestar **subagentes en paralelo** para tareas independient
 8. Nunca hardcodear secretos ni tokens
 9. KDoc para todas las APIs públicas
 10. Documentación bilingüe (docs/es/ y docs/en/), **español por defecto**
+11. **Limpieza de ramas**: Borrar ramas (`git branch -d` y `git push origin --delete`) tras fusionarlas en `develop` o `main` (solo `main` y `develop` son protegidas).
+12. Marcadores (Bookmarks), notas y destacados: soporte unificado para navegación rápida.
 
 ## Testing
 

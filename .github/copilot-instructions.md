@@ -24,3 +24,5 @@ Este proyecto se desarrolla dirigido por agentes IA (Antigravity, Claude Code, C
 - KDoc para todas las APIs públicas
 - Español por defecto en documentación y comentarios de usuario
 - Gestión de issues y RCA con `./scripts/review-issues.sh [list|view|comment|close]`
+- Limpieza obligatoria de ramas una vez fusionadas (main y develop son protegidas)
+- Marcadores (bookmarks), anotaciones y resaltados en panel unificado para navegación rápida

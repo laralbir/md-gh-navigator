@@ -56,3 +56,5 @@ com.laralbir.mdghnavigator/
 - **Branches:** `feature/<ticket>-<short-description>`, `bugfix/<ticket>-<short-description>`
 - **Commits:** Conventional Commits format
 - **PR titles:** Same as commit convention
+- **Ramas protegidas:** `main` y `develop` (nunca se borran).
+- **Limpieza de ramas:** Toda rama de trabajo (`feature/*`, `bugfix/*`, `release/*`) debe ser eliminada local (`git branch -d`) y remotamente (`git push origin --delete`) tan pronto como sea fusionada con éxito en `develop` o `main`.

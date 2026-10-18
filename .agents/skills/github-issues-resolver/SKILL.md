@@ -75,3 +75,4 @@ Elabora una conclusión estructurada:
 
 3. **Si el issue no procede o está fuera de alcance:**
    Cierra con `./scripts/review-issues.sh wontfix <numero> "<motivo razonado>"`.
+
