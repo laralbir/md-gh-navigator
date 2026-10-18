@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_theme">Reading Theme</string>
+    <string name="settings_theme_scholar">Scholar (NXTPAPER e-ink)</string>
+    <string name="settings_theme_paper">Paper (Minimalist)</string>
+    <string name="settings_theme_neon">Neon Dev (High contrast)</string>
+    <string name="settings_typography">Typography</string>
+    <string name="settings_font_literata">Literata (Serif)</string>
+    <string name="settings_font_inter">Inter (Sans-serif)</string>
+    <string name="settings_font_system">System Default</string>
+    <string name="settings_font_scale">Text Size</string>
+    <string name="settings_preview_title">Live Preview</string>
+    <string name="settings_preview_sample">Markdown GitHub Navigator turns any repository into a comfortable eReader experience on Android tablets and phones.</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_lang_system">System default</string>
+    <string name="settings_lang_es">Español (Spanish)</string>
+    <string name="settings_lang_en">English</string>
+    <string name="settings_section_storage">Storage &amp; Cache</string>
+    <string name="settings_cache_size">Cached Documents &amp; Images</string>
+    <string name="settings_clear_cache">Clear Cache</string>
+    <string name="settings_cache_cleared">Cache cleared successfully</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_app_name">MD GitHub Navigator</string>
+    <string name="settings_app_version">Version 0.4.0 (Enhanced eReader)</string>
+    <string name="settings_license">Apache License 2.0</string>
+    <string name="settings_github_repo">GitHub Repository</string>
+    <string name="settings_navigate_back">Back</string>
+</resources>

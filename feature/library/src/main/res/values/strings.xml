@@ -31,5 +31,6 @@
     <string name="library_chip_start">start: %1$s</string>
     <string name="library_synced_at">Synced: %1$s</string>
     <string name="library_not_synced">Not synced</string>
+    <string name="library_settings_button">Settings</string>
 </resources>
 

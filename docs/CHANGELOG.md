@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Persisted detailed implementation plans and TDD roadmaps for all development phases (Phase 1 Analysis, Phase 2 Foundation, Phase 3 Core, Phase 4 Enhanced) under `.ai/plans/`.
 - Specification and ADR-018 requiring a formal Pull Request (PR) from `develop` to `main` upon completing each development phase, including SemVer release tagging, automated CI/CD validation, and branch synchronization.
 - Interactive Zoomable Image & Diagram Viewer (`ZoomableImageViewer`, `ZoomState`) with pinch-to-zoom (1x to 5x), double-tap zoom toggle, pan dragging, translucent status backdrop, top controls bar with zoom level badge, and automatic WebView click interception for images and SVG diagrams.
+- Application settings screen (`SettingsScreen`, `SettingsViewModel`) with live preview, dynamic theme switching (Scholar, Paper, Neon), font scaling (0.85x to 1.35x), font family selector (Literata, Inter, System), in-app language switching (Spanish, English, System default via `AppLocaleManager`), and private cache storage usage calculator and cleaner (`StorageManager`).
+- Persistent user preferences repository (`UserPreferencesRepository`, `DataStoreUserPreferencesRepository`) powered by AndroidX DataStore and Hilt dependency injection.
 
 ### Changed
 - Upgraded Room `AppDatabase` to version 2 supporting unified annotations, bookmarks, and highlights with scroll progress.

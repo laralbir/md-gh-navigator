@@ -12,9 +12,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,6 +41,7 @@ import com.laralbir.mdghnavigator.feature.library.R
 fun LibraryScreen(
     onRepositoryClick: (RepositoryEntity) -> Unit,
     modifier: Modifier = Modifier,
+    onSettingsClick: () -> Unit = {},
     viewModel: LibraryViewModel = androidx.hilt.navigation.compose.hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -58,7 +61,15 @@ fun LibraryScreen(
         topBar = {
             MdTopAppBar(
                 title = stringResource(R.string.library_title),
-                subtitle = stringResource(R.string.library_subtitle)
+                subtitle = stringResource(R.string.library_subtitle),
+                actions = {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.library_settings_button)
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {

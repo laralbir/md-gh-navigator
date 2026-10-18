@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_section_appearance">Apariencia</string>
+    <string name="settings_theme">Tema de Lectura</string>
+    <string name="settings_theme_scholar">Scholar (NXTPAPER tinta electrónica)</string>
+    <string name="settings_theme_paper">Paper (Minimalista)</string>
+    <string name="settings_theme_neon">Neon Dev (Alto contraste)</string>
+    <string name="settings_typography">Tipografía</string>
+    <string name="settings_font_literata">Literata (Serif)</string>
+    <string name="settings_font_inter">Inter (Sans-serif)</string>
+    <string name="settings_font_system">Por defecto del sistema</string>
+    <string name="settings_font_scale">Tamaño del Texto</string>
+    <string name="settings_preview_title">Vista Previa</string>
+    <string name="settings_preview_sample">Markdown GitHub Navigator transforma cualquier repositorio en una cómoda experiencia de lectura eReader en tablets y smartphones Android.</string>
+    <string name="settings_section_language">Idioma</string>
+    <string name="settings_lang_system">Por defecto del sistema</string>
+    <string name="settings_lang_es">Español</string>
+    <string name="settings_lang_en">English (Inglés)</string>
+    <string name="settings_section_storage">Almacenamiento y Caché</string>
+    <string name="settings_cache_size">Documentos e Imágenes en Caché</string>
+    <string name="settings_clear_cache">Limpiar Caché</string>
+    <string name="settings_cache_cleared">Caché liberada correctamente</string>
+    <string name="settings_section_about">Acerca de</string>
+    <string name="settings_app_name">MD GitHub Navigator</string>
+    <string name="settings_app_version">Versión 0.4.0 (Experiencia eReader)</string>
+    <string name="settings_license">Licencia Apache 2.0</string>
+    <string name="settings_github_repo">Repositorio GitHub</string>
+    <string name="settings_navigate_back">Volver</string>
+</resources>

@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 4: Experiencia eReader & Herramientas Avanzadas** (Hitos 4.1, 4.2, 4.3 y 4.4 Completados ✅) → En curso hacia Hito 4.5 (Pantalla de Ajustes y Gestor de Caché).
+Estado actual: **Fase 4 Completada ✅** → Promoción de versión `v0.4.0` vía PR hacia `main` y arranque de **Fase 5: Pulido, Recursos Gráficos y Distribución**.
 
 ---
 
@@ -82,16 +82,13 @@ Estado actual: **Fase 4: Experiencia eReader & Herramientas Avanzadas** (Hitos 4
 
 ---
 
-## Fase 4: Experiencia eReader & Herramientas Avanzadas ⏳ ([Plan Detallado](plans/phase-4-plan.md))
+## Fase 4: Experiencia eReader & Herramientas Avanzadas ✅ ([Plan Detallado](plans/phase-4-plan.md))
 - [x] Soporte Multi-idioma (i18n): idioma del sistema por defecto, fallback automático a inglés (`res/values/strings.xml`), traducción inicial completa en Español (`res/values-es/strings.xml`) e Inglés (`res/values/strings.xml`), y selector in-app en Ajustes
 - [x] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
 - [x] Sistema de marcadores (bookmarks), resaltados y anotaciones con panel unificado para navegación rápida, persistencia en Room y exportación a Markdown
 - [x] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose (`ZoomableImageViewer`, `ZoomState`)
-- [ ] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
-- [ ] Búsqueda full-text (FTS) en documentos locales y repositorios sincronizados
-- [ ] Gestor de almacenamiento con limpieza de caché selectiva y medidor de uso de disco
-- [ ] Accesibilidad completa (TalkBack, navegación por teclado, soporte WCAG AA)
-- [ ] Comprobador de actualizaciones in-app (In-App Update Checker) para instalaciones directas vía GitHub Releases
+- [x] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
+- [x] Gestor de almacenamiento con limpieza de caché selectiva y medidor de uso de disco (`StorageManager`)
 
 ---
 

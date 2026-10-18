@@ -5,25 +5,41 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.laralbir.mdghnavigator.core.datastore.UserPreferences
+import com.laralbir.mdghnavigator.core.datastore.UserPreferencesRepository
 import com.laralbir.mdghnavigator.core.designsystem.theme.AppThemeMode
 import com.laralbir.mdghnavigator.core.designsystem.theme.MdGhNavigatorTheme
 import com.laralbir.mdghnavigator.feature.library.ui.LibraryScreen
 import com.laralbir.mdghnavigator.feature.reader.ui.ReaderScreen
+import com.laralbir.mdghnavigator.feature.settings.ui.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferencesRepository: UserPreferencesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MdGhNavigatorTheme(themeMode = AppThemeMode.SCHOLAR) {
+            val userPrefs by preferencesRepository.userPreferences.collectAsState(initial = UserPreferences())
+            val appThemeMode = when (userPrefs.themeMode.lowercase()) {
+                "paper" -> AppThemeMode.PAPER
+                "neon" -> AppThemeMode.NEON_DEV
+                else -> AppThemeMode.SCHOLAR
+            }
+
+            MdGhNavigatorTheme(themeMode = appThemeMode) {
                 val navController = rememberNavController()
 
                 NavHost(
@@ -38,6 +54,9 @@ class MainActivity : ComponentActivity() {
                                 val docId = "${repo.id}:$initialDocPath"
                                 val encodedDocId = Uri.encode(docId)
                                 navController.navigate("reader/$encodedRepoId/$encodedDocId")
+                            },
+                            onSettingsClick = {
+                                navController.navigate("settings")
                             }
                         )
                     }
@@ -63,6 +82,12 @@ class MainActivity : ComponentActivity() {
                                 val newEncDoc = Uri.encode(newDocId)
                                 navController.navigate("reader/$newEncRepo/$newEncDoc")
                             }
+                        )
+                    }
+
+                    composable("settings") {
+                        SettingsScreen(
+                            onBackClick = { navController.popBackStack() }
                         )
                     }
                 }

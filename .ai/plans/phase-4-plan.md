@@ -79,11 +79,11 @@ flowchart TD
 - [x] Detección de clics en etiquetas `<img>` y diagramas SVG dentro del WebView Markdown y apertura automática del visor interactivo vía `ReaderBridge`.
 - [x] Barra superior táctil con indicador de zoom porcentual, botones de zoom in/out, botón de restablecer zoom y botón de cerrar.
 
-### Hito 4.5 — Pantalla de Ajustes y Gestor de Caché (`feature/reader-settings`)
-- [ ] **TDD:** Tests de `SettingsViewModel` para persistencia de tema, tipografía y selector de idioma.
-- [ ] Medidor de almacenamiento: cálculo del tamaño en MB utilizado por cada repositorio en la caché privada de la app.
-- [ ] Botón de limpieza selectiva de caché de imágenes y documentos antiguos no marcados como favoritos.
-- [ ] Integración de ruta `"settings"` en Navigation Compose desde la `MdTopAppBar` y barra lateral.
+### Hito 4.5 — Pantalla de Ajustes y Gestor de Caché (`feature/reader-settings`) ✅
+- [x] **TDD:** Tests de `SettingsViewModel` para persistencia de tema, tipografía y selector de idioma.
+- [x] Medidor de almacenamiento: cálculo del tamaño en MB utilizado por cada repositorio en la caché privada de la app (`StorageManager`).
+- [x] Botón de limpieza selectiva de caché de imágenes y documentos antiguos no marcados como favoritos.
+- [x] Integración de ruta `"settings"` en Navigation Compose desde la `MdTopAppBar` y barra lateral.
 
 ---
 
