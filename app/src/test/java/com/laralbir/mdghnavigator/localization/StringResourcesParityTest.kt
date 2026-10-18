@@ -14,6 +14,7 @@ class StringResourcesParityTest {
         "feature/library/src/main/res",
         "feature/reader/src/main/res",
         "feature/navigator/src/main/res",
+        "feature/tts/src/main/res",
         "app/src/main/res"
     )
 
@@ -24,15 +25,19 @@ class StringResourcesParityTest {
         val matcher = pattern.matcher(content)
         val keys = mutableSetOf<String>()
         while (matcher.find()) {
-            keys.add(matcher.group(1))
+            val key = matcher.group(1)
+            if (!key.isNullOrBlank()) {
+                keys.add(key)
+            }
         }
         return keys
     }
 
     private fun findRootDir(): File {
-        var current = File(System.getProperty("user.dir") ?: ".")
+        var current: File = File(System.getProperty("user.dir") ?: ".")
         while (current.parentFile != null && !File(current, "settings.gradle.kts").exists()) {
-            current = current.parentFile
+            val parent = current.parentFile ?: break
+            current = parent
         }
         return current
     }

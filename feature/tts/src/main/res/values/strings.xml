@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tts_play">Play</string>
+    <string name="tts_pause">Pause</string>
+    <string name="tts_stop">Stop</string>
+    <string name="tts_next">Next sentence</string>
+    <string name="tts_previous">Previous sentence</string>
+    <string name="tts_speed">Speed: %1$sx</string>
+    <string name="tts_reading_aloud">Reading aloud</string>
+</resources>

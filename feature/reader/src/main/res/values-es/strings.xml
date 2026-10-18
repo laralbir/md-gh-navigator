@@ -8,5 +8,6 @@
     <string name="reader_theme_neon">Tema Neon Dev (Alto Contraste)</string>
     <string name="reader_loading_doc">Cargando documento…</string>
     <string name="reader_unknown_error">Error desconocido</string>
+    <string name="reader_tts_button">Lectura en voz alta (TTS)</string>
 </resources>
 

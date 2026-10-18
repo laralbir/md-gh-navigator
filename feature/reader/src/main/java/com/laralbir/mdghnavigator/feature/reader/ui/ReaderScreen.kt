@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuOpen
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Palette
@@ -55,6 +56,9 @@ import com.laralbir.mdghnavigator.core.renderer.LinkTarget
 import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorIntent
 import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorViewModel
 import com.laralbir.mdghnavigator.feature.navigator.ui.TocSidebar
+import com.laralbir.mdghnavigator.feature.tts.TtsState
+import com.laralbir.mdghnavigator.feature.tts.ui.TtsPlayerBar
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -72,6 +76,7 @@ fun ReaderScreen(
 ) {
     val readerUiState by readerViewModel.uiState.collectAsState()
     val navUiState by navigatorViewModel.uiState.collectAsState()
+    val ttsState by (readerViewModel.ttsController?.uiState ?: remember { MutableStateFlow(TtsState()) }).collectAsState()
     val windowLayout = rememberReaderWindowLayout()
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -100,6 +105,21 @@ fun ReaderScreen(
                         subtitle = readerUiState.document?.filePath,
                         onNavigationClick = onBackClick,
                         actions = {
+                            IconButton(onClick = {
+                                val controller = readerViewModel.ttsController ?: return@IconButton
+                                if (ttsState.isPlaying) controller.pause() else controller.play()
+                            }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                    contentDescription = stringResource(R.string.reader_tts_button),
+                                    tint = if (ttsState.isPlaying) {
+                                        MaterialTheme.colorScheme.primary
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurfaceVariant
+                                    }
+                                )
+                            }
+
                             IconButton(onClick = {
                                 if (windowLayout.isTwoPaneSplitEnabled) {
                                     readerViewModel.onIntent(ReaderIntent.ToggleToc)
@@ -159,6 +179,19 @@ fun ReaderScreen(
                     ReadingProgressBar(
                         progress = readerUiState.scrollProgress,
                         showLabel = false
+                    )
+                }
+            },
+            bottomBar = {
+                readerViewModel.ttsController?.let { controller ->
+                    TtsPlayerBar(
+                        state = ttsState,
+                        onPlay = controller::play,
+                        onPause = controller::pause,
+                        onStop = controller::stop,
+                        onNext = controller::nextSentence,
+                        onPrevious = controller::previousSentence,
+                        onRateChange = controller::setSpeechRate
                     )
                 }
             }
