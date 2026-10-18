@@ -84,7 +84,7 @@ Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completad
 
 ## Fase 4: Experiencia eReader & Herramientas Avanzadas ⏳
 - [x] Soporte Multi-idioma (i18n): idioma del sistema por defecto, fallback automático a inglés (`res/values/strings.xml`), traducción inicial completa en Español (`res/values-es/strings.xml`) e Inglés (`res/values/strings.xml`), y selector in-app en Ajustes
-- [ ] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
+- [x] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
 - [ ] Sistema de marcadores (bookmarks), resaltados y anotaciones con panel unificado para navegación rápida, persistencia en Room y exportación a Markdown
 - [ ] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose
 - [ ] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
