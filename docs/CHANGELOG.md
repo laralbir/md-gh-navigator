@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+## [v0.4.0] - 2026-10-18
+
+### Added
 - Multi-language localization (i18n): system default with English fallback, full Spanish (`values-es`) and English (`values`) resources, and automated parity testing (`StringResourcesParityTest`).
 - Native Text-to-Speech (TTS) engine (`MarkdownSpeechCleaner`, `AndroidTtsSpeechEngine`, `TtsController`, `TtsPlayerBar`) with speed adjustment and clean Markdown sanitization.
 - Unified bookmarks, highlights, and annotations system (`UnifiedAnnotationsDrawer`, `AddBookmarkDialog`, `MarkdownAnnotationExporter`) with one-tap fast reader navigation and Markdown export via Android Share sheet.
