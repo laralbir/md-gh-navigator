@@ -86,14 +86,14 @@ flowchart TD
   - `settings.md`: personalización de temas (Scholar / Paper / Neon) y limpieza de caché.
 - [x] Sincronización bilingüe completa en `/docs/es/user-guide/` y `/docs/en/user-guide/`.
 
-### Hito 5.3 — Optimización de Release, R8/ProGuard y Firma Dual (`feature/release-optimization-signing`)
-- [ ] Auditoría y ajuste de `app/proguard-rules.pro`:
+### Hito 5.3 — Optimización de Release, R8/ProGuard y Firma Dual (`feature/release-optimization-signing`) ✅
+- [x] Auditoría y ajuste de `app/proguard-rules.pro`:
   - Preservación de interfaces de `@JavascriptInterface` en `:core:renderer` (`ReaderBridge`).
   - Reglas para Google Tink y Android Keystore en `:core:datastore`.
   - Reglas de serialización KotlinX y Room DAOs en `:core:database`.
-- [ ] Habilitación de `isMinifyEnabled = true` e `isShrinkResources = true` en el build type `release`.
-- [ ] Tarea Gradle para generación de hash SHA-256 de los binarios compilados.
-- [ ] Verificación de ejecución limpia de `./gradlew assembleRelease` y `./gradlew bundleRelease`.
+- [x] Habilitación de `isMinifyEnabled = true` e `isShrinkResources = true` en el build type `release`.
+- [x] Tarea Gradle para generación de hash SHA-256 de los binarios compilados (`generateReleaseChecksums`).
+- [x] Verificación de ejecución limpia de `./gradlew assembleRelease` y `./gradlew bundleRelease`.
 
 ### Hito 5.4 — Automatización CI/CD con GitHub Actions (`feature/ci-cd-pipelines`)
 - [ ] Workflow `.github/workflows/ci.yml`:

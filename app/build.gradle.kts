@@ -1,4 +1,6 @@
+import java.io.File
 import java.io.FileInputStream
+import java.security.MessageDigest
 import java.util.Properties
 
 plugins {
@@ -161,4 +163,36 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+abstract class GenerateChecksumsTask : DefaultTask() {
+    @get:Internal
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun generate() {
+        val dir = outputDir.orNull?.asFile ?: return
+        if (!dir.exists()) return
+        val releaseFiles = dir.walkTopDown().filter { file ->
+            (file.name.endsWith("-release.apk") || file.name.endsWith("-release.aab") ||
+             file.name.endsWith("-release-unsigned.apk") || file.name.endsWith("-release-unsigned.aab")) &&
+            !file.name.endsWith(".sha256")
+        }.toList()
+
+        releaseFiles.forEach { file ->
+            val messageDigest = MessageDigest.getInstance("SHA-256")
+            val hash = file.readBytes().let { bytes: ByteArray ->
+                messageDigest.digest(bytes).joinToString("") { b -> "%02x".format(b) }
+            }
+            val checksumFile = File(file.parentFile, "${file.name}.sha256")
+            checksumFile.writeText("$hash  ${file.name}\n")
+            println("SHA-256 [${file.name}]: $hash")
+        }
+    }
+}
+
+tasks.register<GenerateChecksumsTask>("generateReleaseChecksums") {
+    group = "distribution"
+    description = "Computes SHA-256 checksums for built release APKs and AABs"
+    outputDir.set(layout.buildDirectory.dir("outputs"))
 }

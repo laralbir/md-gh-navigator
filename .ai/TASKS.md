@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1 y 5.2 Completados ✅) → En curso hacia Hito 5.3 (Optimización de Release, R8/ProGuard y Firma Dual).
+Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1, 5.2 y 5.3 Completados ✅) → En curso hacia Hito 5.4 (Automatización CI/CD con GitHub Actions).
 
 ---
 
@@ -97,9 +97,9 @@ Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1
 - [ ] Tests E2E de flujos críticos de usuario (añadir repo -> sincronizar -> leer -> anotar -> reanudar)
 - [ ] Auditoría de seguridad final y optimización de rendimiento en tablet TCL NXTPAPER 11 Plus
 - [x] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
-- [ ] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
-- [ ] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
-- [ ] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases
+- [x] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
+- [x] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
+- [x] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases (`generateReleaseChecksums`)
 - [ ] Pipeline CI/CD en GitHub Actions activado por Git tags `v*` (construcción de AAB + APK y publicación automática del Release en GitHub)
 - [ ] Preparación de ficha de Google Play Store:
   - [x] Icono de alta resolución (512x512)

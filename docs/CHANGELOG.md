@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - High-resolution marketing graphics for Google Play Store: 512x512 app icon (`icon_play_512x512.png`) and 1024x500 feature graphic banner (`feature_graphic_1024x500.png`) in `docs/assets/store/`.
 - High-resolution visual diagrams and UI mockups in `docs/assets/images/user-guide/` covering offline sync, TCL NXTPAPER dual-pane layout, annotations flow, TTS architecture, and themes.
 - Diagram generator script `scripts/generate_guide_diagrams.py` producing 7 graphical user guide assets.
-- Complete bilingual parity for all English user guides (`docs/en/user-guide/`) with integrated Mermaid flowcharts and visual references.
+- Complete R8 and ProGuard rules (`app/proguard-rules.pro`) ensuring reflection safety for Room database DAOs, Google Tink Keystore encryption, WebView JavaScript interfaces (`ReaderBridge`), AndroidSVG, and KotlinX serialization with log stripping in release builds.
+- Automated Gradle task `generateReleaseChecksums` computing and persisting SHA-256 verification checksums for release APKs and Android App Bundles (AAB).
+- Release build verification with resource shrinking (`isShrinkResources = true`) and code minification (`isMinifyEnabled = true`).
 
 ### Changed
 
