@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated Gradle task `generateReleaseChecksums` computing and persisting SHA-256 verification checksums for release APKs and Android App Bundles (AAB).
 - Automated GitHub Actions CI workflow (`.github/workflows/ci.yml`) validating all PRs and pushes to `develop` and `main` with automated tests and debug assembly.
 - Automated GitHub Actions CD Release pipeline (`.github/workflows/release.yml`) triggered on `v*` tags to compile signed release AABs and universal APKs, extract release notes from CHANGELOG, and publish GitHub Releases with SHA-256 checksums.
+- End-to-end reading flow integration test (`ReaderFlowIntegrationTest`) validating bookmark creation, highlight tracking, architectural note attachment, Markdown export, and theme preference binding.
 
 ### Changed
 

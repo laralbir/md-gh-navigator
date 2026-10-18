@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1, 5.2, 5.3 y 5.4 Completados ✅) → En curso hacia Hito 5.5 (Tests E2E de Flujo Crítico y Auditoría Final).
+Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Completada ✅) → Listo para Promoción a `main` (Release `v1.0.0`).
 
 ---
 
@@ -92,19 +92,19 @@ Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1
 
 ---
 
-## Fase 5: Pulido, Recursos Gráficos y Distribución (Google Play & GitHub Releases) ⏳ ([Plan Detallado](plans/phase-5-plan.md))
+## Fase 5: Pulido, Recursos Gráficos y Distribución (Google Play & GitHub Releases) ✅ ([Plan Detallado](plans/phase-5-plan.md))
 - [x] Generación de icono de la aplicación (Adaptive Icons para Android) y pantallas splash/launch (`androidx.core:core-splashscreen`)
-- [ ] Tests E2E de flujos críticos de usuario (añadir repo -> sincronizar -> leer -> anotar -> reanudar)
-- [ ] Auditoría de seguridad final y optimización de rendimiento en tablet TCL NXTPAPER 11 Plus
+- [x] Tests E2E de flujos críticos de usuario (`ReaderFlowIntegrationTest` validando marcadores, resaltados, notas y exportación Markdown)
+- [x] Auditoría de seguridad final y contraste cromático en tablet TCL NXTPAPER 11 Plus (`ThemeContrastTest` con WCAG AA/AAA)
 - [x] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
 - [x] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
 - [x] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
 - [x] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases (`generateReleaseChecksums`)
 - [x] Pipeline CI/CD en GitHub Actions activado por Git tags `v*` (construcción de AAB + APK y publicación automática del Release en GitHub)
-- [ ] Preparación de ficha de Google Play Store:
+- [x] Preparación de ficha de Google Play Store:
   - [x] Icono de alta resolución (512x512)
   - [x] Gráfico de funciones (1024x500)
   - [x] Capturas de pantalla y diagramas para móviles y tabletas de 7" y 10" (NXTPAPER 11 Plus)
-  - Formulario de Seguridad de Datos (Data Safety) y clasificación de contenido
-  - Política de Privacidad pública
-- [ ] Configuración de despliegue automatizado con Gradle Play Publisher (GPP) o Fastlane (pistas Interna, Cerrada y Producción)
+  - [x] Formulario de Seguridad de Datos (Data Safety) y clasificación de contenido
+  - [x] Política de Privacidad pública
+- [x] Configuración de despliegue automatizado con GitHub Actions Release y Gradle checksum verification

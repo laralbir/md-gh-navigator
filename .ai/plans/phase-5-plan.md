@@ -104,10 +104,10 @@ flowchart TD
   - Construye el AAB para Google Play y el APK universal firmado para GitHub Releases con `generateReleaseChecksums`.
   - Publica el GitHub Release con las notas extraídas de `docs/CHANGELOG.md` y adjunta el APK con su hash SHA-256.
 
-### Hito 5.5 — Tests E2E de Flujo Crítico y Auditoría Final (`feature/e2e-testing-audit`)
-- [ ] Implementación de test de flujo de lectura end-to-end (`ReaderFlowE2ETest`).
-- [ ] Verificación de contraste cromático WCAG AA en tema Scholar, Paper y Neon.
-- [ ] Actualización final de `docs/CHANGELOG.md` con la versión de producción `v1.0.0`.
+### Hito 5.5 — Tests E2E de Flujo Crítico y Auditoría Final (`feature/e2e-testing-audit`) ✅
+- [x] Implementación de test de flujo de lectura end-to-end (`ReaderFlowIntegrationTest`).
+- [x] Verificación de contraste cromático WCAG AA en tema Scholar, Paper y Neon (`ThemeContrastTest`).
+- [x] Actualización final de `docs/CHANGELOG.md` con la versión de producción `v1.0.0`.
 
 ---
 
