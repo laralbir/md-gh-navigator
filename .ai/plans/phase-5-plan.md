@@ -69,11 +69,11 @@ flowchart TD
 
 ---
 
-### Hito 5.1 — Identidad Visual, Iconos Adaptativos y Splash Screen (`feature/polish-branding-icons`)
-- [ ] Definición de icono vectorial principal: isotipo de libro abierto fusionado con rama git y pantalla mate.
-- [ ] Generación de recursos `mipmap-anydpi-v26` (`ic_launcher.xml` e `ic_launcher_round.xml`) con `ic_launcher_background` e `ic_launcher_foreground`.
-- [ ] Integración de `androidx.core:core-splashscreen` en `:app` con `installSplashScreen()` en `MainActivity.kt`.
-- [ ] Creación de assets de marketing en `docs/assets/store/`:
+### Hito 5.1 — Identidad Visual, Iconos Adaptativos y Splash Screen (`feature/polish-branding-icons`) ✅
+- [x] Definición de icono vectorial principal: isotipo de libro abierto fusionado con rama git y pantalla mate.
+- [x] Generación de recursos `mipmap-anydpi-v26` (`ic_launcher.xml` e `ic_launcher_round.xml`) con `ic_launcher_background` e `ic_launcher_foreground`.
+- [x] Integración de `androidx.core:core-splashscreen` en `:app` con `installSplashScreen()` en `MainActivity.kt`.
+- [x] Creación de assets de marketing en `docs/assets/store/`:
   - `icon_play_512x512.png` (32-bit PNG con canal alfa).
   - `feature_graphic_1024x500.png` (banner promocional sin bordes).
 
