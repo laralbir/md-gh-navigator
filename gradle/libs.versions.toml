@@ -19,6 +19,7 @@ kotlinxCoroutines = "1.11.0"
 kotlinxSerializationJson = "1.7.3"
 browser = "1.8.0"
 androidsvg = "1.4"
+webkit = "1.12.1"
 
 # Testing
 junit5 = "5.11.4"
@@ -79,8 +80,9 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 androidsvg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidsvg" }
 
-# Browser & Custom Tabs
+# Browser & WebKit
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 
 # Kotlinx
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
