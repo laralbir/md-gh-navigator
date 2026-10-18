@@ -2,6 +2,22 @@
 
 Personaliza la apariencia y el comportamiento de la app según tus preferencias de lectura y el tipo de pantalla de tu dispositivo.
 
+![Temas Visuales y Gestor de Caché](../../assets/images/user-guide/diagram_settings_themes.png)
+
+```mermaid
+flowchart TD
+    subgraph Temas["Paletas de Color & Temas"]
+        Scholar["Scholar (Default)<br/>Fondo pergamino #FAF7F2, marrón café #2C2420, tipografía Serif Literata"]
+        Paper["Paper (Minimalista)<br/>Fondo blanco puro / negro profundo, tipografía Sans Inter"]
+        Neon["Neon Dev (IDE)<br/>Fondo cyber #0A0E14, cian #00E5FF y magenta terminal"]
+    end
+
+    subgraph Almacenamiento["Gestor de Caché (StorageManager)"]
+        Size["Medidor de Espacio en MB / GB"]
+        Clear["Limpieza Selectiva de Caché con 1 Toque"]
+    end
+```
+
 ---
 
 ## 1. Temas de Visualización

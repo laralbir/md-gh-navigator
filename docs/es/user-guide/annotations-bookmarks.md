@@ -2,6 +2,17 @@
 
 **MD GitHub Navigator** te permite interactuar activamente con la documentación técnica tomando notas y guardando puntos de interés.
 
+![Flujo de Marcadores, Resaltados y Exportación](../../assets/images/user-guide/diagram_annotations_flow.png)
+
+```mermaid
+flowchart LR
+    Select["1. Selección de Texto / Gesto Dog-Ear"] --> Action["2. Diálogo Flotante<br/>(Color, Nota, Marcador)"]
+    Action --> Room[("Room DB (v2)<br/>scrollProgress + scrollY")]
+    Room --> Drawer["3. UnifiedAnnotationsDrawer<br/>(Filtros: Todos, Marcadores, Notas)"]
+    Drawer --> Jump["4a. Salto Instantáneo<br/>(window.ReaderApi.scrollToProgress)"]
+    Drawer --> Export["4b. Exportación Markdown<br/>(MarkdownAnnotationExporter + Share Sheet)"]
+```
+
 ---
 
 ## 1. Marcadores Rápidos (Bookmarks)

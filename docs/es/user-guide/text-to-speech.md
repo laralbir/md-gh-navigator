@@ -2,6 +2,15 @@
 
 **MD GitHub Navigator** integra el motor de síntesis de voz nativo de Android para permitirte escuchar libros y artículos técnicos mientras descansas la vista o te desplazas.
 
+![Arquitectura del Motor Text-to-Speech](../../assets/images/user-guide/diagram_tts_engine.png)
+
+```mermaid
+flowchart LR
+    MD["1. Documento Markdown<br/>(Párrafos, Títulos, Fórmulas)"] --> Cleaner["2. MarkdownSpeechCleaner<br/>(Filtra sintaxis cruda y código)"]
+    Cleaner --> Engine["3. AndroidTtsSpeechEngine<br/>(Síntesis de voz nativa Android)"]
+    Engine --> UI["4. TtsPlayerBar<br/>(Play/Pausa, Salto 15s, Velocidad)"]
+```
+
 ---
 
 ## 1. Cómo Iniciar la Lectura por Voz

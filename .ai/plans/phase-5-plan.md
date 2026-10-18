@@ -69,45 +69,45 @@ flowchart TD
 
 ---
 
-### Hito 5.1 — Identidad Visual, Iconos Adaptativos y Splash Screen (`feature/polish-branding-icons`)
-- [ ] Definición de icono vectorial principal: isotipo de libro abierto fusionado con rama git y pantalla mate.
-- [ ] Generación de recursos `mipmap-anydpi-v26` (`ic_launcher.xml` e `ic_launcher_round.xml`) con `ic_launcher_background` e `ic_launcher_foreground`.
-- [ ] Integración de `androidx.core:core-splashscreen` en `:app` con `installSplashScreen()` en `MainActivity.kt`.
-- [ ] Creación de assets de marketing en `docs/assets/store/`:
+### Hito 5.1 — Identidad Visual, Iconos Adaptativos y Splash Screen (`feature/polish-branding-icons`) ✅
+- [x] Definición de icono vectorial principal: isotipo de libro abierto fusionado con rama git y pantalla mate.
+- [x] Generación de recursos `mipmap-anydpi-v26` (`ic_launcher.xml` e `ic_launcher_round.xml`) con `ic_launcher_background` e `ic_launcher_foreground`.
+- [x] Integración de `androidx.core:core-splashscreen` en `:app` con `installSplashScreen()` en `MainActivity.kt`.
+- [x] Creación de assets de marketing en `docs/assets/store/`:
   - `icon_play_512x512.png` (32-bit PNG con canal alfa).
   - `feature_graphic_1024x500.png` (banner promocional sin bordes).
 
-### Hito 5.2 — Guía de Usuario con Recursos Gráficos y Ejemplos Paso a Paso (`feature/user-guide-graphics`)
-- [ ] Generación de diagramas ilustrativos de interfaz en formato SVG/Mermaid para cada guía de usuario:
+### Hito 5.2 — Guía de Usuario con Recursos Gráficos y Ejemplos Paso a Paso (`feature/user-guide-graphics`) ✅
+- [x] Generación de diagramas ilustrativos de interfaz en formato SVG/Mermaid para cada guía de usuario:
   - `adding-repositories.md`: flujo de sincronización de repositorios remotos y carpetas locales SAF.
   - `reading-navigation.md`: interacción con TOC, anclajes y gestos de zoom.
   - `annotations-bookmarks.md`: marcado de texto, notas flotantes y exportación Markdown.
   - `text-to-speech.md`: uso del reproductor nativo y velocidades.
   - `settings.md`: personalización de temas (Scholar / Paper / Neon) y limpieza de caché.
-- [ ] Sincronización bilingüe completa en `/docs/es/user-guide/` y `/docs/en/user-guide/`.
+- [x] Sincronización bilingüe completa en `/docs/es/user-guide/` y `/docs/en/user-guide/`.
 
-### Hito 5.3 — Optimización de Release, R8/ProGuard y Firma Dual (`feature/release-optimization-signing`)
-- [ ] Auditoría y ajuste de `app/proguard-rules.pro`:
+### Hito 5.3 — Optimización de Release, R8/ProGuard y Firma Dual (`feature/release-optimization-signing`) ✅
+- [x] Auditoría y ajuste de `app/proguard-rules.pro`:
   - Preservación de interfaces de `@JavascriptInterface` en `:core:renderer` (`ReaderBridge`).
   - Reglas para Google Tink y Android Keystore en `:core:datastore`.
   - Reglas de serialización KotlinX y Room DAOs en `:core:database`.
-- [ ] Habilitación de `isMinifyEnabled = true` e `isShrinkResources = true` en el build type `release`.
-- [ ] Tarea Gradle para generación de hash SHA-256 de los binarios compilados.
-- [ ] Verificación de ejecución limpia de `./gradlew assembleRelease` y `./gradlew bundleRelease`.
+- [x] Habilitación de `isMinifyEnabled = true` e `isShrinkResources = true` en el build type `release`.
+- [x] Tarea Gradle para generación de hash SHA-256 de los binarios compilados (`generateReleaseChecksums`).
+- [x] Verificación de ejecución limpia de `./gradlew assembleRelease` y `./gradlew bundleRelease`.
 
-### Hito 5.4 — Automatización CI/CD con GitHub Actions (`feature/ci-cd-pipelines`)
-- [ ] Workflow `.github/workflows/ci.yml`:
+### Hito 5.4 — Automatización CI/CD con GitHub Actions (`feature/ci-cd-pipelines`) ✅
+- [x] Workflow `.github/workflows/ci.yml`:
   - Disparado en pushes y pull requests hacia `develop` y `main`.
   - Ejecuta `./gradlew lintDebug`, `./gradlew test` y `./gradlew assembleDebug`.
-- [ ] Workflow `.github/workflows/release.yml`:
+- [x] Workflow `.github/workflows/release.yml`:
   - Disparado en la creación de tags que comiencen con `v*`.
-  - Construye el AAB para Google Play y el APK universal firmado para GitHub Releases.
+  - Construye el AAB para Google Play y el APK universal firmado para GitHub Releases con `generateReleaseChecksums`.
   - Publica el GitHub Release con las notas extraídas de `docs/CHANGELOG.md` y adjunta el APK con su hash SHA-256.
 
-### Hito 5.5 — Tests E2E de Flujo Crítico y Auditoría Final (`feature/e2e-testing-audit`)
-- [ ] Implementación de test de flujo de lectura end-to-end (`ReaderFlowE2ETest`).
-- [ ] Verificación de contraste cromático WCAG AA en tema Scholar, Paper y Neon.
-- [ ] Actualización final de `docs/CHANGELOG.md` con la versión de producción `v1.0.0`.
+### Hito 5.5 — Tests E2E de Flujo Crítico y Auditoría Final (`feature/e2e-testing-audit`) ✅
+- [x] Implementación de test de flujo de lectura end-to-end (`ReaderFlowIntegrationTest`).
+- [x] Verificación de contraste cromático WCAG AA en tema Scholar, Paper y Neon (`ThemeContrastTest`).
+- [x] Actualización final de `docs/CHANGELOG.md` con la versión de producción `v1.0.0`.
 
 ---
 

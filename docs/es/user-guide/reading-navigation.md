@@ -2,6 +2,29 @@
 
 **MD GitHub Navigator** emula la experiencia de lectura de los mejores dispositivos de tinta electrónica y lectores profesionales (Kobo, Nickel, Kindle).
 
+![Diseño Adaptativo: Smartphone vs Tablet TCL NXTPAPER 11 Plus](../../assets/images/user-guide/diagram_reader_layout_tablet_vs_phone.png)
+
+```mermaid
+flowchart TD
+    subgraph Smartphone["Smartphones (Modo Vertical)"]
+        TopBar["TopAppBar (Acciones, Búsqueda, TTS, Ajustes)"]
+        CanvasM["Lienzo Central de Lectura (WebView + JS Bridge)"]
+        DrawerM["Panel TOC Desplegable (Cajón Modal)"]
+        BottomM["Barra Inferior de Progreso y Anotaciones"]
+        TopBar --> CanvasM --> BottomM
+        CanvasM -.-> DrawerM
+    end
+
+    subgraph Tablet["Tablets NXTPAPER 11 Plus (Modo Apaisado)"]
+        LeftTOC["Panel Izquierdo Fijo<br/>(Tabla de Contenidos 320dp)"]
+        CenterCanvas["Lienzo de Lectura Continuo<br/>(Zoom, Tipografía, Resaltados)"]
+        RightNotes["Cajón Derecho<br/>(Marcadores & Notas)"]
+        BottomTTS["Barra TTS Inferior<br/>(Reproductor de voz)"]
+        LeftTOC --- CenterCanvas --- RightNotes
+        CenterCanvas --> BottomTTS
+    end
+```
+
 ---
 
 ## 1. Lienzo de Lectura y Controles

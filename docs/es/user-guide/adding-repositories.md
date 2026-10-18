@@ -2,6 +2,35 @@
 
 En **MD GitHub Navigator** puedes vincular múltiples fuentes de contenido: repositorios remotos en GitHub y carpetas locales de tu tablet o smartphone.
 
+![Flujo de Sincronización y Caché Selectivo](../../assets/images/user-guide/diagram_repo_sync_workflow.png)
+
+```mermaid
+flowchart LR
+    subgraph Fuentes["Fuentes de Datos"]
+        GH["GitHub API v3<br/>(OAuth / PAT / ETag)"]
+        SAF["Almacenamiento Local<br/>(Android Storage Access Framework)"]
+    end
+
+    subgraph Filtro["Caché Selectivo"]
+        MD[".md & Assets Vinculados<br/>(Ahorro >90% almacenamiento)"]
+    end
+
+    subgraph Persistencia["Almacenamiento Local"]
+        Room[("Room SQLite DB<br/>Metadatos & Progreso")]
+        Tink["Google Tink + Keystore<br/>Credenciales Cifradas"]
+    end
+
+    subgraph Lector["Lector eReader"]
+        Reader["ComposeMarkdownReader<br/>100% Offline & Aislado"]
+    end
+
+    GH --> MD
+    SAF --> MD
+    MD --> Room
+    MD --> Reader
+    Tink -.-> GH
+```
+
 ---
 
 ## 1. Conectar Repositorios de GitHub
