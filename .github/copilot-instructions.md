@@ -23,3 +23,4 @@ Este proyecto se desarrolla dirigido por agentes IA (Antigravity, Claude Code, C
 - Nunca hacer commit de secretos ni tokens
 - KDoc para todas las APIs públicas
 - Español por defecto en documentación y comentarios de usuario
+- Gestión de issues y RCA con `./scripts/review-issues.sh [list|view|comment|close]`

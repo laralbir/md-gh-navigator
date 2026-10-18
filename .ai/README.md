@@ -50,6 +50,23 @@ agy
 /boost            # Análisis profundo multi-perspectiva
 /compact          # Compactar contexto largo
 /schedule         # Tareas programadas o recurrentes
+
+### Comando para Agentes: Revisión y Resolución de Issues (RCA)
+
+Cualquier agente puede auditar, diagnosticar y resolver incidencias de [GitHub Issues](https://github.com/laralbir/md-gh-navigator/issues):
+```bash
+# Script agéntico universal
+./scripts/review-issues.sh list
+./scripts/review-issues.sh view <numero>
+./scripts/review-issues.sh comment <numero> "<mensaje>"
+./scripts/review-issues.sh close <numero> "<mensaje>"
+```
+- **Skill Antigravity:** `.agents/skills/github-issues-resolver/SKILL.md`
+- **Protocolo agéntico:**
+  1. Revisar issues abiertos.
+  2. Analizar el código para determinar la **Causa Raíz (RCA)**.
+  3. Formular conclusiones y soluciones técnicas.
+  4. Responder al usuario en el issue y actualizar su estado (comentar/cerrar).
 ```
 
 ## Ficheros Clave

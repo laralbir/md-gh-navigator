@@ -109,3 +109,4 @@ agy
 5. **Documentar** cambios significativos en el CHANGELOG
 6. **Conventional Commits** para todos los mensajes de commit
 7. **Español** como idioma por defecto en documentación y comentarios de usuario
+8. **Gestión de Issues y RCA**: Usar `./scripts/review-issues.sh` y la skill `.agents/skills/github-issues-resolver/` para revisar issues del repo, analizar su causa raíz (RCA), redactar soluciones de código, contestar al issue y actualizar/cerrar su estado.
