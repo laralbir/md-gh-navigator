@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.0] - 2026-10-18
+
 ### Added
 - Custom adaptive launcher icons (`ic_launcher.xml`, `ic_launcher_round.xml`, `ic_launcher_foreground.xml`) uniting open book and git branching iconography with e-paper Scholar aesthetics.
 - Native splash screen integration using AndroidX Core Splashscreen API (`installSplashScreen()`, `Theme.App.Starting`) with smooth transition into the application.
@@ -18,8 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated GitHub Actions CI workflow (`.github/workflows/ci.yml`) validating all PRs and pushes to `develop` and `main` with automated tests and debug assembly.
 - Automated GitHub Actions CD Release pipeline (`.github/workflows/release.yml`) triggered on `v*` tags to compile signed release AABs and universal APKs, extract release notes from CHANGELOG, and publish GitHub Releases with SHA-256 checksums.
 - End-to-end reading flow integration test (`ReaderFlowIntegrationTest`) validating bookmark creation, highlight tracking, architectural note attachment, Markdown export, and theme preference binding.
-
-### Changed
 
 ## [v0.4.0] - 2026-10-18
 
