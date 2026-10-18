@@ -111,3 +111,30 @@ To render complex diagrams (**Mermaid**, **Graphviz/Viz.js**, **D2/WASM**, **Exc
    - Supported via Android 13+ `android.app.LocaleManager` and `AppCompatDelegate.setApplicationLocales` in `:feature:settings`.
 3. **Strict Text Externalization:**
    - Zero hardcoded text literals in Compose or Kotlin code; all visual labels are externalized to resource XML files.
+
+---
+
+## 6. Bookmarks, Annotations & Fast Navigation Panel
+
+The persistence and display of reading anchors is centralized in `:feature:annotations` and `:core:database`:
+1. **Unified Schema in Room (`AnnotationEntity`)**:
+   - Covers three primary types (`AnnotationType`): `BOOKMARK` (positional bookmark), `HIGHLIGHT` (selected excerpt), and `NOTE` (user note).
+   - High-precision coordinate metadata: `scrollProgress` (normalized float) and `scrollY` (absolute vertical offset in pixels).
+2. **Bi-directional Asynchronous Navigation**:
+   - Selecting any entry in `UnifiedAnnotationsDrawer` evaluates JavaScript `window.ReaderApi.scrollToProgress(progress)` inside the WebView, providing smooth and instant jump-to-anchor navigation.
+3. **Structured Markdown Exporter**:
+   - `MarkdownAnnotationExporter` transforms the ordered reading highlights and bookmarks into a clean Markdown summary for external study, directly shareable via the native Android Share sheet (`ACTION_SEND`).
+
+---
+
+## 7. Parallel Agent Concurrency & Deadlock Prevention (CPU/GPU)
+
+To accelerate system development using autonomous AI agents and concurrent subagents without system lockups:
+1. **Multi-Core Hardware Optimization**:
+   - **CPU**: Parallel Gradle builds (`--parallel`, `--max-workers`) decoupling contention between modules (`:core:*` vs `:feature:*`).
+   - **GPU**: Offload Compose layout previews, Android emulator graphics, and local neural inference pipelines.
+2. **Anti-Deadlock Guarantee (Coffman Conditions)**:
+   - **Isolated Workspaces**: Writing subagents operate on separate git branches or disjoint file sets.
+   - **Elimination of "Hold and Wait"**: Subagents never retain exclusive shared locks while awaiting asynchronous responses.
+   - **Strict DAG Topology**: Hierarchical unidirectional orchestration eliminating circular wait conditions.
+   - **Event-Driven Asynchronous Messaging**: System event wakeups with defensive timeouts replacing polling loops.

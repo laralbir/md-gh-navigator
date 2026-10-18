@@ -113,3 +113,30 @@ La aplicación implementa una arquitectura de localización nativa y escalable:
    - Soporte nativo de la API de Android 13+ (`android.app.LocaleManager`) y `AppCompatDelegate.setApplicationLocales` para que el usuario pueda alternar entre español e inglés desde la pantalla de *Ajustes* (`:feature:settings`) sin alterar la configuración del sistema.
 3. **Externalización y Mantenibilidad:**
    - Cero cadenas literales en código Kotlin/Compose. Todos los módulos de presentación (`:feature:*` y `:core:designsystem`) delegan en identificadores de recursos XML compilados.
+
+---
+
+## 6. Marcadores, Anotaciones y Panel de Navegación Rápida
+
+La persistencia y visualización de hitos de lectura se consolida en `:feature:annotations` y `:core:database`:
+1. **Esquema Unificado en Room (`AnnotationEntity`)**:
+   - Soporte para tres tipos fundamentales (`AnnotationType`): `BOOKMARK` (marcador posicional), `HIGHLIGHT` (fragmento seleccionado) y `NOTE` (anotación textual).
+   - Metadatos posicionales de precisión: `scrollProgress` (flotante normalizado) y `scrollY` (desplazamiento vertical absoluto en píxeles).
+2. **Navegación Bidireccional Asíncrona**:
+   - Al seleccionar cualquier entrada en el cajón `UnifiedAnnotationsDrawer`, se invoca la API `window.ReaderApi.scrollToProgress(progress)` dentro del WebView mediante evaluación JavaScript, garantizando un desplazamiento suave e inmediato hacia el anclaje exacto.
+3. **Exportación Estructurada**:
+   - `MarkdownAnnotationExporter` transforma la lista ordenada de marcas en un documento Markdown legible para sincronización o estudio externo, compartible directamente mediante el Intent nativo de Android.
+
+---
+
+## 7. Concurrencia Agéntica y Prevención de Deadlocks (CPU/GPU)
+
+Para acelerar el desarrollo del sistema mediante agentes autónomos y subagentes concurrentes sin provocar bloqueos:
+1. **Aprovechamiento Hardware Multi-Núcleo**:
+   - **CPU**: Compilación paralela modular de Gradle (`--parallel`, `--max-workers`) desacoplando la contención entre módulos (`:core:*` vs `:feature:*`).
+   - **GPU**: Delegación de aceleración de previsualizaciones Compose, renderizado de emuladores e inferencia local asistida por hardware.
+2. **Garantía Anti-Deadlock (Condiciones de Coffman)**:
+   - **Workspaces Aislados**: Subagentes operan en branches independientes o en conjuntos disjuntos de ficheros.
+   - **Eliminación de "Hold and Wait"**: Prohibición de retener daemons o bloqueos exclusivos durante esperas asíncronas.
+   - **Topología DAG Estricta**: Relaciones jerárquicas unidireccionales que eliminan dependencias circulares.
+   - **Reactividad Asíncrona sin Polling**: Despertar basado en eventos del sistema y temporizadores defensivos acotados.

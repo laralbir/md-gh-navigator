@@ -252,3 +252,68 @@ Además del canal de Google Play Store, los usuarios deben poder descargar e ins
    - Al crear y pushear un tag que coincida con `v*`, el pipeline ejecuta los tests, compila el `.aab` para Play Store y el `.apk` universal standalone para GitHub Releases, adjuntando el APK y las notas de lanzamiento generadas a partir de Conventional Commits al release correspondiente.
 4. **Comprobación de Actualizaciones en la App (In-App Update Checker):**
    - Para las instalaciones desde GitHub (detectadas por el instalador `null` o sin firma de Google Play), la app podrá consultar el endpoint público de GitHub Releases (`api.github.com/repos/laralbir/md-gh-navigator/releases/latest`) para notificar al usuario de nuevas versiones disponibles para descarga directa.
+
+---
+
+## ADR-015: Estrategia de Concurrencia y Paralelismo Agéntico Seguro (CPU/GPU y Prevención de Deadlocks)
+
+**Estado:** Aprobado
+**Fecha:** 2026-10-18
+
+### Contexto
+El desarrollo agéntico intensivo con múltiples agentes y subagentes concurrentes debe aprovechar de forma óptima los recursos computacionales de la máquina host (CPU multi-núcleo y GPU), pero corre el riesgo de agotar recursos del sistema, provocar contención de I/O en disco o generar bloqueos mutuos permanentes (*deadlocks*) si no se aplican restricciones formales de concurrencia.
+
+### Decisión
+1. **Aprovechamiento Eficiente de CPU & GPU:**
+   - La compilación y ejecución de tests se distribuye en paralelo entre módulos ortogonales aprovechando Gradle Workers (`org.gradle.parallel=true`).
+   - El número de subagentes activos concurrentes se acota dinámicamente a $N \le \text{núcleos de CPU} - 1$ para evitar el *thrashing* del planificador del sistema operativo.
+   - Las cargas gráficas (emuladores de Android, renderizado Canvas/Compose) y de inferencia local se delegan a aceleración por GPU (Metal/Vulkan/OpenCL), dejando los núcleos de la CPU disponibles para análisis y compilación.
+2. **Eliminación de las Cuatro Condiciones de Coffman (Anti-Deadlock):**
+   - **Exclusión Mutua Sin Conflicto (Workspaces Aislados):** Todo subagente que realiza escrituras de código trabaja en su propio branch aislado (`Workspace: 'branch'` o `'share'`) o en módulos desacoplados sin intersección de ficheros.
+   - **Eliminación de "Hold and Wait" (No Retención Activa):** Ningún agente retiene bloqueos exclusivos compartidos (como el daemon de Gradle, conexiones a base de datos o puertos de red) mientras espera una respuesta asíncrona de otro agente.
+   - **Prevención de Inanición e Imposibilidad de Desapropiación:** Se fijan timeouts defensivos en todas las tareas asíncronas con temporizadores basados en condiciones (`TimerCondition`).
+   - **Eliminación de Espera Circular (Jerarquía Estricta DAG):** La topología de orquestación es un grafo acíclico dirigido unidireccional (Agente Orquestador $\rightarrow$ Subagente Worker). Los subagentes nunca esperan mutuamente entre sí de forma cíclica.
+3. **Comunicación Reactiva sin Polling:**
+   - Prohibido el sondeo activo en bucle (`sleep` o bucles `while`). La comunicación inter-agente se realiza exclusivamente mediante mensajería reactiva y eventos del sistema.
+
+---
+
+## ADR-016: Sistema de Localización Multi-idioma (i18n), Marcadores y Panel Unificado de Lectura
+
+**Estado:** Aprobado
+**Fecha:** 2026-10-18
+
+### Contexto
+Para ofrecer una experiencia de eReader completa, accesible internacionalmente y adaptada a la tableta TCL NXTPAPER 11 Plus, la aplicación requiere soporte nativo multi-idioma (i18n) y un sistema unificado de marcadores, notas y fragmentos destacados para navegación rápida con un solo toque y exportación a Markdown.
+
+### Decisión
+1. **Localización Multi-idioma (i18n):**
+   - **Preferencia Per-App:** Soporte Android 13+ con `AppLocaleManager` y `AppCompatDelegate.setApplicationLocales`.
+   - **Fallback determinista:** Cadenas base en inglés (`values/strings.xml`) y catálogo en español (`values-es/strings.xml`).
+   - **Test de paridad automatizado:** `StringResourcesParityTest` en `:app` verifica en cada compilación la correspondencia exacta de claves entre catálogos de recursos.
+2. **Entidad y Persistencia Unificada (Room v2):**
+   - Migración de `AppDatabase` a versión 2 introduciendo `AnnotationType` (`BOOKMARK`, `HIGHLIGHT`, `NOTE`), `scrollProgress` y `scrollY` en `AnnotationEntity`.
+   - Una única tabla permite consultar y ordenar cronológica o posicionalmente todos los hitos de lectura en una sola consulta reactiva de Room.
+3. **Panel Unificado de Navegación Rápida (`UnifiedAnnotationsDrawer`):**
+   - Panel lateral acoplado en split-pane para tablets NXTPAPER y modal drawer para smartphones.
+   - Pestañas con contadores en tiempo real (*Todos*, *Marcadores*, *Resaltados*, *Notas*).
+   - Salto instantáneo mediante `window.ReaderApi.scrollToProgress()` al pulsar cualquier elemento.
+   - Exportador nativo `MarkdownAnnotationExporter` y compartición del resumen generado vía Android Share sheet (`ACTION_SEND`).
+
+---
+
+## ADR-017: Mantenimiento Continuo de Changelog y Política de Limpieza de Ramas
+
+**Estado:** Aprobado
+**Fecha:** 2026-10-18
+
+### Contexto
+A medida que el proyecto avanza a gran velocidad con múltiples ramas de características e integración continua, se requiere mantener la trazabilidad exacta de los cambios para los usuarios y asegurar que el repositorio remoto no acumule ramas huérfanas tras sus respectivas fusiones.
+
+### Decisión
+1. **Mantenimiento Continuo del Changelog:**
+   - Todo cambio relevante debe documentarse de forma incremental e inmediata en `docs/CHANGELOG.md` en la sección `[Unreleased]`, categorizado estrictamente bajo el estándar [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) (`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`).
+2. **Limpieza Automática e Inmediata de Ramas:**
+   - Tan pronto como una rama (`feature/*`, `bugfix/*`, `release/*`) sea fusionada con éxito en `develop` o `main`, debe eliminarse tanto localmente (`git branch -d`) como en el repositorio remoto (`git push origin --delete`).
+   - Las únicas ramas protegidas y permanentes son `main` y `develop`.
+
