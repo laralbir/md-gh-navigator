@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reader_title_default">Lector Markdown</string>
+    <string name="reader_toc_button">Índice de contenidos</string>
+    <string name="reader_change_theme">Cambiar tema</string>
+    <string name="reader_theme_scholar">Tema Scholar (NXTPAPER)</string>
+    <string name="reader_theme_paper">Tema Paper (Minimalista)</string>
+    <string name="reader_theme_neon">Tema Neon Dev (Alto Contraste)</string>
+    <string name="reader_loading_doc">Cargando documento…</string>
+    <string name="reader_unknown_error">Error desconocido</string>
+</resources>
+

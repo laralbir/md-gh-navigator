@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_error_title">Ha ocurrido un error</string>
+    <string name="common_unknown_error">Error desconocido</string>
+    <string name="common_retry">Reintentar</string>
+    <string name="common_back">Volver</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_confirm">Confirmar</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="common_save">Guardar</string>
+    <string name="common_loading">Cargando…</string>
+    <string name="common_close">Cerrar</string>
+</resources>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="library_title">Biblioteca</string>
+    <string name="library_subtitle">MD GitHub Navigator</string>
+    <string name="library_add_repository">Añadir repositorio</string>
+    <string name="library_empty_title">Biblioteca vacía</string>
+    <string name="library_empty_message">Añade tu primer repositorio de GitHub o una carpeta local para comenzar a leer tus documentos en Markdown.</string>
+    <string name="library_add_repository_button">Añadir Repositorio</string>
+    <string name="library_dialog_title">Añadir a la Biblioteca</string>
+    <string name="library_tab_github">GitHub</string>
+    <string name="library_tab_local">Carpeta Local</string>
+    <string name="library_owner_label">Propietario / Organización *</string>
+    <string name="library_owner_placeholder">ej. laralbir</string>
+    <string name="library_repo_name_label">Nombre del Repositorio *</string>
+    <string name="library_repo_name_placeholder">ej. md-gh-navigator</string>
+    <string name="library_branch_label">Rama (opcional)</string>
+    <string name="library_branch_placeholder">por defecto: main</string>
+    <string name="library_start_file_label">Fichero principal de inicio</string>
+    <string name="library_start_file_placeholder">README.md</string>
+    <string name="library_local_name_label">Nombre de la Colección *</string>
+    <string name="library_local_name_placeholder">ej. Mis Apuntes Markdown</string>
+    <string name="library_syncing">Sincronizando…</string>
+    <string name="library_btn_sync_repo">Sincronizar Repo</string>
+    <string name="library_btn_select_folder">Seleccionar Carpeta</string>
+    <string name="library_btn_cancel">Cancelar</string>
+    <string name="library_pin">Anclar</string>
+    <string name="library_unpin">Desanclar</string>
+    <string name="library_sync">Sincronizar</string>
+    <string name="library_delete">Eliminar</string>
+    <string name="library_chip_branch">rama: %1$s</string>
+    <string name="library_chip_start">inicio: %1$s</string>
+    <string name="library_synced_at">Sincronizado: %1$s</string>
+    <string name="library_not_synced">Sin sincronizar</string>
+</resources>
+

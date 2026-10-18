@@ -35,11 +35,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.laralbir.mdghnavigator.core.database.entity.DocumentEntity
 import com.laralbir.mdghnavigator.core.database.entity.TocItemEntity
+import com.laralbir.mdghnavigator.feature.navigator.R
 
 @Composable
 fun TocSidebar(
@@ -64,14 +66,14 @@ fun TocSidebar(
                 Tab(
                     selected = uiState.selectedTab == NavigatorTab.TOC,
                     onClick = { onIntent(NavigatorIntent.SelectTab(NavigatorTab.TOC)) },
-                    text = { Text("Índice") },
-                    icon = { Icon(Icons.Default.FormatListNumbered, contentDescription = "Índice") }
+                    text = { Text(stringResource(R.string.nav_tab_toc)) },
+                    icon = { Icon(Icons.Default.FormatListNumbered, contentDescription = stringResource(R.string.nav_tab_toc)) }
                 )
                 Tab(
                     selected = uiState.selectedTab == NavigatorTab.FILES,
                     onClick = { onIntent(NavigatorIntent.SelectTab(NavigatorTab.FILES)) },
-                    text = { Text("Archivos") },
-                    icon = { Icon(Icons.Default.Folder, contentDescription = "Archivos") }
+                    text = { Text(stringResource(R.string.nav_tab_files)) },
+                    icon = { Icon(Icons.Default.Folder, contentDescription = stringResource(R.string.nav_tab_files)) }
                 )
             }
 
@@ -116,7 +118,7 @@ private fun TocList(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Sin encabezados en este documento",
+                text = stringResource(R.string.nav_toc_empty),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -200,12 +202,15 @@ private fun FilesList(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp),
-            placeholder = { Text("Buscar archivos...") },
+            placeholder = { Text(stringResource(R.string.nav_files_search_placeholder)) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             trailingIcon = {
                 if (searchQuery.isNotEmpty()) {
                     IconButton(onClick = { onSearchQueryChanged("") }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Limpiar búsqueda")
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = stringResource(R.string.nav_files_search_clear)
+                        )
                     }
                 }
             },
@@ -220,7 +225,7 @@ private fun FilesList(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No se encontraron archivos markdown",
+                    text = stringResource(R.string.nav_files_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

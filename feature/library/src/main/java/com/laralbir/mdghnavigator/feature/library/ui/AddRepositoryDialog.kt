@@ -30,7 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.laralbir.mdghnavigator.feature.library.R
 
 @Composable
 fun AddRepositoryDialog(
@@ -57,7 +59,7 @@ fun AddRepositoryDialog(
         shape = RoundedCornerShape(16.dp),
         title = {
             Text(
-                text = "Añadir a la Biblioteca",
+                text = stringResource(R.string.library_dialog_title),
                 style = MaterialTheme.typography.titleLarge
             )
         },
@@ -67,13 +69,13 @@ fun AddRepositoryDialog(
                     Tab(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text("GitHub") },
+                        text = { Text(stringResource(R.string.library_tab_github)) },
                         icon = { Icon(Icons.Default.Hub, contentDescription = null) }
                     )
                     Tab(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text("Carpeta Local") },
+                        text = { Text(stringResource(R.string.library_tab_local)) },
                         icon = { Icon(Icons.Default.Folder, contentDescription = null) }
                     )
                 }
@@ -85,8 +87,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = owner,
                         onValueChange = { owner = it },
-                        label = { Text("Propietario / Organización *") },
-                        placeholder = { Text("ej. laralbir") },
+                        label = { Text(stringResource(R.string.library_owner_label)) },
+                        placeholder = { Text(stringResource(R.string.library_owner_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -95,8 +97,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = repoName,
                         onValueChange = { repoName = it },
-                        label = { Text("Nombre del Repositorio *") },
-                        placeholder = { Text("ej. md-gh-navigator") },
+                        label = { Text(stringResource(R.string.library_repo_name_label)) },
+                        placeholder = { Text(stringResource(R.string.library_repo_name_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -105,8 +107,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = branch,
                         onValueChange = { branch = it },
-                        label = { Text("Rama (opcional)") },
-                        placeholder = { Text("por defecto: main") },
+                        label = { Text(stringResource(R.string.library_branch_label)) },
+                        placeholder = { Text(stringResource(R.string.library_branch_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -115,8 +117,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = startFile,
                         onValueChange = { startFile = it },
-                        label = { Text("Fichero principal de inicio") },
-                        placeholder = { Text("README.md") },
+                        label = { Text(stringResource(R.string.library_start_file_label)) },
+                        placeholder = { Text(stringResource(R.string.library_start_file_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -126,8 +128,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = localCollectionName,
                         onValueChange = { localCollectionName = it },
-                        label = { Text("Nombre de la Colección *") },
-                        placeholder = { Text("ej. Mis Apuntes Markdown") },
+                        label = { Text(stringResource(R.string.library_local_name_label)) },
+                        placeholder = { Text(stringResource(R.string.library_local_name_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -136,8 +138,8 @@ fun AddRepositoryDialog(
                     OutlinedTextField(
                         value = localStartFile,
                         onValueChange = { localStartFile = it },
-                        label = { Text("Fichero principal de inicio") },
-                        placeholder = { Text("README.md") },
+                        label = { Text(stringResource(R.string.library_start_file_label)) },
+                        placeholder = { Text(stringResource(R.string.library_start_file_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -189,9 +191,15 @@ fun AddRepositoryDialog(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Sincronizando...")
+                    Text(stringResource(R.string.library_syncing))
                 } else {
-                    Text(if (selectedTab == 0) "Sincronizar Repo" else "Seleccionar Carpeta")
+                    Text(
+                        if (selectedTab == 0) {
+                            stringResource(R.string.library_btn_sync_repo)
+                        } else {
+                            stringResource(R.string.library_btn_select_folder)
+                        }
+                    )
                 }
             }
         },
@@ -200,7 +208,7 @@ fun AddRepositoryDialog(
                 onClick = onDismiss,
                 enabled = !isLoading
             ) {
-                Text("Cancelar")
+                Text(stringResource(R.string.library_btn_cancel))
             }
         }
     )

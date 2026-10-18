@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_tab_toc">TOC</string>
+    <string name="nav_tab_files">Files</string>
+    <string name="nav_toc_empty">No headings in this document</string>
+    <string name="nav_files_search_placeholder">Search files…</string>
+    <string name="nav_files_search_clear">Clear search</string>
+    <string name="nav_files_empty">No markdown files found</string>
+</resources>
+
