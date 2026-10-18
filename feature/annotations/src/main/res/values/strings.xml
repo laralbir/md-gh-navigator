@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="annotations_title">Bookmarks &amp; Annotations</string>
+    <string name="annotations_tab_all">All</string>
+    <string name="annotations_tab_bookmarks">Bookmarks</string>
+    <string name="annotations_tab_highlights">Highlights</string>
+    <string name="annotations_tab_notes">Notes</string>
+    <string name="annotations_empty_title">No markers yet</string>
+    <string name="annotations_empty_message">Save bookmarks at your current reading position, highlight excerpts, or add notes.</string>
+    <string name="annotations_add_bookmark">Add Bookmark</string>
+    <string name="annotations_export_button">Export to Markdown</string>
+    <string name="annotations_dialog_title">Add Bookmark</string>
+    <string name="annotations_dialog_title_label">Bookmark Title</string>
+    <string name="annotations_dialog_note_label">Optional Note</string>
+    <string name="annotations_dialog_progress">Position: %1$d%%</string>
+    <string name="annotations_btn_save">Save</string>
+    <string name="annotations_btn_cancel">Cancel</string>
+    <string name="annotations_delete">Delete</string>
+    <string name="annotations_progress_chip">%1$d%%</string>
+    <string name="annotations_close">Close</string>
+    <string name="annotations_default_bookmark_title">Bookmark</string>
+</resources>

@@ -26,6 +26,8 @@ fun ComposeMarkdownReader(
     themeMode: AppThemeMode = LocalAppThemeMode.current,
     isDark: Boolean = isSystemInDarkTheme(),
     fontSizeSp: Int = 18,
+    targetScrollProgress: Float? = null,
+    targetHeadingId: String? = null,
     onScrollProgress: (progress: Float, scrollY: Int) -> Unit = { _, _ -> },
     onLinkClicked: (LinkTarget) -> Unit = {},
     onHeadingsDetected: (List<HeadingItem>) -> Unit = {}
@@ -77,6 +79,7 @@ fun ComposeMarkdownReader(
                     onLinkTargetResolved = onLinkClicked
                 )
 
+                tag = htmlContent
                 loadDataWithBaseURL(
                     "https://appassets.androidplatform.net/",
                     htmlContent,
@@ -87,13 +90,27 @@ fun ComposeMarkdownReader(
             }
         },
         update = { webView ->
-            webView.loadDataWithBaseURL(
-                "https://appassets.androidplatform.net/",
-                htmlContent,
-                "text/html",
-                "UTF-8",
-                null
-            )
+            if (webView.tag != htmlContent) {
+                webView.tag = htmlContent
+                webView.loadDataWithBaseURL(
+                    "https://appassets.androidplatform.net/",
+                    htmlContent,
+                    "text/html",
+                    "UTF-8",
+                    null
+                )
+            }
+            if (targetHeadingId != null) {
+                webView.evaluateJavascript(
+                    "window.ReaderApi && window.ReaderApi.scrollToHeading('$targetHeadingId');",
+                    null
+                )
+            } else if (targetScrollProgress != null) {
+                webView.evaluateJavascript(
+                    "window.ReaderApi && window.ReaderApi.scrollToProgress($targetScrollProgress);",
+                    null
+                )
+            }
         }
     )
 }

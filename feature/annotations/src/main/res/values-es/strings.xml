@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="annotations_title">Marcadores y Anotaciones</string>
+    <string name="annotations_tab_all">Todos</string>
+    <string name="annotations_tab_bookmarks">Marcadores</string>
+    <string name="annotations_tab_highlights">Resaltados</string>
+    <string name="annotations_tab_notes">Notas</string>
+    <string name="annotations_empty_title">Sin marcadores todavía</string>
+    <string name="annotations_empty_message">Guarda marcadores en tu posición de lectura, resalta fragmentos o añade notas.</string>
+    <string name="annotations_add_bookmark">Añadir Marcador</string>
+    <string name="annotations_export_button">Exportar a Markdown</string>
+    <string name="annotations_dialog_title">Añadir Marcador</string>
+    <string name="annotations_dialog_title_label">Título del marcador</string>
+    <string name="annotations_dialog_note_label">Nota opcional</string>
+    <string name="annotations_dialog_progress">Posición: %1$d%%</string>
+    <string name="annotations_btn_save">Guardar</string>
+    <string name="annotations_btn_cancel">Cancelar</string>
+    <string name="annotations_delete">Eliminar</string>
+    <string name="annotations_progress_chip">%1$d%%</string>
+    <string name="annotations_close">Cerrar</string>
+    <string name="annotations_default_bookmark_title">Marcador</string>
+</resources>

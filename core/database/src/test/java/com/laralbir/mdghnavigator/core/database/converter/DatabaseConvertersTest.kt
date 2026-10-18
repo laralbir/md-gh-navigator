@@ -24,4 +24,17 @@ class DatabaseConvertersTest {
     fun testUnknownTypeFallback() {
         assertEquals(RepositoryType.GITHUB, converters.toRepositoryType("UNKNOWN_CUSTOM_TYPE"))
     }
+
+    @Test
+    @DisplayName("Converts AnnotationType enum to and from string accurately")
+    fun testAnnotationTypeConversion() {
+        assertEquals("BOOKMARK", converters.fromAnnotationType(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.BOOKMARK))
+        assertEquals("HIGHLIGHT", converters.fromAnnotationType(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.HIGHLIGHT))
+        assertEquals("NOTE", converters.fromAnnotationType(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.NOTE))
+
+        assertEquals(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.BOOKMARK, converters.toAnnotationType("BOOKMARK"))
+        assertEquals(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.HIGHLIGHT, converters.toAnnotationType("HIGHLIGHT"))
+        assertEquals(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.NOTE, converters.toAnnotationType("NOTE"))
+        assertEquals(com.laralbir.mdghnavigator.core.database.entity.AnnotationType.HIGHLIGHT, converters.toAnnotationType("UNKNOWN"))
+    }
 }
