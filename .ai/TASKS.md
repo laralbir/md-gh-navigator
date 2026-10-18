@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Foundation & Scaffolding) en curso**.
+Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completada y Verificada ✅** → Listo para **Fase 4: Experiencia eReader & Herramientas Avanzadas**.
 
 ---
 
@@ -30,12 +30,12 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
 
 ---
 
-## Fase 2: Plan & Arquitectura Base (Foundation) 🔄
+## Fase 2: Plan & Arquitectura Base (Foundation) ✅
 
 ### 2.1 Estructura Gradle y Módulos ✅
 - [x] Configurar Gradle con Kotlin DSL y Version Catalog (`gradle/libs.versions.toml`)
 - [x] Configurar módulo `:app` con Android SDK 36, minSdk 24
-- [x] Modularización del proyecto implementada y verificada:
+- [x] Modularización del proyecto implementada y verificada (13 módulos):
   - `:core:common` (utilidades base, despachadores, EventBus)
   - `:core:designsystem` (tema Scholar, tipografías Literata/Inter, paleta M3)
   - `:core:network` (Retrofit, OkHttp, Certificate Pinning, interceptores de auth)
@@ -49,27 +49,36 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
   - `:feature:settings` (Preferencias, temas, tipografía, gestión de caché)
   - `:feature:tts` (Text-to-Speech con voces descargables)
 
-### 2.2 Infraestructura de Testing (TDD) 🔄
+### 2.2 Infraestructura de Testing (TDD) ✅
 - [x] Configuración de JUnit 5 + MockK + Turbine para tests unitarios
 - [x] Configuración de Compose Testing + Espresso para tests instrumentados
-- [x] Implementación TDD del `DefaultEventBus` en `:core:common` con tests en verde (100% passing)
+- [x] Implementación TDD del `DefaultEventBus` en `:core:common` con tests en verde
+- [x] Implementación TDD de `EncryptedTokenStorage` en `:core:datastore` con Google Tink
+- [x] Implementación TDD de interceptores de red en `:core:network` (`AuthInterceptorTest`, `RateLimitInterceptorTest`) con MockWebServer
+- [x] Implementación TDD de contratos de contraste WCAG y tipografía en `:core:designsystem`
+- [x] Implementación TDD de clasificador de links y puente JS en `:core:renderer`
+- [x] Implementación TDD de TypeConverters en `:core:database`
+- [x] Smoke test de cálculo de SemVer y version code en `:app`
 
-### 2.3 Seguridad y Red Base 🔄
+### 2.3 Seguridad y Red Base ✅
 - [x] Configurar `network_security_config.xml` con TLS 1.3 y Certificate Pinning para `api.github.com`
-- [ ] Módulo de cifrado seguro con Google Tink para almacenamiento de tokens de GitHub
+- [x] Módulo de cifrado seguro con Google Tink para almacenamiento de tokens de GitHub
 - [x] Configuración Gradle de firma para Release (desacoplada con keystore vía variables de entorno o `secrets.properties`, soporte AAB y APK standalone)
 - [x] Lógica de versionado semántico en Gradle (cálculo de `versionName` y `versionCode` a partir de Git tags / SemVer)
+- [x] Verificación de construcción limpia: APK (`app-debug.apk`, 19MB) y AAB (`app-debug.aab`, 16MB) generados con éxito.
+
 
 ---
 
-## Fase 3: Funcionalidades Core (Lectura y Repositorios) ⏳
-- [ ] Implementación de `GitHubRemoteDataSource` (API GitHub v3) con soporte ETag para descargas incrementales
-- [ ] Implementación de `LocalDirectoryDataSource` (Storage Access Framework de Android)
-- [ ] Selector de archivo principal de inicio (por defecto `README.md` de la raíz)
-- [ ] Sistema de caché selectivo: descarga y persistencia exclusiva de `.md` y assets vinculados
-- [ ] Integración del motor de renderizado Markdown con soporte para diagramas locales
-- [ ] Pantalla de Lector con control de scroll sincronizado y persistencia automática de progreso
-- [ ] Panel TOC (Tabla de Contenidos) en panel colapsable/drawer y split-pane para tablet TCL
+## Fase 3: Funcionalidades Core (Lectura y Repositorios) ✅
+- [x] Implementación de `GitHubRemoteDataSource` (API GitHub v3) con soporte ETag para descargas incrementales
+- [x] Implementación de `LocalDirectoryRepository` (Storage Access Framework de Android)
+- [x] Selector de archivo principal de inicio (por defecto `README.md` de la raíz)
+- [x] Sistema de caché selectivo: descarga y persistencia exclusiva de `.md` y assets vinculados (`SelectiveCacheManager`)
+- [x] Integración del motor de renderizado Markdown con soporte para diagramas locales (`ComposeMarkdownReader`)
+- [x] Pantalla de Lector con control de scroll sincronizado y persistencia automática de progreso en Room (`ReaderViewModel`, `ReaderScreen`)
+- [x] Panel TOC (Tabla de Contenidos) en panel colapsable/drawer y split-pane para tablet TCL NXTPAPER 11 Plus (`TocSidebar`, `NavigatorViewModel`, `computeReaderWindowLayout`)
+- [x] Navegación completa end-to-end con Navigation Compose entre `LibraryScreen` y `ReaderScreen` en `MainActivity`
 
 ---
 
@@ -89,7 +98,7 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
 - [ ] Generación de icono de la aplicación (Adaptive Icons para Android) y pantallas splash/launch
 - [ ] Tests E2E de flujos críticos de usuario (añadir repo -> sincronizar -> leer -> anotar -> reanudar)
 - [ ] Auditoría de seguridad final y optimización de rendimiento en tablet TCL NXTPAPER 11 Plus
-- [ ] Generación y verificación final de la documentación navegable completa (`/docs`)
+- [ ] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
 - [ ] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
 - [ ] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
 - [ ] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases

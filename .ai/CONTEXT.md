@@ -34,6 +34,7 @@ Transformar repositorios de GitHub en una experiencia de lectura navegable tipo 
 - Seguridad-first para almacenamiento de credenciales (Tink + DataStore)
 - Soporte de renderizado de diagramas: Mermaid, D2, Graphviz, Excalidraw
 - Documentación bilingüe (ES/EN), español por defecto
+- Guía de usuario con ejemplos gráficos: la documentación para el usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) debe incorporar capturas de pantalla, mockups de interfaz con marcos de dispositivo o diagramas visuales paso a paso para tablets (TCL NXTPAPER) y smartphones
 - Preparación para Google Play Store: Android App Bundle (.aab), firma segura desacoplada, Data Safety form y optimización para tablets (TCL NXTPAPER) y móviles
 - Canal alternativo GitHub Releases: APKs standalone universales firmados para sideloading directo sin Google Play
 - Estrategia de versionado semántico estricto (SemVer `vMAJOR.MINOR.PATCH`) sincronizado con Git tags y cálculo determinista de `versionCode`
