@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 2 (Foundation & Scaffolding) Completada y Verificada ✅** → Listo para **Fase 3: Funcionalidades Core (Lectura y Repositorios)**.
+Estado actual: **Fase 3: Funcionalidades Core (Lectura y Repositorios) Completada y Verificada ✅** → Listo para **Fase 4: Experiencia eReader & Herramientas Avanzadas**.
 
 ---
 
@@ -70,14 +70,15 @@ Estado actual: **Fase 2 (Foundation & Scaffolding) Completada y Verificada ✅**
 
 ---
 
-## Fase 3: Funcionalidades Core (Lectura y Repositorios) ⏳
-- [ ] Implementación de `GitHubRemoteDataSource` (API GitHub v3) con soporte ETag para descargas incrementales
-- [ ] Implementación de `LocalDirectoryDataSource` (Storage Access Framework de Android)
-- [ ] Selector de archivo principal de inicio (por defecto `README.md` de la raíz)
-- [ ] Sistema de caché selectivo: descarga y persistencia exclusiva de `.md` y assets vinculados
-- [ ] Integración del motor de renderizado Markdown con soporte para diagramas locales
-- [ ] Pantalla de Lector con control de scroll sincronizado y persistencia automática de progreso
-- [ ] Panel TOC (Tabla de Contenidos) en panel colapsable/drawer y split-pane para tablet TCL
+## Fase 3: Funcionalidades Core (Lectura y Repositorios) ✅
+- [x] Implementación de `GitHubRemoteDataSource` (API GitHub v3) con soporte ETag para descargas incrementales
+- [x] Implementación de `LocalDirectoryRepository` (Storage Access Framework de Android)
+- [x] Selector de archivo principal de inicio (por defecto `README.md` de la raíz)
+- [x] Sistema de caché selectivo: descarga y persistencia exclusiva de `.md` y assets vinculados (`SelectiveCacheManager`)
+- [x] Integración del motor de renderizado Markdown con soporte para diagramas locales (`ComposeMarkdownReader`)
+- [x] Pantalla de Lector con control de scroll sincronizado y persistencia automática de progreso en Room (`ReaderViewModel`, `ReaderScreen`)
+- [x] Panel TOC (Tabla de Contenidos) en panel colapsable/drawer y split-pane para tablet TCL NXTPAPER 11 Plus (`TocSidebar`, `NavigatorViewModel`, `computeReaderWindowLayout`)
+- [x] Navegación completa end-to-end con Navigation Compose entre `LibraryScreen` y `ReaderScreen` en `MainActivity`
 
 ---
 
