@@ -35,9 +35,9 @@ import com.laralbir.mdghnavigator.core.designsystem.component.MdTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LibraryScreen(
-    viewModel: LibraryViewModel,
     onRepositoryClick: (RepositoryEntity) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: LibraryViewModel = androidx.hilt.navigation.compose.hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
