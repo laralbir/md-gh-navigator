@@ -10,7 +10,9 @@ data class ReaderUiState(
     val isTocOpen: Boolean = false,
     val errorMessage: String? = null,
     val themeMode: String = "scholar",
-    val fontSize: Float = 1.0f
+    val fontSize: Float = 1.0f,
+    val selectedImageUrl: String? = null,
+    val selectedImageTitle: String? = null
 )
 
 sealed interface ReaderIntent {
@@ -20,5 +22,7 @@ sealed interface ReaderIntent {
     data class SetTocOpen(val isOpen: Boolean) : ReaderIntent
     data class ChangeTheme(val theme: String) : ReaderIntent
     data class ChangeFontSize(val size: Float) : ReaderIntent
+    data class OpenImageViewer(val imageUrl: String, val title: String) : ReaderIntent
+    data object CloseImageViewer : ReaderIntent
 }
 

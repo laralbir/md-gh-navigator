@@ -16,7 +16,8 @@ data class HeadingItem(
 class ReaderBridge(
     private val onScrollProgressCallback: (progress: Float, scrollY: Int) -> Unit = { _, _ -> },
     private val onLinkClickedCallback: (url: String) -> Unit = {},
-    private val onHeadingsDetectedCallback: (headings: List<HeadingItem>) -> Unit = {}
+    private val onHeadingsDetectedCallback: (headings: List<HeadingItem>) -> Unit = {},
+    private val onImageClickedCallback: (imageUrl: String, alt: String) -> Unit = { _, _ -> }
 ) {
 
     @JavascriptInterface
@@ -33,6 +34,11 @@ class ReaderBridge(
     fun onHeadingsDetected(headingsJson: String) {
         val items = parseHeadings(headingsJson)
         onHeadingsDetectedCallback(items)
+    }
+
+    @JavascriptInterface
+    fun onImageClicked(url: String, alt: String = "") {
+        onImageClickedCallback(url, alt)
     }
 
     private fun parseHeadings(json: String): List<HeadingItem> {

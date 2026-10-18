@@ -53,4 +53,20 @@ class ReaderBridgeTest {
         assertEquals("Instalación", headings[1].text)
         assertEquals(2, headings[1].level)
     }
+
+    @Test
+    @DisplayName("ReaderBridge correctly dispatches image clicks")
+    fun testImageClicked() {
+        var clickedUrl = ""
+        var imageTitle = ""
+        val bridge = ReaderBridge(onImageClickedCallback = { url, title ->
+            clickedUrl = url
+            imageTitle = title
+        })
+
+        bridge.onImageClicked("https://example.com/diagram.svg", "Class Diagram")
+
+        assertEquals("https://example.com/diagram.svg", clickedUrl)
+        assertEquals("Class Diagram", imageTitle)
+    }
 }

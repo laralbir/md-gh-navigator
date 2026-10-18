@@ -74,9 +74,10 @@ flowchart TD
 - [x] Navegación rápida con un toque mediante evaluación de `window.ReaderApi.scrollToProgress()`.
 - [x] Exportador estructurado `MarkdownAnnotationExporter` y compartición nativa mediante Android Share sheet (`ACTION_SEND`).
 
-### Hito 4.4 — Visor de Imágenes con Pinch-to-Zoom (`feature/reader-image-viewer`)
-- [ ] Componente `ZoomableImageViewer`: modal a pantalla completa con gestos multitáctiles (`detectTransformGestures`) para zoom suave de 1x a 5x y desplazamiento (pan).
-- [ ] Detección de clics en etiquetas `<img>` dentro del WebView Markdown y apertura automática del visor.
+### Hito 4.4 — Visor de Imágenes con Pinch-to-Zoom (`feature/reader-image-viewer`) ✅
+- [x] Componente `ZoomableImageViewer`: modal a pantalla completa con gestos multitáctiles (`detectTransformGestures`) para zoom suave de 1x a 5x, desplazamiento (pan) y doble toque para ampliar o restablecer (`ZoomState`).
+- [x] Detección de clics en etiquetas `<img>` y diagramas SVG dentro del WebView Markdown y apertura automática del visor interactivo vía `ReaderBridge`.
+- [x] Barra superior táctil con indicador de zoom porcentual, botones de zoom in/out, botón de restablecer zoom y botón de cerrar.
 
 ### Hito 4.5 — Pantalla de Ajustes y Gestor de Caché (`feature/reader-settings`)
 - [ ] **TDD:** Tests de `SettingsViewModel` para persistencia de tema, tipografía y selector de idioma.

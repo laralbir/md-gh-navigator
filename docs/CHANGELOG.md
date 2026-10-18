@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Architectural specification for parallel agent/subagent orchestration maximizing CPU and GPU hardware utilization while preventing deadlocks (Coffman conditions, isolated workspaces, strict DAG hierarchy, event-driven reactive messaging).
 - Persisted detailed implementation plans and TDD roadmaps for all development phases (Phase 1 Analysis, Phase 2 Foundation, Phase 3 Core, Phase 4 Enhanced) under `.ai/plans/`.
 - Specification and ADR-018 requiring a formal Pull Request (PR) from `develop` to `main` upon completing each development phase, including SemVer release tagging, automated CI/CD validation, and branch synchronization.
+- Interactive Zoomable Image & Diagram Viewer (`ZoomableImageViewer`, `ZoomState`) with pinch-to-zoom (1x to 5x), double-tap zoom toggle, pan dragging, translucent status backdrop, top controls bar with zoom level badge, and automatic WebView click interception for images and SVG diagrams.
 
 ### Changed
 - Upgraded Room `AppDatabase` to version 2 supporting unified annotations, bookmarks, and highlights with scroll progress.

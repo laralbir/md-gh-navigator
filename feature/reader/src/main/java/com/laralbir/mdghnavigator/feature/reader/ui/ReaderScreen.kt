@@ -61,6 +61,7 @@ import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorIntent
 import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorViewModel
 import com.laralbir.mdghnavigator.feature.navigator.ui.TocSidebar
 import com.laralbir.mdghnavigator.feature.reader.R
+import com.laralbir.mdghnavigator.feature.reader.ui.component.ZoomableImageViewer
 import com.laralbir.mdghnavigator.feature.tts.TtsState
 import com.laralbir.mdghnavigator.feature.tts.ui.TtsPlayerBar
 import kotlinx.coroutines.delay
@@ -349,6 +350,11 @@ fun ReaderScreen(
                                                 navUiState = navUiState,
                                                 onNavigateToDocument = onNavigateToDocument
                                             )
+                                        },
+                                        onImageClicked = { imageUrl, title ->
+                                            readerViewModel.onIntent(
+                                                ReaderIntent.OpenImageViewer(imageUrl, title)
+                                            )
                                         }
                                     )
                                 }
@@ -398,6 +404,11 @@ fun ReaderScreen(
                                             target = target,
                                             navUiState = navUiState,
                                             onNavigateToDocument = onNavigateToDocument
+                                        )
+                                    },
+                                    onImageClicked = { imageUrl, title ->
+                                        readerViewModel.onIntent(
+                                            ReaderIntent.OpenImageViewer(imageUrl, title)
                                         )
                                     }
                                 )
@@ -476,6 +487,16 @@ fun ReaderScreen(
                         note = note
                     )
                 )
+            }
+        )
+    }
+
+    if (readerUiState.selectedImageUrl != null) {
+        ZoomableImageViewer(
+            imageUrl = readerUiState.selectedImageUrl!!,
+            title = readerUiState.selectedImageTitle,
+            onDismiss = {
+                readerViewModel.onIntent(ReaderIntent.CloseImageViewer)
             }
         )
     }

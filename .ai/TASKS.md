@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 4: Experiencia eReader & Herramientas Avanzadas** (Hitos 4.1, 4.2 y 4.3 Completados ✅) → En curso hacia Hito 4.4 (Visor de imágenes interactivo).
+Estado actual: **Fase 4: Experiencia eReader & Herramientas Avanzadas** (Hitos 4.1, 4.2, 4.3 y 4.4 Completados ✅) → En curso hacia Hito 4.5 (Pantalla de Ajustes y Gestor de Caché).
 
 ---
 
@@ -86,7 +86,7 @@ Estado actual: **Fase 4: Experiencia eReader & Herramientas Avanzadas** (Hitos 4
 - [x] Soporte Multi-idioma (i18n): idioma del sistema por defecto, fallback automático a inglés (`res/values/strings.xml`), traducción inicial completa en Español (`res/values-es/strings.xml`) e Inglés (`res/values/strings.xml`), y selector in-app en Ajustes
 - [x] Motor Text-to-Speech (TTS) nativo con selección de idioma y voces de Android
 - [x] Sistema de marcadores (bookmarks), resaltados y anotaciones con panel unificado para navegación rápida, persistencia en Room y exportación a Markdown
-- [ ] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose
+- [x] Visor de imágenes con pinch-to-zoom y doble tap integrado en Compose (`ZoomableImageViewer`, `ZoomState`)
 - [ ] Configuración de tipografía, tamaño de fuente, interlineado y selector de temas (Scholar / Paper / Neon)
 - [ ] Búsqueda full-text (FTS) en documentos locales y repositorios sincronizados
 - [ ] Gestor de almacenamiento con limpieza de caché selectiva y medidor de uso de disco

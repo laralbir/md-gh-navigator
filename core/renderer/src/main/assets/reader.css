@@ -138,6 +138,12 @@ img {
     margin: 1.5em auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: zoom-in;
+    transition: transform 0.15s ease-in-out;
+}
+
+img:active {
+    transform: scale(0.99);
 }
 
 /* Listas */
@@ -159,9 +165,11 @@ li {
     margin: 1.5em 0;
     text-align: center;
     overflow-x: auto;
+    cursor: zoom-in;
 }
 
 .diagram-container svg {
     max-width: 100%;
     height: auto;
+    cursor: zoom-in;
 }

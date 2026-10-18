@@ -32,6 +32,18 @@ class ReaderViewModel @Inject constructor(
             is ReaderIntent.SetTocOpen -> _uiState.update { it.copy(isTocOpen = intent.isOpen) }
             is ReaderIntent.ChangeTheme -> _uiState.update { it.copy(themeMode = intent.theme) }
             is ReaderIntent.ChangeFontSize -> _uiState.update { it.copy(fontSize = intent.size) }
+            is ReaderIntent.OpenImageViewer -> _uiState.update {
+                it.copy(
+                    selectedImageUrl = intent.imageUrl,
+                    selectedImageTitle = intent.title
+                )
+            }
+            is ReaderIntent.CloseImageViewer -> _uiState.update {
+                it.copy(
+                    selectedImageUrl = null,
+                    selectedImageTitle = null
+                )
+            }
         }
     }
 

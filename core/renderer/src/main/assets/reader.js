@@ -72,6 +72,36 @@
         }
     }
 
+    // Intercept image and diagram clicks to open full-screen zoomable viewer
+    function setupImageInterception() {
+        document.addEventListener('click', function (e) {
+            const img = e.target.closest('img, svg, .diagram-container');
+            if (!img) return;
+
+            let src = '';
+            let alt = '';
+
+            if (img.tagName.toLowerCase() === 'img') {
+                src = img.currentSrc || img.src || img.getAttribute('src') || '';
+                alt = img.alt || img.title || '';
+            } else if (img.tagName.toLowerCase() === 'svg' || img.classList.contains('diagram-container')) {
+                const svgElem = img.tagName.toLowerCase() === 'svg' ? img : img.querySelector('svg');
+                if (svgElem) {
+                    const serializer = new XMLSerializer();
+                    const svgString = serializer.serializeToString(svgElem);
+                    src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
+                    alt = svgElem.getAttribute('aria-label') || 'Diagram';
+                }
+            }
+
+            if (src && window.AndroidBridge && window.AndroidBridge.onImageClicked) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.AndroidBridge.onImageClicked(src, alt);
+            }
+        }, true);
+    }
+
     // Public API accessible from Android WebView
     window.ReaderApi = {
         scrollToHeading: function (headingId) {
@@ -96,6 +126,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('DOMContentLoaded', function () {
         setupLinkInterception();
+        setupImageInterception();
         extractHeadings();
     });
 })();

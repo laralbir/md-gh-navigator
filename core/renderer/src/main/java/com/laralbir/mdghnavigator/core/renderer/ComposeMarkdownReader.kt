@@ -30,7 +30,8 @@ fun ComposeMarkdownReader(
     targetHeadingId: String? = null,
     onScrollProgress: (progress: Float, scrollY: Int) -> Unit = { _, _ -> },
     onLinkClicked: (LinkTarget) -> Unit = {},
-    onHeadingsDetected: (List<HeadingItem>) -> Unit = {}
+    onHeadingsDetected: (List<HeadingItem>) -> Unit = {},
+    onImageClicked: (imageUrl: String, title: String) -> Unit = { _, _ -> }
 ) {
     val templateBuilder = remember { HtmlTemplateBuilder() }
     val linkClassifier = remember { MarkdownLinkClassifier() }
@@ -70,7 +71,8 @@ fun ComposeMarkdownReader(
                         val target = linkClassifier.classify(rawUrl)
                         onLinkClicked(target)
                     },
-                    onHeadingsDetectedCallback = onHeadingsDetected
+                    onHeadingsDetectedCallback = onHeadingsDetected,
+                    onImageClickedCallback = onImageClicked
                 )
                 addJavascriptInterface(bridge, "AndroidBridge")
 
