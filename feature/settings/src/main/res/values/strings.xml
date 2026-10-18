@@ -3,9 +3,9 @@
     <string name="settings_title">Settings</string>
     <string name="settings_section_appearance">Appearance</string>
     <string name="settings_theme">Reading Theme</string>
-    <string name="settings_theme_scholar">Scholar (NXTPAPER e-ink)</string>
-    <string name="settings_theme_paper">Paper (Minimalist)</string>
-    <string name="settings_theme_neon">Neon Dev (High contrast)</string>
+    <string name="settings_theme_paper">GitHub Modern (Clean)</string>
+    <string name="settings_theme_scholar">Scholar (Warm Ivory)</string>
+    <string name="settings_theme_neon">Neon Dev (Terminal Dark)</string>
     <string name="settings_typography">Typography</string>
     <string name="settings_font_literata">Literata (Serif)</string>
     <string name="settings_font_inter">Inter (Sans-serif)</string>

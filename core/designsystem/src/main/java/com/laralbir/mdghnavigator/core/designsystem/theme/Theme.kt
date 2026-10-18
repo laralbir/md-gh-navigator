@@ -9,21 +9,21 @@ import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
  * Modos de tema visual soportados por MD GitHub Navigator.
- * - SCHOLAR: Tono sepia y pergamino cálido. Máxima relajación ocular para lectura prolongada. (Predeterminado).
- * - PAPER: Estilo editorial minimalista blanco/negro inspirado en e-readers clásicos.
+ * - PAPER: Estilo GitHub Modern Clean con fondos nítidos y acentos en azul. (Predeterminado).
+ * - SCHOLAR: Tono cálido marfil de lectura relajante para e-readers o noche.
  * - NEON_DEV: Modo oscuro con colores cian/magenta saturados para perfil desarrollador.
  */
 enum class AppThemeMode {
-    SCHOLAR,
     PAPER,
+    SCHOLAR,
     NEON_DEV
 }
 
-val LocalAppThemeMode = staticCompositionLocalOf { AppThemeMode.SCHOLAR }
+val LocalAppThemeMode = staticCompositionLocalOf { AppThemeMode.PAPER }
 
 @Composable
 fun MdGhNavigatorTheme(
-    themeMode: AppThemeMode = AppThemeMode.SCHOLAR,
+    themeMode: AppThemeMode = AppThemeMode.PAPER,
     darkTheme: Boolean = isSystemInDarkTheme(),
     readerTypography: MdReaderTypography = MdReaderTypography(),
     content: @Composable () -> Unit

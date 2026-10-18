@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FormatSize
@@ -151,22 +152,22 @@ fun SettingsScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         ThemeOptionChip(
-                            label = stringResource(R.string.settings_theme_scholar),
-                            colorDot = Color(0xFFFBF0D9),
-                            isSelected = uiState.themeMode.equals("scholar", ignoreCase = true),
-                            onClick = { viewModel.onIntent(SettingsIntent.SetTheme("scholar")) }
-                        )
-
-                        ThemeOptionChip(
                             label = stringResource(R.string.settings_theme_paper),
-                            colorDot = Color(0xFFFAFAFA),
+                            colorDot = Color(0xFF0969DA),
                             isSelected = uiState.themeMode.equals("paper", ignoreCase = true),
                             onClick = { viewModel.onIntent(SettingsIntent.SetTheme("paper")) }
                         )
 
                         ThemeOptionChip(
+                            label = stringResource(R.string.settings_theme_scholar),
+                            colorDot = Color(0xFFCBD5E0),
+                            isSelected = uiState.themeMode.equals("scholar", ignoreCase = true),
+                            onClick = { viewModel.onIntent(SettingsIntent.SetTheme("scholar")) }
+                        )
+
+                        ThemeOptionChip(
                             label = stringResource(R.string.settings_theme_neon),
-                            colorDot = Color(0xFF0F141C),
+                            colorDot = Color(0xFF00E5FF),
                             isSelected = uiState.themeMode.equals("neon", ignoreCase = true),
                             onClick = { viewModel.onIntent(SettingsIntent.SetTheme("neon")) }
                         )
@@ -458,14 +459,24 @@ private fun ThemeOptionChip(
     FilterChip(
         selected = isSelected,
         onClick = onClick,
-        leadingIcon = {
-            Box(
-                modifier = Modifier
-                    .size(14.dp)
-                    .clip(CircleShape)
-                    .background(colorDot)
-                    .border(1.dp, Color.Gray.copy(alpha = 0.5f), CircleShape)
-            )
+        leadingIcon = if (isSelected) {
+            {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        } else {
+            {
+                Box(
+                    modifier = Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(colorDot)
+                        .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f), CircleShape)
+                )
+            }
         },
         label = { Text(label) }
     )

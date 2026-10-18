@@ -2,6 +2,7 @@ package com.laralbir.mdghnavigator.feature.reader.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.laralbir.mdghnavigator.core.common.util.ContentDecoder
 import com.laralbir.mdghnavigator.core.database.dao.DocumentDao
 import com.laralbir.mdghnavigator.feature.tts.TtsController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,12 +55,20 @@ class ReaderViewModel @Inject constructor(
             documentDao.updateLastReadAt(documentId, System.currentTimeMillis())
             documentDao.getDocumentById(documentId).collect { doc ->
                 if (doc != null) {
-                    ttsController?.loadContent(doc.content)
+                    val decoded = ContentDecoder.decodeIfNeeded(doc.content)
+                    val effectiveDoc = if (decoded != doc.content) {
+                        val fixed = doc.copy(content = decoded)
+                        documentDao.upsertDocument(fixed)
+                        fixed
+                    } else {
+                        doc
+                    }
+                    ttsController?.loadContent(effectiveDoc.content)
                     _uiState.update {
                         it.copy(
-                            document = doc,
-                            scrollProgress = doc.scrollProgress,
-                            scrollY = doc.scrollY,
+                            document = effectiveDoc,
+                            scrollProgress = effectiveDoc.scrollProgress,
+                            scrollY = effectiveDoc.scrollY,
                             isLoading = false
                         )
                     }

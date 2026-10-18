@@ -38,9 +38,13 @@ object NetworkModule {
     @Singleton
     fun provideCertificatePinner(): CertificatePinner {
         return CertificatePinner.Builder()
-            // Pins for api.github.com / github.com
+            // Active GitHub Sectigo certificates
+            .add("api.github.com", "sha256/S2LUIbq4yUg5w+MYbj5LZOWAZAzaeNGJ9rTTc4GjvBQ=")
+            .add("api.github.com", "sha256/ZSagvDzjltLkewXEBuDxIzpW/dpVw1Juvvmd0hhkzdY=")
+            .add("api.github.com", "sha256/sLVjNUaFYfW7n6EtgBeEpjOlcnBdNPMrZDRF36iwBdE=")
+            // Legacy / backup pins
             .add("api.github.com", "sha256/WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=")
-            .add("api.github.com", "sha256/k2/oqTRJgPpeYCp+bDoglTmLioZgpdT39f42Ts8a75Z=")
+            .add("api.github.com", "sha256/k2/oqTRJgPpeYCp+bDoglTmLioZgpdT39f42Ts8a75Y=")
             .add("api.github.com", "sha256/r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=")
             .build()
     }

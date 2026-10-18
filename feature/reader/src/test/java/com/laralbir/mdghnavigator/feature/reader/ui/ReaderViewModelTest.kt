@@ -143,5 +143,30 @@ class ReaderViewModelTest {
         assertNull(viewModel.uiState.value.selectedImageUrl)
         assertNull(viewModel.uiState.value.selectedImageTitle)
     }
+
+    @Test
+    @DisplayName("LoadDocument automatically decodes base64 JSON payload and updates Room")
+    fun testLoadDocumentDecodesBase64JsonContent() = runTest {
+        val originalMarkdown = "# Título Decodificado\n\nTexto legible."
+        val base64Content = java.util.Base64.getEncoder().encodeToString(originalMarkdown.toByteArray(Charsets.UTF_8))
+        val jsonPayload = """{"content": "$base64Content", "encoding": "base64"}"""
+
+        val encodedDoc = DocumentEntity(
+            id = "doc-encoded",
+            repoId = "repo-1",
+            filePath = "README.md",
+            title = "README",
+            content = jsonPayload,
+            scrollProgress = 0f,
+            scrollY = 0
+        )
+
+        viewModel.onIntent(ReaderIntent.LoadDocument("doc-encoded"))
+        documentFlow.value = encodedDoc
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(originalMarkdown, viewModel.uiState.value.document?.content)
+        coVerify { documentDao.upsertDocument(match { it.content == originalMarkdown }) }
+    }
 }
 

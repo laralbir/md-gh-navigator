@@ -123,10 +123,16 @@
         }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('DOMContentLoaded', function () {
+    function initReader() {
         setupLinkInterception();
         setupImageInterception();
         extractHeadings();
-    });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initReader);
+    } else {
+        initReader();
+    }
 })();

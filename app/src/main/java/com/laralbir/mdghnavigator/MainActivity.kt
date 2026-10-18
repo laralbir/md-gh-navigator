@@ -36,9 +36,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val userPrefs by preferencesRepository.userPreferences.collectAsState(initial = UserPreferences())
             val appThemeMode = when (userPrefs.themeMode.lowercase()) {
-                "paper" -> AppThemeMode.PAPER
-                "neon" -> AppThemeMode.NEON_DEV
-                else -> AppThemeMode.SCHOLAR
+                "scholar" -> AppThemeMode.SCHOLAR
+                "neon", "neon_dev" -> AppThemeMode.NEON_DEV
+                else -> AppThemeMode.PAPER
             }
 
             MdGhNavigatorTheme(themeMode = appThemeMode) {

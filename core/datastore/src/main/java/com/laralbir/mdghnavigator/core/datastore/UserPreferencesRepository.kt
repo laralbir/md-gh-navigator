@@ -19,7 +19,7 @@ import javax.inject.Singleton
  * @property languageCode Código de idioma BCP-47 o "system" para el idioma del dispositivo
  */
 data class UserPreferences(
-    val themeMode: String = "scholar",
+    val themeMode: String = "paper",
     val fontScale: Float = 1.0f,
     val fontFamily: String = "literata",
     val languageCode: String = "system"
@@ -53,7 +53,7 @@ class DataStoreUserPreferencesRepository @Inject constructor(
 
     override val userPreferences: Flow<UserPreferences> = dataStore.data.map { prefs ->
         UserPreferences(
-            themeMode = prefs[PreferencesKeys.THEME_MODE] ?: "scholar",
+            themeMode = prefs[PreferencesKeys.THEME_MODE] ?: "paper",
             fontScale = prefs[PreferencesKeys.FONT_SCALE] ?: 1.0f,
             fontFamily = prefs[PreferencesKeys.FONT_FAMILY] ?: "literata",
             languageCode = prefs[PreferencesKeys.LANGUAGE_CODE] ?: "system"

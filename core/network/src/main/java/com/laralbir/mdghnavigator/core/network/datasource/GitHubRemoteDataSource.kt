@@ -1,6 +1,7 @@
 package com.laralbir.mdghnavigator.core.network.datasource
 
 import com.laralbir.mdghnavigator.core.common.result.AppResult
+import com.laralbir.mdghnavigator.core.common.util.ContentDecoder
 import com.laralbir.mdghnavigator.core.network.api.GitHubApiService
 import com.laralbir.mdghnavigator.core.network.model.GitHubContentDto
 import com.laralbir.mdghnavigator.core.network.model.GitHubReleaseDto
@@ -53,7 +54,8 @@ class GitHubRemoteDataSource @Inject constructor(
                 response.code() == 304 -> AppResult.NotModified(responseEtag ?: etag)
                 response.isSuccessful -> {
                     val text = response.body()?.string() ?: ""
-                    AppResult.Success(text, responseEtag)
+                    val decoded = ContentDecoder.decodeIfNeeded(text)
+                    AppResult.Success(decoded, responseEtag)
                 }
                 else -> AppResult.Error(response.message(), code = response.code())
             }
