@@ -54,9 +54,9 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
 - [x] Configuración de Compose Testing + Espresso para tests instrumentados
 - [x] Implementación TDD del `DefaultEventBus` en `:core:common` con tests en verde (100% passing)
 
-### 2.3 Seguridad y Red Base 🔄
+### 2.3 Seguridad y Red Base ✅
 - [x] Configurar `network_security_config.xml` con TLS 1.3 y Certificate Pinning para `api.github.com`
-- [ ] Módulo de cifrado seguro con Google Tink para almacenamiento de tokens de GitHub
+- [x] Módulo de cifrado seguro con Google Tink para almacenamiento de tokens de GitHub
 - [x] Configuración Gradle de firma para Release (desacoplada con keystore vía variables de entorno o `secrets.properties`, soporte AAB y APK standalone)
 - [x] Lógica de versionado semántico en Gradle (cálculo de `versionName` y `versionCode` a partir de Git tags / SemVer)
 
