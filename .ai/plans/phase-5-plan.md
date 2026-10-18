@@ -77,14 +77,14 @@ flowchart TD
   - `icon_play_512x512.png` (32-bit PNG con canal alfa).
   - `feature_graphic_1024x500.png` (banner promocional sin bordes).
 
-### Hito 5.2 — Guía de Usuario con Recursos Gráficos y Ejemplos Paso a Paso (`feature/user-guide-graphics`)
-- [ ] Generación de diagramas ilustrativos de interfaz en formato SVG/Mermaid para cada guía de usuario:
+### Hito 5.2 — Guía de Usuario con Recursos Gráficos y Ejemplos Paso a Paso (`feature/user-guide-graphics`) ✅
+- [x] Generación de diagramas ilustrativos de interfaz en formato SVG/Mermaid para cada guía de usuario:
   - `adding-repositories.md`: flujo de sincronización de repositorios remotos y carpetas locales SAF.
   - `reading-navigation.md`: interacción con TOC, anclajes y gestos de zoom.
   - `annotations-bookmarks.md`: marcado de texto, notas flotantes y exportación Markdown.
   - `text-to-speech.md`: uso del reproductor nativo y velocidades.
   - `settings.md`: personalización de temas (Scholar / Paper / Neon) y limpieza de caché.
-- [ ] Sincronización bilingüe completa en `/docs/es/user-guide/` y `/docs/en/user-guide/`.
+- [x] Sincronización bilingüe completa en `/docs/es/user-guide/` y `/docs/en/user-guide/`.
 
 ### Hito 5.3 — Optimización de Release, R8/ProGuard y Firma Dual (`feature/release-optimization-signing`)
 - [ ] Auditoría y ajuste de `app/proguard-rules.pro`:

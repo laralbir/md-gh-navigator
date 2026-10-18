@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hito 5.1 Completado ✅) → En curso hacia Hito 5.2 (Guía de Usuario con Recursos Gráficos y Diagramas).
+Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hitos 5.1 y 5.2 Completados ✅) → En curso hacia Hito 5.3 (Optimización de Release, R8/ProGuard y Firma Dual).
 
 ---
 
@@ -96,7 +96,7 @@ Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hito 5.1 
 - [x] Generación de icono de la aplicación (Adaptive Icons para Android) y pantallas splash/launch (`androidx.core:core-splashscreen`)
 - [ ] Tests E2E de flujos críticos de usuario (añadir repo -> sincronizar -> leer -> anotar -> reanudar)
 - [ ] Auditoría de seguridad final y optimización de rendimiento en tablet TCL NXTPAPER 11 Plus
-- [ ] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
+- [x] Generación y verificación final de la documentación navegable completa (`/docs`), incorporando capturas de pantalla, diagramas y ejemplos gráficos paso a paso en la guía de usuario (`/docs/es/user-guide/` y `/docs/en/user-guide/`) para tablets (TCL NXTPAPER 11 Plus) y smartphones
 - [ ] Preparación de build release (`isMinifyEnabled = true`, R8/ProGuard, subida de `mapping.txt`)
 - [ ] Generación de Android App Bundle (`.aab`) firmado para Google Play Store
 - [ ] Generación de APKs universales (`app-universal-release.apk`) firmados con hash SHA-256 para GitHub Releases
@@ -104,7 +104,7 @@ Estado actual: **Fase 5: Pulido, Recursos Gráficos y Distribución** (Hito 5.1 
 - [ ] Preparación de ficha de Google Play Store:
   - [x] Icono de alta resolución (512x512)
   - [x] Gráfico de funciones (1024x500)
-  - Capturas de pantalla para móviles y tabletas de 7" y 10" (NXTPAPER 11 Plus)
+  - [x] Capturas de pantalla y diagramas para móviles y tabletas de 7" y 10" (NXTPAPER 11 Plus)
   - Formulario de Seguridad de Datos (Data Safety) y clasificación de contenido
   - Política de Privacidad pública
 - [ ] Configuración de despliegue automatizado con Gradle Play Publisher (GPP) o Fastlane (pistas Interna, Cerrada y Producción)

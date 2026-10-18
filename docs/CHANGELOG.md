@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom adaptive launcher icons (`ic_launcher.xml`, `ic_launcher_round.xml`, `ic_launcher_foreground.xml`) uniting open book and git branching iconography with e-paper Scholar aesthetics.
 - Native splash screen integration using AndroidX Core Splashscreen API (`installSplashScreen()`, `Theme.App.Starting`) with smooth transition into the application.
 - High-resolution marketing graphics for Google Play Store: 512x512 app icon (`icon_play_512x512.png`) and 1024x500 feature graphic banner (`feature_graphic_1024x500.png`) in `docs/assets/store/`.
-- Asset generator script `scripts/generate_store_assets.py` using Pillow.
+- High-resolution visual diagrams and UI mockups in `docs/assets/images/user-guide/` covering offline sync, TCL NXTPAPER dual-pane layout, annotations flow, TTS architecture, and themes.
+- Diagram generator script `scripts/generate_guide_diagrams.py` producing 7 graphical user guide assets.
+- Complete bilingual parity for all English user guides (`docs/en/user-guide/`) with integrated Mermaid flowcharts and visual references.
 
 ### Changed
 
