@@ -27,10 +27,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.laralbir.mdghnavigator.core.database.entity.RepositoryEntity
 import com.laralbir.mdghnavigator.core.designsystem.component.EmptyStateView
 import com.laralbir.mdghnavigator.core.designsystem.component.MdTopAppBar
+import com.laralbir.mdghnavigator.feature.library.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,8 +57,8 @@ fun LibraryScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             MdTopAppBar(
-                title = "Biblioteca",
-                subtitle = "MD GitHub Navigator"
+                title = stringResource(R.string.library_title),
+                subtitle = stringResource(R.string.library_subtitle)
             )
         },
         floatingActionButton = {
@@ -67,7 +69,7 @@ fun LibraryScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Añadir repositorio"
+                    contentDescription = stringResource(R.string.library_add_repository)
                 )
             }
         }
@@ -87,9 +89,9 @@ fun LibraryScreen(
             if (uiState.repositories.isEmpty() && !uiState.isLoading) {
                 EmptyStateView(
                     icon = Icons.AutoMirrored.Filled.MenuBook,
-                    title = "Biblioteca vacía",
-                    message = "Añade tu primer repositorio de GitHub o una carpeta local para comenzar a leer tus documentos en Markdown.",
-                    actionLabel = "Añadir Repositorio",
+                    title = stringResource(R.string.library_empty_title),
+                    message = stringResource(R.string.library_empty_message),
+                    actionLabel = stringResource(R.string.library_add_repository_button),
                     onActionClick = { viewModel.onIntent(LibraryIntent.OpenAddDialog) }
                 )
             } else {

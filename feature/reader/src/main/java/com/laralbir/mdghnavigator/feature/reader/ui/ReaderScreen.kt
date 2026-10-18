@@ -40,8 +40,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.laralbir.mdghnavigator.feature.reader.R
 import com.laralbir.mdghnavigator.core.designsystem.component.ErrorStateView
 import com.laralbir.mdghnavigator.core.designsystem.component.LoadingView
 import com.laralbir.mdghnavigator.core.designsystem.component.MdTopAppBar
@@ -92,8 +94,9 @@ fun ReaderScreen(
         Scaffold(
             topBar = {
                 Column {
+                    val defaultTitle = stringResource(R.string.reader_title_default)
                     MdTopAppBar(
-                        title = readerUiState.document?.title?.ifBlank { "Lector Markdown" } ?: "Lector Markdown",
+                        title = readerUiState.document?.title?.ifBlank { defaultTitle } ?: defaultTitle,
                         subtitle = readerUiState.document?.filePath,
                         onNavigationClick = onBackClick,
                         actions = {
@@ -112,7 +115,7 @@ fun ReaderScreen(
                                     } else {
                                         Icons.Default.Menu
                                     },
-                                    contentDescription = "Índice de contenidos"
+                                    contentDescription = stringResource(R.string.reader_toc_button)
                                 )
                             }
 
@@ -120,7 +123,7 @@ fun ReaderScreen(
                                 IconButton(onClick = { showThemeMenu = true }) {
                                     Icon(
                                         imageVector = Icons.Default.Palette,
-                                        contentDescription = "Cambiar tema"
+                                        contentDescription = stringResource(R.string.reader_change_theme)
                                     )
                                 }
 
@@ -129,21 +132,21 @@ fun ReaderScreen(
                                     onDismissRequest = { showThemeMenu = false }
                                 ) {
                                     DropdownMenuItem(
-                                        text = { Text("Tema Scholar (NXTPAPER)") },
+                                        text = { Text(stringResource(R.string.reader_theme_scholar)) },
                                         onClick = {
                                             readerViewModel.onIntent(ReaderIntent.ChangeTheme("scholar"))
                                             showThemeMenu = false
                                         }
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Tema Paper (Minimalista)") },
+                                        text = { Text(stringResource(R.string.reader_theme_paper)) },
                                         onClick = {
                                             readerViewModel.onIntent(ReaderIntent.ChangeTheme("paper"))
                                             showThemeMenu = false
                                         }
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Tema Neon Dev (Alto Contraste)") },
+                                        text = { Text(stringResource(R.string.reader_theme_neon)) },
                                         onClick = {
                                             readerViewModel.onIntent(ReaderIntent.ChangeTheme("neon"))
                                             showThemeMenu = false
@@ -167,11 +170,11 @@ fun ReaderScreen(
             ) {
                 when {
                     readerUiState.isLoading -> {
-                        LoadingView(message = "Cargando documento...")
+                        LoadingView(message = stringResource(R.string.reader_loading_doc))
                     }
                     readerUiState.errorMessage != null -> {
                         ErrorStateView(
-                            message = readerUiState.errorMessage ?: "Error desconocido",
+                            message = readerUiState.errorMessage ?: stringResource(R.string.reader_unknown_error),
                             onRetry = { readerViewModel.onIntent(ReaderIntent.LoadDocument(documentId)) }
                         )
                     }
