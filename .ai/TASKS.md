@@ -1,6 +1,6 @@
 # Backlog de Tareas — MD GitHub Navigator
 
-Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Foundation & Scaffolding) en curso**.
+Estado actual: **Fase 2 (Foundation & Scaffolding) Completada y Verificada ✅** → Listo para **Fase 3: Funcionalidades Core (Lectura y Repositorios)**.
 
 ---
 
@@ -30,12 +30,12 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
 
 ---
 
-## Fase 2: Plan & Arquitectura Base (Foundation) 🔄
+## Fase 2: Plan & Arquitectura Base (Foundation) ✅
 
 ### 2.1 Estructura Gradle y Módulos ✅
 - [x] Configurar Gradle con Kotlin DSL y Version Catalog (`gradle/libs.versions.toml`)
 - [x] Configurar módulo `:app` con Android SDK 36, minSdk 24
-- [x] Modularización del proyecto implementada y verificada:
+- [x] Modularización del proyecto implementada y verificada (13 módulos):
   - `:core:common` (utilidades base, despachadores, EventBus)
   - `:core:designsystem` (tema Scholar, tipografías Literata/Inter, paleta M3)
   - `:core:network` (Retrofit, OkHttp, Certificate Pinning, interceptores de auth)
@@ -49,16 +49,24 @@ Estado actual: **Fase 1 (Análisis) Completada y Aprobada** → **Fase 2 (Founda
   - `:feature:settings` (Preferencias, temas, tipografía, gestión de caché)
   - `:feature:tts` (Text-to-Speech con voces descargables)
 
-### 2.2 Infraestructura de Testing (TDD) 🔄
+### 2.2 Infraestructura de Testing (TDD) ✅
 - [x] Configuración de JUnit 5 + MockK + Turbine para tests unitarios
 - [x] Configuración de Compose Testing + Espresso para tests instrumentados
-- [x] Implementación TDD del `DefaultEventBus` en `:core:common` con tests en verde (100% passing)
+- [x] Implementación TDD del `DefaultEventBus` en `:core:common` con tests en verde
+- [x] Implementación TDD de `EncryptedTokenStorage` en `:core:datastore` con Google Tink
+- [x] Implementación TDD de interceptores de red en `:core:network` (`AuthInterceptorTest`, `RateLimitInterceptorTest`) con MockWebServer
+- [x] Implementación TDD de contratos de contraste WCAG y tipografía en `:core:designsystem`
+- [x] Implementación TDD de clasificador de links y puente JS en `:core:renderer`
+- [x] Implementación TDD de TypeConverters en `:core:database`
+- [x] Smoke test de cálculo de SemVer y version code en `:app`
 
 ### 2.3 Seguridad y Red Base ✅
 - [x] Configurar `network_security_config.xml` con TLS 1.3 y Certificate Pinning para `api.github.com`
 - [x] Módulo de cifrado seguro con Google Tink para almacenamiento de tokens de GitHub
 - [x] Configuración Gradle de firma para Release (desacoplada con keystore vía variables de entorno o `secrets.properties`, soporte AAB y APK standalone)
 - [x] Lógica de versionado semántico en Gradle (cálculo de `versionName` y `versionCode` a partir de Git tags / SemVer)
+- [x] Verificación de construcción limpia: APK (`app-debug.apk`, 19MB) y AAB (`app-debug.aab`, 16MB) generados con éxito.
+
 
 ---
 
