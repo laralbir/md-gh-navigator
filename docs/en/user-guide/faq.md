@@ -13,8 +13,8 @@ Answers to common questions regarding **MD GitHub Navigator** functionality, pri
 ### Can I use the app with private company or personal repositories?
 **Yes.** You can authenticate seamlessly using **OAuth Device Flow** or supply a Personal Access Token (PAT) with read-only repository permissions (`repo:read`). All credentials are encrypted using Google Tink and authenticated Android Keystore hardware keys.
 
-### Why is the Scholar theme chosen as default?
-Because it was engineered to maximize visual comfort and reduce eye strain on anti-glare, matte e-paper displays such as the **TCL NXTPAPER 11 Plus**. It emulates warm physical book pages with zero blue-light spikes. You can switch to *Paper* or *Neon Dev* anytime from Settings.
+### What visual reading themes are available?
+The application defaults to **GitHub Modern (Paper)**, featuring a crisp white background, electric blue accents, and high contrast for sharp technical readability. In addition, you can choose the **Scholar** theme (softened contrast and balanced tones ideal for prolonged sessions and matte screens like the **TCL NXTPAPER 11 Plus**) or the **Neon Dev** theme (cyber dark mode). You can switch themes with a single tap from the top action bar or Settings.
 
 ### Can I export the annotations and notes I make while reading?
 **Yes.** All highlighted passages, notes, and reading bookmarks can be compiled into a single structured Markdown file (`.md`) and shared to Obsidian, Logseq, Notion, Google Drive, or email via Android's native share sheet.

@@ -91,6 +91,7 @@ cursor.execute("CREATE INDEX IF NOT EXISTS `index_toc_items_documentId_orderInde
 
 cursor.execute("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)")
 cursor.execute("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22cb5f83689961e78734ac8eb11a0825')")
+cursor.execute("PRAGMA user_version = 2")
 
 # 2. Insert sample repositories
 repos = [
@@ -135,7 +136,7 @@ Lector eReader especializado en documentación técnica en **Markdown** almacena
 
 - **Renderizado Nativo y Seguro:** Visualización híbrida mediante WebView local aislado con soporte para tipografía legible y temas e-ink.
 - **Soporte Offline Completo:** Caché selectiva que descarga únicamente ficheros `.md` y recursos vinculados.
-- **Optimización para Pantalla Mate:** Paleta de colores cálida *Scholar* diseñada específicamente para tablets **TCL NXTPAPER 11 Plus**.
+- **Optimización de Lectura:** Paleta de colores nítida *Paper* diseñada para máxima claridad y confort visual en tablets y móviles.
 - **Motor Text-to-Speech (TTS):** Locución fluida del texto descartando sintaxis markdown y enlaces crudos.
 - **Anotaciones y Marcadores:** Resaltado cromático, notas al margen y exportación unificada.
 
@@ -152,9 +153,9 @@ class MainActivity : ComponentActivity() {
 
 ## 🎨 Temas Visuales Disponibles
 
-1. **Scholar (Por defecto):** Fondo pergamino cálido `#FAF7F2` con texto sepia `#2C2420`.
-2. **Paper (Minimalista):** Alto contraste blanco y negro para entornos iluminados.
-3. **Neon Dev (IDE):** Tema oscuro para desarrolladores con acentos cian y magenta.
+1. **Paper (Por defecto):** Alto contraste blanco puro `#FFFFFF` y tipografía nítida `#1F2328` con azul GitHub `#0969DA`.
+2. **Neon Dev (IDE):** Tema oscuro para desarrolladores con acentos cian y azul eléctrico.
+3. **Scholar:** Tono cálido para lectura prolongada.
 """
 
 doc_id = "github:laralbir/md-gh-navigator:README.md"
@@ -227,7 +228,7 @@ annotations = [
         "github:laralbir/md-gh-navigator",
         "HIGHLIGHT",
         None,
-        "Paleta de colores cálida Scholar diseñada específicamente para tablets TCL NXTPAPER",
+        "Paleta de colores nítida Paper diseñada para máxima claridad y confort visual",
         None,
         "#81C784",
         120,

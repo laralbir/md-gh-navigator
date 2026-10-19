@@ -34,7 +34,7 @@ Ideal for devices without Google Play services, custom ROMs, or dedicated e-read
 
 ```mermaid
 flowchart TD
-    AppStart["🚀 MD GitHub Navigator Launch"] --> ThemeApply["🎨 Load Scholar Theme (Warm Sepia Tone)"]
+    AppStart["🚀 MD GitHub Navigator Launch"] --> ThemeApply["🎨 Load GitHub Modern / Paper Theme (Clean Palette)"]
     ThemeApply --> DeviceCheck{"📱 Form Factor Detection"}
     DeviceCheck -->|"Tablet (≥ 840dp) TCL NXTPAPER"| TwoPane["📖 Adaptive Layout: Navigation Rail + Dual-Pane Content"]
     DeviceCheck -->|"Smartphone (< 840dp)"| CompactView["📱 Mobile Layout: TopAppBar + Modal Drawer"]
@@ -43,7 +43,7 @@ flowchart TD
 ```
 
 ![Initial welcome and library screen on TCL NXTPAPER 11 Plus tablet](../../assets/images/user-guide/getting-started-tablet-welcome.png)
-*Figure 1: Tablet layout on TCL NXTPAPER 11 Plus with Scholar theme active and initial welcome cards.*
+*Figure 1: Tablet layout on TCL NXTPAPER 11 Plus with GitHub Modern (Paper) theme active and initial welcome cards.*
 
 ![Smartphone welcome view](../../assets/images/user-guide/getting-started-phone-welcome.png)
 *Figure 2: Compact smartphone layout with direct access to the floating add button.*
@@ -54,4 +54,4 @@ flowchart TD
 
 - **Navigation Rail (Tablets):** Instantly switch between the *Library*, *Recent Documents*, *Bookmarks & Annotations*, and *Settings*.
 - **Full-Screen Canvas:** Tap near the center of any open document to toggle the top action bar and bottom reading controls.
-- **One-Tap Theme Switcher:** Tap the palette selector to alternate between *Scholar* (warm sepia paper), *Paper* (minimalist e-ink), or *Neon Dev* (high-contrast code editor).
+- **One-Tap Theme Switcher:** Tap the palette selector to alternate between *Paper* (GitHub Modern, default), *Scholar* (relaxed reading), or *Neon Dev* (high-contrast code editor).

@@ -7,8 +7,8 @@ Personaliza la apariencia y el comportamiento de la app según tus preferencias 
 ```mermaid
 flowchart TD
     subgraph Temas["Paletas de Color & Temas"]
-        Scholar["Scholar (Default)<br/>Fondo pergamino #FAF7F2, marrón café #2C2420, tipografía Serif Literata"]
-        Paper["Paper (Minimalista)<br/>Fondo blanco puro / negro profundo, tipografía Sans Inter"]
+        Paper["Paper (GitHub Modern - Predeterminado)<br/>Fondo blanco puro / acentos azul #0969DA, tipografía Sans Inter"]
+        Scholar["Scholar (Lectura Relajante)<br/>Fondo slate suave #F8FAFC, contraste equilibrado"]
         Neon["Neon Dev (IDE)<br/>Fondo cyber #0A0E14, cian #00E5FF y magenta terminal"]
     end
 
@@ -22,8 +22,8 @@ flowchart TD
 
 ## 1. Temas de Visualización
 
-- **Scholar (Predeterminado):** Diseñado con un fondo cálido tipo pergamino suave, contraste rebajado y tipografía Serif, ideal para la pantalla mate de la tablet **TCL NXTPAPER 11 Plus** o para sesiones nocturnas de estudio.
-- **Paper:** Estilo minimalista de alto contraste con blancos puros o negros profundos, inspirado en Notion y Medium.
+- **Paper / GitHub Modern (Predeterminado):** Estilo nítido de alto contraste con fondo blanco puro y acentos azules modernos, máxima legibilidad técnica e inspirado en GitHub y Notion.
+- **Scholar (Lectura Relajante):** Diseñado con un fondo suave de contraste reducido, ideal para sesiones prolongadas de estudio o pantallas mate como **TCL NXTPAPER 11 Plus**.
 - **Neon Dev:** Tema oscuro con acentos de color vibrantes para quienes prefieren la estética de un editor de código moderno.
 - **Modo del Sistema:** Alterna automáticamente entre Claro y Oscuro según la configuración de Android.
 

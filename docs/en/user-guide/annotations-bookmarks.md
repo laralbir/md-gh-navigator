@@ -26,7 +26,7 @@ flowchart LR
 
 - **Text Selection:** Long-press and drag your finger across any text paragraph or heading you wish to mark.
 - **Floating Action Bar:**
-  - **Color Palette:** Choose from 4 soft pastel colors (Scholar Warm Amber, Mint Green, Rose, or Sepia).
+  - **Color Palette:** Choose from 4 soft pastel colors (Warm Amber, Mint Green, Rose, or Sky Blue).
   - **Attach Note:** Add your personal reflections or technical clarifications to the highlight.
 - **Rendering:** Highlighted spans are styled smoothly without breaking layout flow or contrast. Tapping any highlight displays its attached note in an inspector card.
 

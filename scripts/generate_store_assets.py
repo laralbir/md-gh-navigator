@@ -70,14 +70,15 @@ def generate_play_icon():
     g_draw = ImageDraw.Draw(gradient)
     for y in range(size[1]):
         t = y / size[1]
-        r = int(250 * (1 - t) + 237 * t)
-        g = int(247 * (1 - t) + 227 * t)
-        b = int(242 * (1 - t) + 216 * t)
+        r = int(255 * (1 - t) + 246 * t)
+        g = int(255 * (1 - t) + 248 * t)
+        b = int(255 * (1 - t) + 250 * t)
         g_draw.line([(0, y), (size[0], y)], fill=(r, g, b, 255))
 
     img.paste(gradient, (0, 0), mask)
-    draw.rounded_rectangle(bg_bounds, radius=radius, outline=(211, 196, 184, 255), width=3)
+    draw.rounded_rectangle(bg_bounds, radius=radius, outline=(208, 215, 222, 255), width=3)
 
+    # Book cover in GitHub Electric Blue (#0969DA)
     cover_poly = [
         (256, 150),
         (216, 138), (176, 138), (124, 148), (116, 160),
@@ -86,8 +87,9 @@ def generate_play_icon():
         (292, 352), (332, 350), (384, 362), (396, 350),
         (396, 160), (388, 148), (336, 138), (296, 138)
     ]
-    draw.polygon(cover_poly, fill=(62, 39, 35, 255))
+    draw.polygon(cover_poly, fill=(9, 105, 218, 255))
 
+    # Pages in Crisp White (#FFFFFF)
     pages_poly = [
         (256, 160),
         (220, 148), (180, 148), (134, 158),
@@ -98,20 +100,22 @@ def generate_play_icon():
         (378, 158),
         (332, 148), (292, 148)
     ]
-    draw.polygon(pages_poly, fill=(255, 253, 249, 255))
-    draw.line([(256, 160), (256, 348)], fill=(211, 196, 184, 255), width=3)
+    draw.polygon(pages_poly, fill=(255, 255, 255, 255))
+    draw.line([(256, 160), (256, 348)], fill=(208, 215, 222, 255), width=3)
 
     for i in range(5):
         y_off = 185 + i * 26
-        draw.line([(156, y_off), (236, y_off - 4)], fill=(211, 196, 184, 255), width=3)
+        draw.line([(156, y_off), (236, y_off - 4)], fill=(208, 215, 222, 255), width=3)
 
+    # Markdown badge in GitHub Green (#2DA44E)
     badge_x, badge_y, badge_w, badge_h = 140, 240, 80, 60
     draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
-                           radius=8, fill=(93, 64, 55, 255))
-    draw.text((badge_x + 12, badge_y + 12), "M ↓", fill=(250, 247, 242, 255), font=get_font(28, bold=True))
+                           radius=8, fill=(45, 164, 78, 255))
+    draw.text((badge_x + 12, badge_y + 12), "M ↓", fill=(255, 255, 255, 255), font=get_font(28, bold=True))
 
-    git_color = (93, 64, 55, 255)
-    branch_color = (141, 110, 99, 255)
+    # Git tree in GitHub Blue & Green
+    git_color = (9, 105, 218, 255)
+    branch_color = (45, 164, 78, 255)
     draw.line([(288, 195), (288, 315)], fill=git_color, width=4)
     draw.line([(288, 230), (338, 245)], fill=branch_color, width=4)
     draw.line([(338, 245), (338, 310)], fill=branch_color, width=4)
@@ -121,9 +125,9 @@ def generate_play_icon():
 
     draw_node(288, 195, 8, git_color)
     draw_node(288, 230, 8, branch_color)
-    draw_node(338, 245, 8, (161, 136, 127, 255))
+    draw_node(338, 245, 8, (84, 174, 255, 255))
     draw_node(288, 280, 8, git_color)
-    draw_node(288, 315, 6, (62, 39, 35, 255))
+    draw_node(288, 315, 6, (31, 35, 40, 255))
 
     icon_path = os.path.join(ASSETS_DIR, "icon_play_512x512.png")
     img.save(icon_path, "PNG")
@@ -135,39 +139,40 @@ def generate_feature_graphic():
     img = Image.new("RGBA", size)
     draw = ImageDraw.Draw(img)
 
+    # 1. Dark Slate Gradient (#0D1117 to #161B22)
     for x in range(size[0]):
         t = x / size[0]
-        r = int(30 * (1 - t) + 62 * t)
-        g = int(25 * (1 - t) + 39 * t)
-        b = int(23 * (1 - t) + 35 * t)
+        r = int(13 * (1 - t) + 22 * t)
+        g = int(17 * (1 - t) + 27 * t)
+        b = int(23 * (1 - t) + 34 * t)
         draw.line([(x, 0), (x, size[1])], fill=(r, g, b, 255))
 
     glow = Image.new("RGBA", size, (0, 0, 0, 0))
     glow_draw = ImageDraw.Draw(glow)
     for r in range(240, 0, -10):
-        alpha = int(45 * (1 - r / 240))
-        glow_draw.ellipse([720 - r, 250 - r, 720 + r, 250 + r], fill=(215, 204, 200, alpha))
+        alpha = int(40 * (1 - r / 240))
+        glow_draw.ellipse([720 - r, 250 - r, 720 + r, 250 + r], fill=(9, 105, 218, alpha))
     img = Image.alpha_composite(img, glow)
     draw = ImageDraw.Draw(img)
 
     # 2. Left side: Branding text & badges
-    draw.text((54, 75), "MD GitHub Navigator", fill=(250, 247, 242, 255), font=get_font(38, bold=True))
-    draw.text((54, 130), "The Modern Markdown & Git eReader", fill=(215, 204, 200, 255), font=get_font(20, bold=True))
-    draw.text((54, 160), "Optimizado para Android y TCL NXTPAPER 11 Plus", fill=(188, 170, 164, 255), font=get_font(15))
+    draw.text((54, 75), "MD GitHub Navigator", fill=(255, 255, 255, 255), font=get_font(38, bold=True))
+    draw.text((54, 130), "The Modern Markdown & Git eReader", fill=(84, 174, 255, 255), font=get_font(20, bold=True))
+    draw.text((54, 160), "Optimizado para Android y TCL NXTPAPER 11 Plus", fill=(140, 149, 159, 255), font=get_font(15))
 
     badges = [
         ("✦  Caché Offline Selectiva (.md y recursos vinculados)", 210),
         ("✦  Diagramas Locales Mermaid, D2 y Renderizado SVG", 255),
         ("✦  Anotaciones Unificadas, Resaltados y Voz TTS", 300),
-        ("✦  Temas Scholar, Paper y Neon Dev de Alto Contraste", 345),
+        ("✦  Temas GitHub Modern (Paper) y Neon Dev", 345),
     ]
     for text, y in badges:
         pad_x, pad_y = 12, 6
-        draw.rounded_rectangle([54, y - pad_y, 500, y + 26], radius=6, fill=(44, 36, 32, 210), outline=(93, 64, 55, 255), width=1)
-        draw.text((64, y), text, fill=(237, 227, 216, 255), font=get_font(13))
+        draw.rounded_rectangle([54, y - pad_y, 500, y + 26], radius=6, fill=(22, 27, 34, 230), outline=(48, 54, 61, 255), width=1)
+        draw.text((64, y), text, fill=(240, 246, 252, 255), font=get_font(13))
 
-    ver_text = "Release v1.0.0 • Google Play & GitHub Releases"
-    draw.text((54, 420), ver_text, fill=(188, 170, 164, 255), font=get_font(14, bold=True))
+    ver_text = "Release v1.0.0 (Beta) • Google Play & GitHub Releases"
+    draw.text((54, 420), ver_text, fill=(140, 149, 159, 255), font=get_font(14, bold=True))
 
     # 3. Right side: REAL Tablet Screenshot inside sleek tablet chassis
     tablet_path = os.path.join(GUIDE_DIR, "screenshot_tablet_dual_pane_reader.png")
@@ -182,7 +187,7 @@ def generate_feature_graphic():
         tablet_frame = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
         f_draw = ImageDraw.Draw(tablet_frame)
         f_draw.rounded_rectangle([0, 0, frame_w - 1, frame_h - 1], radius=16,
-                                 fill=(20, 20, 22, 255), outline=(90, 80, 75, 255), width=border_w)
+                                 fill=(13, 17, 23, 255), outline=(48, 54, 61, 255), width=border_w)
         tablet_frame.paste(tab_resized, (border_w, border_w))
 
         img.paste(tablet_frame, (530, 85), tablet_frame)
