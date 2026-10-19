@@ -16,5 +16,6 @@
     <string name="image_viewer_zoom_out">Reducir imagen</string>
     <string name="image_viewer_zoom_reset">Restablecer zoom</string>
     <string name="image_viewer_title_default">Vista previa de imagen</string>
+    <string name="image_viewer_error">Error al cargar la imagen o diagrama</string>
 </resources>
 
