@@ -29,4 +29,7 @@ interface RepositoryDao {
 
     @Query("UPDATE repositories SET isPinned = :isPinned WHERE id = :id")
     suspend fun setPinned(id: String, isPinned: Boolean)
+
+    @Query("UPDATE repositories SET alias = :alias WHERE id = :id")
+    suspend fun updateAlias(id: String, alias: String?)
 }

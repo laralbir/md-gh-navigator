@@ -39,8 +39,8 @@ fun AddRepositoryDialog(
     isLoading: Boolean,
     errorMessage: String?,
     onDismiss: () -> Unit,
-    onAddGitHubRepo: (owner: String, repo: String, branch: String?, startFilePath: String) -> Unit,
-    onSelectLocalFolder: (name: String, startFilePath: String) -> Unit
+    onAddGitHubRepo: (owner: String, repo: String, branch: String?, startFilePath: String, alias: String?) -> Unit,
+    onSelectLocalFolder: (name: String, startFilePath: String, alias: String?) -> Unit
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
 
@@ -49,10 +49,12 @@ fun AddRepositoryDialog(
     var repoName by remember { mutableStateOf("") }
     var branch by remember { mutableStateOf("") }
     var startFile by remember { mutableStateOf("README.md") }
+    var alias by remember { mutableStateOf("") }
 
     // Local folder fields
     var localCollectionName by remember { mutableStateOf("") }
     var localStartFile by remember { mutableStateOf("README.md") }
+    var localAlias by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = { if (!isLoading) onDismiss() },
@@ -123,6 +125,16 @@ fun AddRepositoryDialog(
                         singleLine = true,
                         enabled = !isLoading
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = alias,
+                        onValueChange = { alias = it },
+                        label = { Text(stringResource(R.string.library_alias_label)) },
+                        placeholder = { Text(stringResource(R.string.library_alias_placeholder)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        enabled = !isLoading
+                    )
                 } else {
                     // Formulario Local
                     OutlinedTextField(
@@ -140,6 +152,16 @@ fun AddRepositoryDialog(
                         onValueChange = { localStartFile = it },
                         label = { Text(stringResource(R.string.library_start_file_label)) },
                         placeholder = { Text(stringResource(R.string.library_start_file_placeholder)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        enabled = !isLoading
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = localAlias,
+                        onValueChange = { localAlias = it },
+                        label = { Text(stringResource(R.string.library_alias_label)) },
+                        placeholder = { Text(stringResource(R.string.library_alias_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         enabled = !isLoading
@@ -165,14 +187,16 @@ fun AddRepositoryDialog(
                                 owner.trim(),
                                 repoName.trim(),
                                 branch.trim().ifBlank { null },
-                                startFile.trim().ifBlank { "README.md" }
+                                startFile.trim().ifBlank { "README.md" },
+                                alias.trim().ifBlank { null }
                             )
                         }
                     } else {
                         if (localCollectionName.isNotBlank()) {
                             onSelectLocalFolder(
                                 localCollectionName.trim(),
-                                localStartFile.trim().ifBlank { "README.md" }
+                                localStartFile.trim().ifBlank { "README.md" },
+                                localAlias.trim().ifBlank { null }
                             )
                         }
                     }

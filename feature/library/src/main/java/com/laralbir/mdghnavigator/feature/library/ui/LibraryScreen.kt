@@ -26,7 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -46,6 +48,7 @@ fun LibraryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    var repoToEditAlias by remember { mutableStateOf<RepositoryEntity?>(null) }
 
     LaunchedEffect(uiState.errorMessage) {
         val error = uiState.errorMessage
@@ -122,10 +125,22 @@ fun LibraryScreen(
                             onClick = { onRepositoryClick(repo) },
                             onSyncClick = { viewModel.onIntent(LibraryIntent.SyncRepository(repo)) },
                             onPinClick = { viewModel.onIntent(LibraryIntent.TogglePinRepository(repo.id, repo.isPinned)) },
-                            onDeleteClick = { viewModel.onIntent(LibraryIntent.DeleteRepository(repo.id)) }
+                            onDeleteClick = { viewModel.onIntent(LibraryIntent.DeleteRepository(repo.id)) },
+                            onEditAliasClick = { repoToEditAlias = repo }
                         )
                     }
                 }
+            }
+
+            repoToEditAlias?.let { repo ->
+                EditAliasDialog(
+                    repository = repo,
+                    onDismiss = { repoToEditAlias = null },
+                    onSaveAlias = { newAlias ->
+                        viewModel.onIntent(LibraryIntent.UpdateRepositoryAlias(repo.id, newAlias))
+                        repoToEditAlias = null
+                    }
+                )
             }
 
             if (uiState.isAddDialogOpen) {
@@ -133,17 +148,18 @@ fun LibraryScreen(
                     isLoading = uiState.isLoading,
                     errorMessage = uiState.errorMessage,
                     onDismiss = { viewModel.onIntent(LibraryIntent.CloseAddDialog) },
-                    onAddGitHubRepo = { owner, repo, branch, startFile ->
+                    onAddGitHubRepo = { owner, repo, branch, startFile, alias ->
                         viewModel.onIntent(
                             LibraryIntent.AddGitHubRepository(
                                 owner = owner,
                                 repo = repo,
                                 branch = branch,
-                                startFilePath = startFile
+                                startFilePath = startFile,
+                                alias = alias
                             )
                         )
                     },
-                    onSelectLocalFolder = { name, startFile ->
+                    onSelectLocalFolder = { name, startFile, alias ->
                         // Stub for SAF selector callback
                         viewModel.onIntent(LibraryIntent.CloseAddDialog)
                     }

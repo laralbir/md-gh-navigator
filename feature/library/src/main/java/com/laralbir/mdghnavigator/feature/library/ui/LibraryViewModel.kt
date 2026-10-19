@@ -40,9 +40,11 @@ class LibraryViewModel @Inject constructor(
                 owner = intent.owner,
                 repo = intent.repo,
                 branch = intent.branch,
-                startFilePath = intent.startFilePath
+                startFilePath = intent.startFilePath,
+                alias = intent.alias
             )
             is LibraryIntent.ImportLocalDirectory -> importLocalDirectory(intent)
+            is LibraryIntent.UpdateRepositoryAlias -> updateRepositoryAlias(intent.repoId, intent.alias)
             is LibraryIntent.SyncRepository -> syncRepository(intent.repository)
             is LibraryIntent.DeleteRepository -> deleteRepository(intent.repoId)
             is LibraryIntent.TogglePinRepository -> togglePinRepository(intent.repoId, intent.isPinned)
@@ -64,11 +66,12 @@ class LibraryViewModel @Inject constructor(
         owner: String,
         repo: String,
         branch: String?,
-        startFilePath: String
+        startFilePath: String,
+        alias: String? = null
     ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            when (val result = cacheManager.syncGitHubRepository(owner, repo, branch, startFilePath)) {
+            when (val result = cacheManager.syncGitHubRepository(owner, repo, branch, startFilePath, alias)) {
                 is AppResult.Success -> {
                     _uiState.update {
                         it.copy(isLoading = false, isAddDialogOpen = false, errorMessage = null)
@@ -95,7 +98,8 @@ class LibraryViewModel @Inject constructor(
                 repoName = intent.name,
                 uriString = intent.uriString,
                 files = intent.files,
-                startFilePath = intent.startFilePath
+                startFilePath = intent.startFilePath,
+                alias = intent.alias
             )) {
                 is AppResult.Success -> {
                     _uiState.update {
@@ -150,6 +154,12 @@ class LibraryViewModel @Inject constructor(
     private fun togglePinRepository(repoId: String, currentPinned: Boolean) {
         viewModelScope.launch {
             repositoryDao.setPinned(repoId, !currentPinned)
+        }
+    }
+
+    private fun updateRepositoryAlias(repoId: String, alias: String?) {
+        viewModelScope.launch {
+            repositoryDao.updateAlias(repoId, alias?.trim()?.ifBlank { null })
         }
     }
 }

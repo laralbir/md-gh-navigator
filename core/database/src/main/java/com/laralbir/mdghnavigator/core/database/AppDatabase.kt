@@ -20,7 +20,7 @@ import com.laralbir.mdghnavigator.core.database.entity.TocItemEntity
         AnnotationEntity::class,
         TocItemEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(DatabaseConverters::class)

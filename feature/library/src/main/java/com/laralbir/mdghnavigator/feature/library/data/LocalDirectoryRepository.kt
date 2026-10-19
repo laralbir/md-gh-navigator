@@ -36,7 +36,8 @@ class LocalDirectoryRepository @Inject constructor(
         repoName: String,
         uriString: String,
         files: List<LocalFilePayload>,
-        startFilePath: String = "README.md"
+        startFilePath: String = "README.md",
+        alias: String? = null
     ): AppResult<RepositoryEntity> {
         val repoHash = computeSha256(uriString).take(12)
         val repoId = "local:$repoHash"
@@ -74,7 +75,8 @@ class LocalDirectoryRepository @Inject constructor(
             localUri = uriString,
             startFilePath = resolvedStartFile,
             lastSyncTimestamp = System.currentTimeMillis(),
-            isPinned = existingRepo?.isPinned ?: false
+            isPinned = existingRepo?.isPinned ?: false,
+            alias = alias ?: existingRepo?.alias
         )
 
         repositoryDao.upsertRepository(repository)
