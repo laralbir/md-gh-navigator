@@ -1,9 +1,9 @@
 package com.laralbir.mdghnavigator.feature.settings.ui
 
 data class SettingsUiState(
-    val themeMode: String = "scholar",
+    val themeMode: String = "paper",
     val fontScale: Float = 1.0f,
-    val fontFamily: String = "literata",
+    val fontFamily: String = "inter",
     val languageCode: String = "system",
     val cacheSizeFormatted: String = "0.0 MB",
     val isClearingCache: Boolean = false,

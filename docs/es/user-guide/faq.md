@@ -13,8 +13,8 @@ Respuestas a las dudas más habituales sobre el funcionamiento de **MD GitHub Na
 ### ¿Puedo utilizar la aplicación con repositorios privados de mi empresa?
 **Sí.** Puedes iniciar sesión mediante el flujo OAuth Device Flow o añadir un Personal Access Token (PAT) con alcance de lectura (`repo:read`). Todos los tokens se almacenan cifrados con hardware criptográfico (Android Keystore + Google Tink).
 
-### ¿Por qué se eligió el tema Scholar por defecto?
-Porque fue diseñado expresamente para maximizar la legibilidad y el confort en pantallas mate y tabletas de lectura como la **TCL NXTPAPER 11 Plus**, emulando las propiedades de la tinta electrónica y el papel cálido. No obstante, puedes cambiar a los temas *Paper* o *Neon Dev* en cualquier momento desde los ajustes.
+### ¿Cuáles son los temas de visualización disponibles?
+La aplicación incluye por defecto el tema **GitHub Modern (Paper)**, con fondo blanco limpio, acentos en azul eléctrico y alto contraste, garantizando una lectura técnica fresca y nítida. También dispones del tema **Scholar** (paleta suave de contraste equilibrado ideal para sesiones prolongadas y pantallas mate como la **TCL NXTPAPER 11 Plus**) y **Neon Dev** (modo oscuro estilo terminal). Puedes alternar entre ellos con un solo toque desde la barra superior o en los ajustes.
 
 ### ¿Se pueden exportar las anotaciones que realizo en los documentos?
 **Sí.** Puedes exportar tus citas y notas en formato Markdown estándar para importarlas en herramientas como Obsidian, Logseq, Notion o enviarlas por correo electrónico.

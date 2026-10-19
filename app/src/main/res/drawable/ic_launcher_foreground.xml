@@ -4,9 +4,9 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Book Base / Leather Cover Shadow -->
+    <!-- Book Base / Cover Shadow (GitHub Modern Electric Blue) -->
     <path
-        android:fillColor="#3E2723"
+        android:fillColor="#0969DA"
         android:pathData="M 54,34
                           C 46,31 38,31 28,33
                           C 26.5,33.3 26,34.5 26,36
@@ -19,9 +19,9 @@
                           C 82,34.5 81.5,33.3 80,33
                           C 70,31 62,31 54,34 Z" />
 
-    <!-- Open Book Pages (Parchment Ivory) -->
+    <!-- Open Book Pages (Crisp White) -->
     <path
-        android:fillColor="#FAF7F2"
+        android:fillColor="#FFFFFF"
         android:pathData="M 54,36
                           C 47,33.5 40,33.5 30,35.2
                           L 30,73.5
@@ -32,14 +32,14 @@
 
     <!-- Book Spine Crease -->
     <path
-        android:strokeColor="#D7CCC8"
+        android:strokeColor="#D0D7DE"
         android:strokeWidth="1.5"
         android:pathData="M 54,36 L 54,75.5" />
 
     <!-- Left Page: Markdown Elements (M badge + down arrow + lines) -->
     <!-- Markdown "M" mark -->
     <path
-        android:strokeColor="#5D4037"
+        android:strokeColor="#0969DA"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
@@ -48,7 +48,7 @@
 
     <!-- Markdown down arrow badge -->
     <path
-        android:strokeColor="#795548"
+        android:strokeColor="#0969DA"
         android:strokeWidth="1.8"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
@@ -57,7 +57,7 @@
 
     <!-- Text line 1 -->
     <path
-        android:strokeColor="#8D6E63"
+        android:strokeColor="#57606A"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
@@ -65,7 +65,7 @@
 
     <!-- Text line 2 -->
     <path
-        android:strokeColor="#8D6E63"
+        android:strokeColor="#8C959F"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
@@ -73,7 +73,7 @@
 
     <!-- Text line 3 -->
     <path
-        android:strokeColor="#A1887F"
+        android:strokeColor="#AFB8C1"
         android:strokeWidth="1.8"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
@@ -82,44 +82,44 @@
     <!-- Right Page: Git Branching Graph -->
     <!-- Main branch trunk -->
     <path
-        android:strokeColor="#5D4037"
+        android:strokeColor="#1F2328"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
         android:pathData="M 61,42 L 61,68" />
 
-    <!-- Feature branch curve -->
+    <!-- Feature branch arc -->
     <path
-        android:strokeColor="#795548"
+        android:strokeColor="#2DA44E"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
         android:pathData="M 61,48 C 65,48 70,51 70,55 C 70,59 65,62 61,62" />
 
     <!-- Git Commit Nodes -->
-    <!-- Node 1 (Root) -->
+    <!-- Root commit node -->
     <path
-        android:fillColor="#5D4037"
+        android:fillColor="#1F2328"
         android:pathData="M 61,42 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
 
-    <!-- Node 2 (Branch off) -->
+    <!-- Branch departure node -->
     <path
-        android:fillColor="#795548"
+        android:fillColor="#2DA44E"
         android:pathData="M 61,50 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
 
-    <!-- Node 3 (Feature commit) -->
+    <!-- Feature branch tip node -->
     <path
-        android:fillColor="#A1887F"
+        android:fillColor="#2DA44E"
         android:pathData="M 70,55 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
 
-    <!-- Node 4 (Merge commit) -->
+    <!-- Merge commit node -->
     <path
-        android:fillColor="#5D4037"
+        android:fillColor="#2DA44E"
         android:pathData="M 61,62 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
 
-    <!-- Node 5 (Head) -->
+    <!-- Latest commit node -->
     <path
-        android:fillColor="#3E2723"
+        android:fillColor="#0969DA"
         android:pathData="M 61,68 m -2,0 a 2,2 0 1,0 4,0 a 2,2 0 1,0 -4,0" />
 
 </vector>

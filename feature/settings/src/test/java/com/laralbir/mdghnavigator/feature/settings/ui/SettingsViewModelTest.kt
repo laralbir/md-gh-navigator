@@ -31,9 +31,9 @@ class SettingsViewModelTest {
     private val storageManager: StorageManager = mockk(relaxed = true)
     private val prefsFlow = MutableStateFlow(
         UserPreferences(
-            themeMode = "scholar",
+            themeMode = "paper",
             fontScale = 1.0f,
-            fontFamily = "literata",
+            fontFamily = "inter",
             languageCode = "system"
         )
     )
@@ -62,9 +62,9 @@ class SettingsViewModelTest {
         viewModel.uiState.test {
             testDispatcher.scheduler.advanceUntilIdle()
             val state = expectMostRecentItem()
-            assertEquals("scholar", state.themeMode)
+            assertEquals("paper", state.themeMode)
             assertEquals(1.0f, state.fontScale)
-            assertEquals("literata", state.fontFamily)
+            assertEquals("inter", state.fontFamily)
             assertEquals("system", state.languageCode)
             assertEquals("10.0 MB", state.cacheSizeFormatted)
         }

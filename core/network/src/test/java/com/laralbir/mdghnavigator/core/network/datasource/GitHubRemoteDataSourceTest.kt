@@ -125,5 +125,36 @@ class GitHubRemoteDataSourceTest {
         assertEquals(markdownText, success.data)
         assertEquals("W/\"raw-etag-99\"", success.etag)
     }
+
+    @Test
+    @DisplayName("fetchRawContent decodes GitHub blob JSON with base64 content into UTF-8 text")
+    fun testFetchRawContentDecodesBase64Blob() = runTest {
+        val originalMarkdown = "# MD GH Navigator 🧭\n\nTexto con acentos: á, é, í, ó, ú, ñ."
+        val base64Content = java.util.Base64.getEncoder().encodeToString(originalMarkdown.toByteArray(Charsets.UTF_8))
+        val jsonPayload = """
+            {
+              "sha": "508eb1034f5904fc1921c54b2aa61ff677bfa2ad",
+              "node_id": "MDQ6QmxvYjUwOGViMTAzNGY1OTA0ZmMxOTIxYzU0YjJhYTYxZmY2NzdiZmEyYWQ=",
+              "size": 1234,
+              "url": "https://api.github.com/repos/laralbir/md-gh-navigator/git/blobs/508eb1034f5904fc1921c54b2aa61ff677bfa2ad",
+              "content": "$base64Content\n",
+              "encoding": "base64"
+            }
+        """.trimIndent()
+
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setHeader("ETag", "W/\"blob-etag-100\"")
+                .setBody(jsonPayload)
+        )
+
+        val result = dataSource.fetchRawContent(server.url("/git/blobs/508eb").toString())
+
+        assertTrue(result is AppResult.Success)
+        val success = result as AppResult.Success
+        assertEquals(originalMarkdown, success.data)
+        assertEquals("W/\"blob-etag-100\"", success.etag)
+    }
 }
 

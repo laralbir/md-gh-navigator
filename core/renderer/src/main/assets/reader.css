@@ -1,14 +1,14 @@
 /* MD GitHub Navigator — Core eReader Stylesheet */
 :root {
-    --reader-bg: #FAF7F2;
-    --reader-text: #2C2420;
-    --reader-surface: #F3EDE4;
-    --reader-primary: #5D4037;
-    --reader-secondary: #795548;
-    --reader-border: #D3C4B8;
+    --reader-bg: #FFFFFF;
+    --reader-text: #1F2328;
+    --reader-surface: #F6F8FA;
+    --reader-primary: #0969DA;
+    --reader-secondary: #57606A;
+    --reader-border: #D0D7DE;
     --reader-font-size: 18px;
     --reader-line-height: 28px;
-    --reader-font-family: serif;
+    --reader-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
     --reader-max-width: 840px;
 }
 

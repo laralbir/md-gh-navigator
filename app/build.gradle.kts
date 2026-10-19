@@ -57,15 +57,31 @@ android {
         create("release") {
             val ksPath = System.getenv("KEYSTORE_PATH")
                 ?: keystoreProperties.getProperty("RELEASE_KEYSTORE_PATH")
-            if (ksPath != null && file(ksPath).exists()) {
-                storeFile = file(ksPath)
+            val customKeystore = if (ksPath != null) file(ksPath) else null
+
+            if (customKeystore != null && customKeystore.exists()) {
+                storeFile = customKeystore
                 storePassword = System.getenv("KEYSTORE_PASSWORD")
                     ?: keystoreProperties.getProperty("RELEASE_KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("KEY_ALIAS")
                     ?: keystoreProperties.getProperty("RELEASE_KEY_ALIAS")
                 keyPassword = System.getenv("KEY_PASSWORD")
                     ?: keystoreProperties.getProperty("RELEASE_KEY_PASSWORD")
+            } else {
+                val standaloneKey = rootProject.file("keystore/release-standalone.jks")
+                if (standaloneKey.exists()) {
+                    storeFile = standaloneKey
+                    storePassword = "mdghnavigator"
+                    keyAlias = "release"
+                    keyPassword = "mdghnavigator"
+                } else {
+                    throw GradleException("Release keystore not found at ${standaloneKey.absolutePath}. A valid signing keystore is required for release builds.")
+                }
             }
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
 
@@ -77,10 +93,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            val releaseSigning = signingConfigs.getByName("release")
-            if (releaseSigning.storeFile != null) {
-                signingConfig = releaseSigning
-            }
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -174,8 +187,7 @@ abstract class GenerateChecksumsTask : DefaultTask() {
         val dir = outputDir.orNull?.asFile ?: return
         if (!dir.exists()) return
         val releaseFiles = dir.walkTopDown().filter { file ->
-            (file.name.endsWith("-release.apk") || file.name.endsWith("-release.aab") ||
-             file.name.endsWith("-release-unsigned.apk") || file.name.endsWith("-release-unsigned.aab")) &&
+            (file.name == "app-release.apk" || file.name == "app-release.aab") &&
             !file.name.endsWith(".sha256")
         }.toList()
 
@@ -187,6 +199,16 @@ abstract class GenerateChecksumsTask : DefaultTask() {
             val checksumFile = File(file.parentFile, "${file.name}.sha256")
             checksumFile.writeText("$hash  ${file.name}\n")
             println("SHA-256 [${file.name}]: $hash")
+
+            // Also produce friendly release artifact copy if APK
+            if (file.name == "app-release.apk") {
+                val friendlyName = "md-gh-navigator-universal-release.apk"
+                val friendlyFile = File(file.parentFile, friendlyName)
+                file.copyTo(friendlyFile, overwrite = true)
+                val friendlyChecksum = File(file.parentFile, "$friendlyName.sha256")
+                friendlyChecksum.writeText("$hash  $friendlyName\n")
+                println("Generated friendly release asset: $friendlyName (SHA-256: $hash)")
+            }
         }
     }
 }
@@ -194,5 +216,6 @@ abstract class GenerateChecksumsTask : DefaultTask() {
 tasks.register<GenerateChecksumsTask>("generateReleaseChecksums") {
     group = "distribution"
     description = "Computes SHA-256 checksums for built release APKs and AABs"
+    dependsOn("assembleRelease", "bundleRelease")
     outputDir.set(layout.buildDirectory.dir("outputs"))
 }

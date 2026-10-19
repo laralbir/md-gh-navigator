@@ -34,7 +34,7 @@ Ideal para dispositivos sin servicios de Google Play, ROMs alternativas o e-read
 
 ```mermaid
 flowchart TD
-    AppStart["🚀 Inicio de MD GitHub Navigator"] --> ThemeApply["🎨 Carga de Tema Scholar (Paleta Sepia Cálida)"]
+    AppStart["🚀 Inicio de MD GitHub Navigator"] --> ThemeApply["🎨 Carga de Tema GitHub Modern / Paper (Paleta Limpia)"]
     ThemeApply --> DeviceCheck{"📱 Detección de Dispositivo"}
     DeviceCheck -->|"Tablet (≥ 840dp) TCL NXTPAPER"| TwoPane["📖 Interfaz Adaptativa: Rail Lateral + Contenido Expandido"]
     DeviceCheck -->|"Smartphone (< 840dp)"| CompactView["📱 Interfaz Móvil: Barra Superior + Drawer Lateral"]
@@ -43,7 +43,7 @@ flowchart TD
 ```
 
 ![Pantalla de bienvenida y biblioteca en Tablet TCL NXTPAPER 11 Plus](../../assets/images/user-guide/getting-started-tablet-welcome.png)
-*Figura 1: Vista panorámica inicial en tablet TCL NXTPAPER 11 Plus con tema Scholar activo y panel de bienvenida.*
+*Figura 1: Vista panorámica inicial en tablet TCL NXTPAPER 11 Plus con tema GitHub Modern (Paper) activo y panel de bienvenida.*
 
 ![Pantalla de bienvenida en smartphone](../../assets/images/user-guide/getting-started-phone-welcome.png)
 *Figura 2: Disposición compacta en smartphone con acceso directo al botón flotante de adición.*
@@ -54,4 +54,4 @@ flowchart TD
 
 - **Barra de navegación / Rail lateral (Tablet):** Permite cambiar entre la *Biblioteca*, los *Documentos Recientes*, los *Marcadores & Anotaciones* y los *Ajustes*.
 - **Pantalla completa de lectura:** Toca en el centro de cualquier documento abierto para mostrar u ocultar la barra superior y los controles de lectura.
-- **Transición de temas táctil:** Con un solo toque en el selector de paleta puedes alternar entre *Scholar* (cálido), *Paper* (minimalista e-ink) o *Neon Dev* (desarrollador de alto contraste).
+- **Transición de temas táctil:** Con un solo toque en el selector de paleta puedes alternar entre *Paper* (GitHub Modern, predeterminado), *Scholar* (cálido relajante) o *Neon Dev* (desarrollador de alto contraste).

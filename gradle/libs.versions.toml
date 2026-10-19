@@ -21,6 +21,7 @@ kotlinxSerializationJson = "1.7.3"
 browser = "1.8.0"
 androidsvg = "1.4"
 webkit = "1.12.1"
+commonmark = "0.24.0"
 
 # Testing
 junit5 = "5.11.4"
@@ -86,6 +87,11 @@ androidsvg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "a
 # Browser & WebKit
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
+
+# Commonmark Markdown Parser
+commonmark = { group = "org.commonmark", name = "commonmark", version.ref = "commonmark" }
+commonmark-ext-gfm-tables = { group = "org.commonmark", name = "commonmark-ext-gfm-tables", version.ref = "commonmark" }
+commonmark-ext-autolink = { group = "org.commonmark", name = "commonmark-ext-autolink", version.ref = "commonmark" }
 
 # Kotlinx
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }

@@ -7,8 +7,8 @@ Customize the reading atmosphere and system behaviors according to your personal
 ```mermaid
 flowchart TD
     subgraph Themes["Color Palettes & Themes"]
-        Scholar["Scholar (Default)<br/>Warm parchment #FAF7F2, rich espresso #2C2420, Serif Literata typography"]
-        Paper["Paper (Minimalist)<br/>Pure white / deep black, high-contrast Sans Inter typography"]
+        Paper["Paper (GitHub Modern - Default)<br/>Crisp white / electric blue #0969DA, Sans Inter typography"]
+        Scholar["Scholar (Relaxed Reading)<br/>Soft slate #F8FAFC, balanced contrast typography"]
         Neon["Neon Dev (IDE)<br/>Cyber slate #0A0E14, electric cyan #00E5FF & magenta accents"]
     end
 
@@ -22,8 +22,8 @@ flowchart TD
 
 ## 1. Visual Themes
 
-- **Scholar (Default):** Engineered specifically for matte anti-glare screens like the **TCL NXTPAPER 11 Plus** and nighttime reading. Features warm parchment tones, softened contrast, and refined Serif typography.
-- **Paper:** High-contrast neutral monochrome styling inspired by Notion and Medium, with crisp pure whites and deep ink blacks.
+- **Paper / GitHub Modern (Default):** High-contrast clean styling featuring crisp pure whites and GitHub electric blue accents, engineered for optimal technical clarity.
+- **Scholar (Relaxed Reading):** Softened contrast and balanced tones, ideal for prolonged study sessions and matte screens like the **TCL NXTPAPER 11 Plus**.
 - **Neon Dev:** High-tech dark theme featuring cyber tones, cyan, and magenta highlights tailored for developers accustomed to modern IDE code syntax themes.
 - **System Theme Matching:** Automatically follows Android's system-wide Dark / Light mode preference.
 

@@ -18,8 +18,11 @@ class AuthInterceptor(
         }
 
         val requestBuilder = originalRequest.newBuilder()
-            .header("Accept", "application/vnd.github.v3+json")
             .header("User-Agent", "MD-GitHub-Navigator-Android")
+
+        if (originalRequest.header("Accept") == null) {
+            requestBuilder.header("Accept", "application/vnd.github.v3+json")
+        }
 
         if (!token.isNullOrBlank()) {
             requestBuilder.header("Authorization", "Bearer $token")

@@ -2,6 +2,7 @@ package com.laralbir.mdghnavigator.feature.settings.ui
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FormatSize
@@ -130,8 +132,9 @@ fun SettingsScreen(
 
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 ),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -151,22 +154,22 @@ fun SettingsScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         ThemeOptionChip(
-                            label = stringResource(R.string.settings_theme_scholar),
-                            colorDot = Color(0xFFFBF0D9),
-                            isSelected = uiState.themeMode.equals("scholar", ignoreCase = true),
-                            onClick = { viewModel.onIntent(SettingsIntent.SetTheme("scholar")) }
-                        )
-
-                        ThemeOptionChip(
                             label = stringResource(R.string.settings_theme_paper),
-                            colorDot = Color(0xFFFAFAFA),
+                            colorDot = Color(0xFF0969DA),
                             isSelected = uiState.themeMode.equals("paper", ignoreCase = true),
                             onClick = { viewModel.onIntent(SettingsIntent.SetTheme("paper")) }
                         )
 
                         ThemeOptionChip(
+                            label = stringResource(R.string.settings_theme_scholar),
+                            colorDot = Color(0xFFCBD5E0),
+                            isSelected = uiState.themeMode.equals("scholar", ignoreCase = true),
+                            onClick = { viewModel.onIntent(SettingsIntent.SetTheme("scholar")) }
+                        )
+
+                        ThemeOptionChip(
                             label = stringResource(R.string.settings_theme_neon),
-                            colorDot = Color(0xFF0F141C),
+                            colorDot = Color(0xFF00E5FF),
                             isSelected = uiState.themeMode.equals("neon", ignoreCase = true),
                             onClick = { viewModel.onIntent(SettingsIntent.SetTheme("neon")) }
                         )
@@ -183,22 +186,52 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        val isLiterata = uiState.fontFamily.equals("literata", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.fontFamily.equals("literata", ignoreCase = true),
+                            selected = isLiterata,
                             onClick = { viewModel.onIntent(SettingsIntent.SetFontFamily("literata")) },
-                            label = { Text(stringResource(R.string.settings_font_literata)) }
+                            label = { Text(stringResource(R.string.settings_font_literata)) },
+                            leadingIcon = if (isLiterata) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
 
+                        val isInter = uiState.fontFamily.equals("inter", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.fontFamily.equals("inter", ignoreCase = true),
+                            selected = isInter,
                             onClick = { viewModel.onIntent(SettingsIntent.SetFontFamily("inter")) },
-                            label = { Text(stringResource(R.string.settings_font_inter)) }
+                            label = { Text(stringResource(R.string.settings_font_inter)) },
+                            leadingIcon = if (isInter) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
 
+                        val isSystem = uiState.fontFamily.equals("system", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.fontFamily.equals("system", ignoreCase = true),
+                            selected = isSystem,
                             onClick = { viewModel.onIntent(SettingsIntent.SetFontFamily("system")) },
-                            label = { Text(stringResource(R.string.settings_font_system)) }
+                            label = { Text(stringResource(R.string.settings_font_system)) },
+                            leadingIcon = if (isSystem) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
                     }
 
@@ -214,10 +247,20 @@ fun SettingsScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         listOf(0.85f to "85%", 1.0f to "100%", 1.15f to "115%", 1.35f to "135%").forEach { (scale, label) ->
+                            val isSelected = kotlin.math.abs(uiState.fontScale - scale) < 0.05f
                             FilterChip(
-                                selected = kotlin.math.abs(uiState.fontScale - scale) < 0.05f,
+                                selected = isSelected,
                                 onClick = { viewModel.onIntent(SettingsIntent.SetFontScale(scale)) },
-                                label = { Text(label) }
+                                label = { Text(label) },
+                                leadingIcon = if (isSelected) {
+                                    {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                        )
+                                    }
+                                } else null
                             )
                         }
                     }
@@ -230,9 +273,9 @@ fun SettingsScreen(
                     )
 
                     val (previewBg, previewFg) = when (uiState.themeMode.lowercase()) {
-                        "paper" -> Color(0xFFFAFAFA) to Color(0xFF1E1E1E)
+                        "paper" -> Color(0xFFFFFFFF) to Color(0xFF1F2328)
                         "neon" -> Color(0xFF0F141C) to Color(0xFFE6EDF3)
-                        else -> Color(0xFFFBF0D9) to Color(0xFF2C2214) // Scholar
+                        else -> Color(0xFFF8FAFC) to Color(0xFF0F172A) // Scholar Slate
                     }
 
                     val previewFamily = when (uiState.fontFamily.lowercase()) {
@@ -268,8 +311,9 @@ fun SettingsScreen(
 
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 ),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -281,22 +325,52 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        val isSystem = uiState.languageCode.equals("system", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.languageCode.equals("system", ignoreCase = true),
+                            selected = isSystem,
                             onClick = { viewModel.onIntent(SettingsIntent.SetLanguage("system")) },
-                            label = { Text(stringResource(R.string.settings_lang_system)) }
+                            label = { Text(stringResource(R.string.settings_lang_system)) },
+                            leadingIcon = if (isSystem) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
 
+                        val isEs = uiState.languageCode.equals("es", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.languageCode.equals("es", ignoreCase = true),
+                            selected = isEs,
                             onClick = { viewModel.onIntent(SettingsIntent.SetLanguage("es")) },
-                            label = { Text(stringResource(R.string.settings_lang_es)) }
+                            label = { Text(stringResource(R.string.settings_lang_es)) },
+                            leadingIcon = if (isEs) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
 
+                        val isEn = uiState.languageCode.equals("en", ignoreCase = true)
                         FilterChip(
-                            selected = uiState.languageCode.equals("en", ignoreCase = true),
+                            selected = isEn,
                             onClick = { viewModel.onIntent(SettingsIntent.SetLanguage("en")) },
-                            label = { Text(stringResource(R.string.settings_lang_en)) }
+                            label = { Text(stringResource(R.string.settings_lang_en)) },
+                            leadingIcon = if (isEn) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else null
                         )
                     }
                 }
@@ -310,8 +384,9 @@ fun SettingsScreen(
 
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 ),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -371,8 +446,9 @@ fun SettingsScreen(
 
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 ),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -458,14 +534,24 @@ private fun ThemeOptionChip(
     FilterChip(
         selected = isSelected,
         onClick = onClick,
-        leadingIcon = {
-            Box(
-                modifier = Modifier
-                    .size(14.dp)
-                    .clip(CircleShape)
-                    .background(colorDot)
-                    .border(1.dp, Color.Gray.copy(alpha = 0.5f), CircleShape)
-            )
+        leadingIcon = if (isSelected) {
+            {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        } else {
+            {
+                Box(
+                    modifier = Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(colorDot)
+                        .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f), CircleShape)
+                )
+            }
         },
         label = { Text(label) }
     )

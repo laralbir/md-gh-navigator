@@ -62,3 +62,9 @@ Si almacenas notas o documentación en tu dispositivo (por ejemplo, sincronizada
 La aplicación aplica una política de **descarga selectiva**:
 - Solo se descargan a la memoria del dispositivo los ficheros de texto Markdown y los recursos gráficos vinculados dentro de ellos.
 - Ficheros binarios, instaladores o carpetas ajenas a la documentación no se descargarán, ahorrando decenas de megabytes por repositorio.
+
+![Biblioteca con repositorios sincronizados](../../assets/images/user-guide/screenshot_library_populated.png)
+*Figura 1: Vista de la biblioteca con repositorios anclados, información de sincronización y accesos directos.*
+
+![Diálogo modal para añadir repositorios](../../assets/images/user-guide/screenshot_add_repository_modal.png)
+*Figura 2: Diálogo de importación para repositorios GitHub y carpetas locales mediante Storage Access Framework.*

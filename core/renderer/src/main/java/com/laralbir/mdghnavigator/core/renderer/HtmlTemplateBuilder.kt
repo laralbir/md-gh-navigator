@@ -1,26 +1,48 @@
 package com.laralbir.mdghnavigator.core.renderer
 
 import com.laralbir.mdghnavigator.core.designsystem.theme.AppThemeMode
+import org.commonmark.ext.autolink.AutolinkExtension
+import org.commonmark.ext.gfm.tables.TablesExtension
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 
 class HtmlTemplateBuilder {
+
+    private val extensions = listOf(
+        TablesExtension.create(),
+        AutolinkExtension.create()
+    )
+
+    private val parser = Parser.builder()
+        .extensions(extensions)
+        .build()
+
+    private val renderer = HtmlRenderer.builder()
+        .extensions(extensions)
+        .build()
+
+    fun renderMarkdownToHtml(markdown: String): String {
+        val document = parser.parse(markdown)
+        return renderer.render(document)
+    }
 
     fun buildHtml(
         markdown: String,
         themeMode: AppThemeMode,
         isDark: Boolean,
         fontSizeSp: Int = 18,
-        fontFamily: String = "serif"
+        fontFamily: String = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     ): String {
         val (bgColor, textColor, surfaceColor, primaryColor, borderColor) = when (themeMode) {
             AppThemeMode.SCHOLAR -> if (isDark) {
-                Quintet("#1A1715", "#EDE3D8", "#24201D", "#D7CCC8", "#4F453E")
+                Quintet("#0F172A", "#F8FAFC", "#1E293B", "#38BDF8", "#334155")
             } else {
-                Quintet("#FAF7F2", "#2C2420", "#F3EDE4", "#5D4037", "#D3C4B8")
+                Quintet("#F8FAFC", "#0F172A", "#F1F5F9", "#2563EB", "#CBD5E1")
             }
             AppThemeMode.PAPER -> if (isDark) {
-                Quintet("#0D1117", "#E6EDF3", "#161B22", "#E6EDF3", "#30363D")
+                Quintet("#0D1117", "#E6EDF3", "#161B22", "#58A6FF", "#30363D")
             } else {
-                Quintet("#FFFFFF", "#1F2328", "#F6F8FA", "#1F2328", "#D0D7DE")
+                Quintet("#FFFFFF", "#1F2328", "#F6F8FA", "#0969DA", "#D0D7DE")
             }
             AppThemeMode.NEON_DEV -> if (isDark) {
                 Quintet("#0A0E14", "#ECEFF4", "#121721", "#00E5FF", "#3B485E")
@@ -30,7 +52,7 @@ class HtmlTemplateBuilder {
         }
 
         val lineHeightPx = (fontSizeSp * 1.55).toInt()
-        val escapedMarkdown = escapeForTemplate(markdown)
+        val renderedContent = renderMarkdownToHtml(markdown)
 
         return """
 <!DOCTYPE html>
@@ -48,7 +70,7 @@ class HtmlTemplateBuilder {
             --reader-border: $borderColor;
             --reader-font-size: ${fontSizeSp}px;
             --reader-line-height: ${lineHeightPx}px;
-            --reader-font-family: $fontFamily, serif;
+            --reader-font-family: $fontFamily, sans-serif;
         }
         body {
             background-color: var(--reader-bg);
@@ -100,45 +122,25 @@ class HtmlTemplateBuilder {
     </style>
 </head>
 <body>
-    <div id="content"></div>
-    <template id="md-source">$escapedMarkdown</template>
+    <div id="content" class="markdown-body">$renderedContent</div>
 
     <script src="https://appassets.androidplatform.net/assets/reader.js"></script>
     <script>
-        // Fallback initialization if reader.js is still loading
-        (function() {
-            var raw = document.getElementById('md-source').innerHTML;
-            var container = document.getElementById('content');
-            if (typeof window.renderMarkdown === 'function') {
-                window.renderMarkdown(raw);
-            } else {
-                // Pre-render minimal text
-                container.innerHTML = '<div style="white-space: pre-wrap;">' + raw + '</div>';
+        // Report initial scroll progress
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, 
+                b = document.body,
+                st = 'scrollTop',
+                sh = 'scrollHeight';
+            var percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight);
+            if (window.AndroidBridge && window.AndroidBridge.onScrollProgress) {
+                window.AndroidBridge.onScrollProgress(percent, h[st]||b[st]);
             }
-
-            // Report initial scroll progress
-            window.addEventListener('scroll', function() {
-                var h = document.documentElement, 
-                    b = document.body,
-                    st = 'scrollTop',
-                    sh = 'scrollHeight';
-                var percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight);
-                if (window.AndroidBridge && window.AndroidBridge.onScrollProgress) {
-                    window.AndroidBridge.onScrollProgress(percent, h[st]||b[st]);
-                }
-            });
-        })();
+        });
     </script>
 </body>
 </html>
         """.trimIndent()
-    }
-
-    private fun escapeForTemplate(text: String): String {
-        return text
-            .replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
     }
 
     private data class Quintet(

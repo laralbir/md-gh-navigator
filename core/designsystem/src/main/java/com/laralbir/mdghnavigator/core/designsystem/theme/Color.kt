@@ -5,64 +5,69 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 // =========================================================================
-// 1. TEMA SCHOLAR (Predeterminado — Optimizado para TCL NXTPAPER 11 Plus)
-// Tonos cálidos, sepia y pergamino que minimizan la fatiga visual.
+// 1. TEMA SCHOLAR (Estilo lectura cálida / Papel marfil relajante)
+// Paleta suave inspirada en e-readers modernos, sin tonos marrones oscuros.
 // =========================================================================
 
 val ScholarLightColors = lightColorScheme(
-    primary = Color(0xFF5D4037),
+    primary = Color(0xFF2563EB),
     onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFD7CCC8),
-    onPrimaryContainer = Color(0xFF3E2723),
-    secondary = Color(0xFF795548),
+    primaryContainer = Color(0xFFDBEAFE),
+    onPrimaryContainer = Color(0xFF1E3A8A),
+    secondary = Color(0xFF64748B),
     onSecondary = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFEFEBE9),
-    onSecondaryContainer = Color(0xFF4E342E),
-    tertiary = Color(0xFF8D6E63),
+    secondaryContainer = Color(0xFFF1F5F9),
+    onSecondaryContainer = Color(0xFF0F172A),
+    tertiary = Color(0xFF0D9488),
     onTertiary = Color(0xFFFFFFFF),
-    background = Color(0xFFFAF7F2),
-    onBackground = Color(0xFF2C2420),
-    surface = Color(0xFFF3EDE4),
-    onSurface = Color(0xFF2C2420),
-    surfaceVariant = Color(0xFFE7DFD5),
-    onSurfaceVariant = Color(0xFF4F453E),
-    outline = Color(0xFF85756C),
-    outlineVariant = Color(0xFFD3C4B8)
+    background = Color(0xFFF8FAFC),
+    onBackground = Color(0xFF0F172A),
+    surface = Color(0xFFF1F5F9),
+    onSurface = Color(0xFF0F172A),
+    surfaceVariant = Color(0xFFE2E8F0),
+    onSurfaceVariant = Color(0xFF475569),
+    outline = Color(0xFF94A3B8),
+    outlineVariant = Color(0xFFCBD5E1)
 )
 
 val ScholarDarkColors = darkColorScheme(
-    primary = Color(0xFFD7CCC8),
-    onPrimary = Color(0xFF3E2723),
-    primaryContainer = Color(0xFF4E342E),
-    onPrimaryContainer = Color(0xFFEFEBE9),
-    secondary = Color(0xFFBCAAA4),
-    onSecondary = Color(0xFF2C2420),
-    secondaryContainer = Color(0xFF3E3430),
-    onSecondaryContainer = Color(0xFFD7CCC8),
-    tertiary = Color(0xFFA1887F),
-    onTertiary = Color(0xFF2C2420),
-    background = Color(0xFF1A1715),
-    onBackground = Color(0xFFEDE3D8),
-    surface = Color(0xFF24201D),
-    onSurface = Color(0xFFEDE3D8),
-    surfaceVariant = Color(0xFF36302B),
-    onSurfaceVariant = Color(0xFFD0C4BA),
-    outline = Color(0xFF9C8F84),
-    outlineVariant = Color(0xFF4F453E)
+    primary = Color(0xFF38BDF8),
+    onPrimary = Color(0xFF0F172A),
+    primaryContainer = Color(0xFF1E293B),
+    onPrimaryContainer = Color(0xFFF8FAFC),
+    secondary = Color(0xFF94A3B8),
+    onSecondary = Color(0xFF0F172A),
+    secondaryContainer = Color(0xFF1E293B),
+    onSecondaryContainer = Color(0xFFF8FAFC),
+    tertiary = Color(0xFF2DD4BF),
+    onTertiary = Color(0xFF0F172A),
+    background = Color(0xFF0F172A),
+    onBackground = Color(0xFFF8FAFC),
+    surface = Color(0xFF1E293B),
+    onSurface = Color(0xFFF8FAFC),
+    surfaceVariant = Color(0xFF334155),
+    onSurfaceVariant = Color(0xFF94A3B8),
+    outline = Color(0xFF475569),
+    outlineVariant = Color(0xFF334155)
 )
 
 // =========================================================================
-// 2. TEMA PAPER (Estilo libro impreso / editorial minimalista)
-// Blanco/Negro y escala de grises con máximo contraste neutro.
+// 2. TEMA PAPER (Predeterminado — GitHub Modern Clean)
+// Fondo blanco nítido / gris suave con acentos en azul GitHub moderno.
+// Máximo contraste, frescura y legibilidad técnica impecable.
 // =========================================================================
 
 val PaperLightColors = lightColorScheme(
-    primary = Color(0xFF1F2328),
+    primary = Color(0xFF0969DA),
     onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFE1E4E8),
-    onPrimaryContainer = Color(0xFF0D1117),
+    primaryContainer = Color(0xFFDDF4FF),
+    onPrimaryContainer = Color(0xFF0969DA),
     secondary = Color(0xFF57606A),
     onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFF6F8FA),
+    onSecondaryContainer = Color(0xFF1F2328),
+    tertiary = Color(0xFF1F883D),
+    onTertiary = Color(0xFFFFFFFF),
     background = Color(0xFFFFFFFF),
     onBackground = Color(0xFF1F2328),
     surface = Color(0xFFF6F8FA),
@@ -74,12 +79,16 @@ val PaperLightColors = lightColorScheme(
 )
 
 val PaperDarkColors = darkColorScheme(
-    primary = Color(0xFFE6EDF3),
+    primary = Color(0xFF58A6FF),
     onPrimary = Color(0xFF0D1117),
-    primaryContainer = Color(0xFF30363D),
+    primaryContainer = Color(0xFF1F6FEB),
     onPrimaryContainer = Color(0xFFF0F6FC),
     secondary = Color(0xFF8B949E),
     onSecondary = Color(0xFF0D1117),
+    secondaryContainer = Color(0xFF21262D),
+    onSecondaryContainer = Color(0xFFE6EDF3),
+    tertiary = Color(0xFF3FB950),
+    onTertiary = Color(0xFF0D1117),
     background = Color(0xFF0D1117),
     onBackground = Color(0xFFE6EDF3),
     surface = Color(0xFF161B22),

@@ -26,7 +26,7 @@ flowchart LR
 
 - **Selección de Texto:** Mantén pulsado y arrastra sobre el texto que desees resaltar.
 - **Barra de Acciones Flotante:**
-  - **Paleta de Colores:** Selecciona un color (amarillo cálido, verde menta, sepia o rosa suave).
+  - **Paleta de Colores:** Selecciona un color (amarillo ámbar, verde menta, azul cielo o rosa suave).
   - **Añadir Nota:** Escribe comentarios o reflexiones sobre el fragmento seleccionado.
 - **Visualización:** El texto resaltado se muestra con un fondo suave que no interfiere con la lectura. Tocar el resaltado abrirá una tarjeta desplegable con tu nota asociada.
 

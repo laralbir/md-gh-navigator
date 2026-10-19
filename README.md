@@ -15,6 +15,16 @@
 
 ---
 
+> [!WARNING]
+> ### ⚠️ Estado del Proyecto: Versión BETA (Pre-release)
+> La versión actual (**[v1.0.0-beta](https://github.com/laralbir/md-gh-navigator/releases/tag/v1.0.0)**) es una compilación preliminar en fase activa de desarrollo y pruebas. Existen bugs e issues conocidos en resolución activa:
+> - [#4: Scroll se frena al desplazarse por documentos](https://github.com/laralbir/md-gh-navigator/issues/4)
+> - [#5: Mermaid no renderiza](https://github.com/laralbir/md-gh-navigator/issues/5)
+> - [#6: No se puede elegir idioma y voz para el text-to-speech](https://github.com/laralbir/md-gh-navigator/issues/6)
+> - [#7: Alias repositorio o carpeta configurada](https://github.com/laralbir/md-gh-navigator/issues/7)
+> 
+> Para reportar fallos adicionales, utiliza la sección de [GitHub Issues](https://github.com/laralbir/md-gh-navigator/issues).
+
 ## Descripción
 
 MD GitHub Navigator es una aplicación nativa Android que transforma repositorios de GitHub en una experiencia de lectura navegable — como un eReader para tu documentación, libros técnicos y contenido basado en Markdown.

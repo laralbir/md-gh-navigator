@@ -135,9 +135,9 @@ fun ReaderScreen(
     }
 
     val appThemeMode = when (readerUiState.themeMode.lowercase()) {
-        "paper" -> AppThemeMode.PAPER
-        "neon" -> AppThemeMode.NEON_DEV
-        else -> AppThemeMode.SCHOLAR
+        "scholar" -> AppThemeMode.SCHOLAR
+        "neon", "neon_dev" -> AppThemeMode.NEON_DEV
+        else -> AppThemeMode.PAPER
     }
 
     val contentComposable: @Composable () -> Unit = {

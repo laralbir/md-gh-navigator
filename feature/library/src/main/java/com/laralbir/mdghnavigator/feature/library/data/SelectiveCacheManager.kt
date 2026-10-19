@@ -3,6 +3,7 @@ package com.laralbir.mdghnavigator.feature.library.data
 import com.laralbir.mdghnavigator.core.common.event.AppEvent
 import com.laralbir.mdghnavigator.core.common.event.EventBus
 import com.laralbir.mdghnavigator.core.common.result.AppResult
+import com.laralbir.mdghnavigator.core.common.util.ContentDecoder
 import com.laralbir.mdghnavigator.core.common.util.SelectiveFileFilter
 import com.laralbir.mdghnavigator.core.database.dao.DocumentDao
 import com.laralbir.mdghnavigator.core.database.dao.RepositoryDao
@@ -69,6 +70,7 @@ class SelectiveCacheManager @Inject constructor(
         for (node in markdownNodes) {
             val contentResult = remoteDataSource.fetchRawContent(node.url)
             if (contentResult is AppResult.Success) {
+                val decodedContent = ContentDecoder.decodeIfNeeded(contentResult.data)
                 val docId = "$repoId:${node.path}"
                 val existingDoc = documentDao.getDocumentByIdSync(docId)
 
@@ -76,8 +78,8 @@ class SelectiveCacheManager @Inject constructor(
                     id = docId,
                     repoId = repoId,
                     filePath = node.path,
-                    title = extractTitle(contentResult.data, node.path),
-                    content = contentResult.data,
+                    title = extractTitle(decodedContent, node.path),
+                    content = decodedContent,
                     scrollProgress = existingDoc?.scrollProgress ?: 0f,
                     scrollY = existingDoc?.scrollY ?: 0,
                     lastReadTimestamp = existingDoc?.lastReadTimestamp ?: 0L,
