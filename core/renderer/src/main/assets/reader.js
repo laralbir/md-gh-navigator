@@ -123,10 +123,25 @@
         }
     };
 
+    // Wrap tables in responsive scrollable containers
+    function setupScrollableTables() {
+        const tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            if (table.parentElement && table.parentElement.classList.contains('table-wrapper')) {
+                return;
+            }
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+    }
+
     function initReader() {
         setupLinkInterception();
         setupImageInterception();
         extractHeadings();
+        setupScrollableTables();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
