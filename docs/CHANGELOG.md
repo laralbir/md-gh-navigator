@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.3.0] - 2026-10-19 (Beta / Pre-release)
+
+> [!NOTE]
+> Versión Beta v1.3.0 con soporte integral de enlaces ancla a encabezados y navegación fluida intra y entre documentos.
+
+### Fixed
+- **Navegación por enlaces ancla intra-documento y encabezados Markdown** ([#21](https://github.com/laralbir/md-gh-navigator/issues/21)): Inyección automática de identificadores slug compatibles con GitHub Flavored Markdown mediante `HeadingIdAttributeProvider` en CommonMark, resolución resiliente de anclas en `reader.js` con coincidencia de IDs, atributos `name`, texto de encabezados y plegado de diacríticos, y propagación de anclas en enlaces relativos al documento actual o inter-documento.
+
 ## [v1.2.0] - 2026-10-19 (Beta / Pre-release)
 
 > [!NOTE]
