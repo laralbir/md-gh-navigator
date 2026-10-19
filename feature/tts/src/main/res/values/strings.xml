@@ -7,4 +7,12 @@
     <string name="tts_previous">Previous sentence</string>
     <string name="tts_speed">Speed: %1$sx</string>
     <string name="tts_reading_aloud">Reading aloud</string>
+    <string name="tts_voice_and_language">Voice &amp; Language</string>
+    <string name="tts_settings_title">Speech Voice &amp; Language</string>
+    <string name="tts_language_label">Reading Language</string>
+    <string name="tts_language_hint">Reading language is independent of app language.</string>
+    <string name="tts_voice_label">Voice</string>
+    <string name="tts_voice_default">System default voice</string>
+    <string name="tts_close">Close</string>
+    <string name="tts_select_voice_and_language">Select voice and language</string>
 </resources>

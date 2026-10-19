@@ -7,4 +7,12 @@
     <string name="tts_previous">Frase anterior</string>
     <string name="tts_speed">Velocidad: %1$sx</string>
     <string name="tts_reading_aloud">Leyendo en voz alta</string>
+    <string name="tts_voice_and_language">Voz e idioma</string>
+    <string name="tts_settings_title">Voz e idioma de lectura</string>
+    <string name="tts_language_label">Idioma de lectura</string>
+    <string name="tts_language_hint">El idioma de lectura es independiente del idioma de la aplicación.</string>
+    <string name="tts_voice_label">Voz</string>
+    <string name="tts_voice_default">Voz predeterminada del sistema</string>
+    <string name="tts_close">Cerrar</string>
+    <string name="tts_select_voice_and_language">Seleccionar voz e idioma</string>
 </resources>
