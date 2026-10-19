@@ -33,8 +33,13 @@ class MarkdownWebViewClient(
         val target = classifier.classify(request.url.toString())
         return when (target) {
             is LinkTarget.Anchor -> {
-                // Allow anchor scrolling inside the webview
-                false
+                val safeAnchor = target.anchorId.replace("'", "\\'").replace("\"", "\\\"")
+                view.evaluateJavascript(
+                    "window.ReaderApi && window.ReaderApi.scrollToHeading('$safeAnchor');",
+                    null
+                )
+                onLinkTargetResolved(target)
+                true
             }
             else -> {
                 onLinkTargetResolved(target)

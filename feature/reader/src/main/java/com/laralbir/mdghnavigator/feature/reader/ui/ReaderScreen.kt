@@ -411,7 +411,9 @@ fun ReaderScreen(
                                                 context = context,
                                                 target = target,
                                                 navUiState = navUiState,
+                                                activeDocId = activeDocId,
                                                 onNavigateToDocument = navigateToDoc,
+                                                onNavigateToAnchor = { anchorId -> targetHeadingId = anchorId },
                                                 onOpenDirectoryPicker = { dirName, docs ->
                                                     directoryPickerState = DirectoryPickerState(dirName, docs)
                                                 }
@@ -469,7 +471,9 @@ fun ReaderScreen(
                                             context = context,
                                             target = target,
                                             navUiState = navUiState,
+                                            activeDocId = activeDocId,
                                             onNavigateToDocument = navigateToDoc,
+                                            onNavigateToAnchor = { anchorId -> targetHeadingId = anchorId },
                                             onOpenDirectoryPicker = { dirName, docs ->
                                                 directoryPickerState = DirectoryPickerState(dirName, docs)
                                             }
@@ -588,10 +592,15 @@ private fun handleLinkTarget(
     context: android.content.Context,
     target: LinkTarget,
     navUiState: com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorUiState,
+    activeDocId: String,
     onNavigateToDocument: (String) -> Unit,
+    onNavigateToAnchor: (String) -> Unit,
     onOpenDirectoryPicker: (String, List<DocumentEntity>) -> Unit
 ) {
     when (target) {
+        is LinkTarget.Anchor -> {
+            onNavigateToAnchor(target.anchorId)
+        }
         is LinkTarget.Directory -> {
             val cleanDir = target.directoryPath.trimStart('.', '/').trimEnd('/')
             val matchingDocs = navUiState.documents.filter { doc ->
@@ -615,7 +624,17 @@ private fun handleLinkTarget(
                         doc.filePath.substringAfterLast('/').equals(cleanPath.substringAfterLast('/'), ignoreCase = true)
             }
             if (matchingDoc != null) {
-                onNavigateToDocument(matchingDoc.id)
+                val anchor = target.targetAnchor
+                if (matchingDoc.id == activeDocId) {
+                    if (anchor != null) {
+                        onNavigateToAnchor(anchor)
+                    }
+                } else {
+                    if (anchor != null) {
+                        onNavigateToAnchor(anchor)
+                    }
+                    onNavigateToDocument(matchingDoc.id)
+                }
             } else {
                 val cleanDir = cleanPath.trimEnd('/')
                 val docsInDir = navUiState.documents.filter { doc ->
@@ -659,9 +678,6 @@ private fun handleLinkTarget(
                     context.startActivity(intent)
                 }
             }
-        }
-        is LinkTarget.Anchor -> {
-            // Anchor scroll handled directly inside WebView via JavaScript
         }
         else -> Unit
     }
