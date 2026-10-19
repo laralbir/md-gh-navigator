@@ -5,6 +5,7 @@ sealed interface LinkTarget {
     data class Anchor(val anchorId: String) : LinkTarget
     data class RelativeDocument(val relativePath: String, val targetAnchor: String? = null) : LinkTarget
     data class RelativeAsset(val assetPath: String) : LinkTarget
+    data class Directory(val directoryPath: String) : LinkTarget
     data class Unknown(val raw: String) : LinkTarget
 }
 
@@ -13,6 +14,11 @@ class MarkdownLinkClassifier {
     private val assetExtensions = setOf(
         "png", "jpg", "jpeg", "gif", "svg", "webp", "ico",
         "bmp", "mp4", "webm", "pdf"
+    )
+
+    private val gitHubTreeRegex = Regex(
+        """^https?://(?:www\.)?github\.com/[^/]+/[^/]+/tree/[^/]+/(.+?)/?$""",
+        RegexOption.IGNORE_CASE
     )
 
     fun classify(rawLink: String): LinkTarget {
@@ -32,6 +38,13 @@ class MarkdownLinkClassifier {
             return LinkTarget.Anchor(trimmed.removePrefix("#"))
         }
 
+        // GitHub tree URL pointing to a repository directory
+        val treeMatch = gitHubTreeRegex.matchEntire(trimmed)
+        if (treeMatch != null) {
+            val dirPath = treeMatch.groupValues[1]
+            return LinkTarget.Directory(dirPath)
+        }
+
         // 2. Web URL
         if (trimmed.startsWith("http://", ignoreCase = true) ||
             trimmed.startsWith("https://", ignoreCase = true) ||
@@ -44,6 +57,11 @@ class MarkdownLinkClassifier {
         val parts = trimmed.split("#", limit = 2)
         val path = parts[0]
         val anchor = if (parts.size > 1 && parts[1].isNotEmpty()) parts[1] else null
+
+        if (path.endsWith("/")) {
+            val cleanDir = path.removePrefix("./").trimEnd('/')
+            return LinkTarget.Directory(cleanDir)
+        }
 
         val extension = path.substringAfterLast('.', "").lowercase()
 

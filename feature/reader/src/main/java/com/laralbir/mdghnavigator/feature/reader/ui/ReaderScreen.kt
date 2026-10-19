@@ -52,6 +52,7 @@ import com.laralbir.mdghnavigator.core.designsystem.component.LoadingView
 import com.laralbir.mdghnavigator.core.designsystem.component.MdTopAppBar
 import com.laralbir.mdghnavigator.core.designsystem.component.ReadingProgressBar
 import com.laralbir.mdghnavigator.core.designsystem.component.rememberReaderWindowLayout
+import com.laralbir.mdghnavigator.core.database.entity.DocumentEntity
 import com.laralbir.mdghnavigator.core.designsystem.theme.AppThemeMode
 import com.laralbir.mdghnavigator.core.renderer.ComposeMarkdownReader
 import com.laralbir.mdghnavigator.core.renderer.LinkTarget
@@ -63,12 +64,18 @@ import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorIntent
 import com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorViewModel
 import com.laralbir.mdghnavigator.feature.navigator.ui.TocSidebar
 import com.laralbir.mdghnavigator.feature.reader.R
+import com.laralbir.mdghnavigator.feature.reader.ui.component.DirectoryDocumentPickerDialog
 import com.laralbir.mdghnavigator.feature.reader.ui.component.ZoomableImageViewer
 import com.laralbir.mdghnavigator.feature.tts.TtsState
 import com.laralbir.mdghnavigator.feature.tts.ui.TtsPlayerBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+
+private data class DirectoryPickerState(
+    val directoryName: String,
+    val documents: List<DocumentEntity>
+)
 
 private enum class ReaderDrawerContent {
     TOC,
@@ -104,6 +111,7 @@ fun ReaderScreen(
 
     var activeDocId by remember(documentId) { mutableStateOf(documentId) }
     val documentBackStack = remember { mutableStateListOf<String>() }
+    var directoryPickerState by remember { mutableStateOf<DirectoryPickerState?>(null) }
 
     val navigateToDoc: (String) -> Unit = { newDocId ->
         if (newDocId != activeDocId) {
@@ -115,6 +123,9 @@ fun ReaderScreen(
 
     val handleBack: () -> Unit = {
         when {
+            directoryPickerState != null -> {
+                directoryPickerState = null
+            }
             readerUiState.selectedImageUrl != null -> {
                 readerViewModel.onIntent(ReaderIntent.CloseImageViewer)
             }
@@ -388,7 +399,10 @@ fun ReaderScreen(
                                                 context = context,
                                                 target = target,
                                                 navUiState = navUiState,
-                                                onNavigateToDocument = navigateToDoc
+                                                onNavigateToDocument = navigateToDoc,
+                                                onOpenDirectoryPicker = { dirName, docs ->
+                                                    directoryPickerState = DirectoryPickerState(dirName, docs)
+                                                }
                                             )
                                         },
                                         onImageClicked = { imageUrl, title ->
@@ -443,7 +457,10 @@ fun ReaderScreen(
                                             context = context,
                                             target = target,
                                             navUiState = navUiState,
-                                            onNavigateToDocument = navigateToDoc
+                                            onNavigateToDocument = navigateToDoc,
+                                            onOpenDirectoryPicker = { dirName, docs ->
+                                                directoryPickerState = DirectoryPickerState(dirName, docs)
+                                            }
                                         )
                                     },
                                     onImageClicked = { imageUrl, title ->
@@ -541,21 +558,40 @@ fun ReaderScreen(
             }
         )
     }
+
+    if (directoryPickerState != null) {
+        DirectoryDocumentPickerDialog(
+            directoryName = directoryPickerState!!.directoryName,
+            documents = directoryPickerState!!.documents,
+            onDocumentSelected = { doc ->
+                directoryPickerState = null
+                navigateToDoc(doc.id)
+            },
+            onDismiss = { directoryPickerState = null }
+        )
+    }
 }
 
 private fun handleLinkTarget(
     context: android.content.Context,
     target: LinkTarget,
     navUiState: com.laralbir.mdghnavigator.feature.navigator.ui.NavigatorUiState,
-    onNavigateToDocument: (String) -> Unit
+    onNavigateToDocument: (String) -> Unit,
+    onOpenDirectoryPicker: (String, List<DocumentEntity>) -> Unit
 ) {
     when (target) {
-        is LinkTarget.ExternalWeb -> {
-            runCatching {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(target.url)).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
+        is LinkTarget.Directory -> {
+            val cleanDir = target.directoryPath.trimStart('.', '/').trimEnd('/')
+            val matchingDocs = navUiState.documents.filter { doc ->
+                val normalized = doc.filePath.trimStart('/')
+                normalized.startsWith("$cleanDir/", ignoreCase = true) ||
+                        normalized.contains("/$cleanDir/", ignoreCase = true)
+            }
+            if (matchingDocs.size == 1) {
+                onNavigateToDocument(matchingDocs.first().id)
+            } else if (matchingDocs.isNotEmpty()) {
+                val dirName = cleanDir.substringAfterLast('/')
+                onOpenDirectoryPicker(dirName, matchingDocs)
             }
         }
         is LinkTarget.RelativeDocument -> {
@@ -568,6 +604,48 @@ private fun handleLinkTarget(
             }
             if (matchingDoc != null) {
                 onNavigateToDocument(matchingDoc.id)
+            } else {
+                val cleanDir = cleanPath.trimEnd('/')
+                val docsInDir = navUiState.documents.filter { doc ->
+                    val normalized = doc.filePath.trimStart('/')
+                    normalized.startsWith("$cleanDir/", ignoreCase = true) ||
+                            normalized.contains("/$cleanDir/", ignoreCase = true)
+                }
+                if (docsInDir.size == 1) {
+                    onNavigateToDocument(docsInDir.first().id)
+                } else if (docsInDir.isNotEmpty()) {
+                    val dirName = cleanDir.substringAfterLast('/')
+                    onOpenDirectoryPicker(dirName, docsInDir)
+                }
+            }
+        }
+        is LinkTarget.ExternalWeb -> {
+            val gitHubTreeRegex = Regex(
+                """^https?://(?:www\.)?github\.com/[^/]+/[^/]+/tree/[^/]+/(.+?)/?$""",
+                RegexOption.IGNORE_CASE
+            )
+            val treeMatch = gitHubTreeRegex.matchEntire(target.url)
+            val dirPath = treeMatch?.groupValues?.getOrNull(1)?.trimStart('.', '/')?.trimEnd('/')
+            val docsInDir = if (dirPath != null) {
+                navUiState.documents.filter { doc ->
+                    val normalized = doc.filePath.trimStart('/')
+                    normalized.startsWith("$dirPath/", ignoreCase = true) ||
+                            normalized.contains("/$dirPath/", ignoreCase = true)
+                }
+            } else emptyList()
+
+            if (docsInDir.size == 1) {
+                onNavigateToDocument(docsInDir.first().id)
+            } else if (docsInDir.isNotEmpty()) {
+                val dirName = dirPath!!.substringAfterLast('/')
+                onOpenDirectoryPicker(dirName, docsInDir)
+            } else {
+                runCatching {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(target.url)).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    context.startActivity(intent)
+                }
             }
         }
         is LinkTarget.Anchor -> {
