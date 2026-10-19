@@ -16,8 +16,16 @@ class MarkdownLinkClassifier {
     )
 
     fun classify(rawLink: String): LinkTarget {
-        val trimmed = rawLink.trim()
+        var trimmed = rawLink.trim()
         if (trimmed.isEmpty()) return LinkTarget.Unknown(trimmed)
+
+        // 0. Normalize appassets virtual URLs originating from WebView clicks
+        if (trimmed.startsWith("https://appassets.androidplatform.net/", ignoreCase = true)) {
+            trimmed = trimmed.removePrefix("https://appassets.androidplatform.net/")
+        } else if (trimmed.startsWith("http://appassets.androidplatform.net/", ignoreCase = true)) {
+            trimmed = trimmed.removePrefix("http://appassets.androidplatform.net/")
+        }
+        trimmed = trimmed.trimStart('/')
 
         // 1. In-page anchor (e.g. #architecture or #section-2)
         if (trimmed.startsWith("#")) {
