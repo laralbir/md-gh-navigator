@@ -122,12 +122,38 @@ class HtmlTemplateBuilderTest {
             isDark = false
         )
 
-        assertTrue(html.contains("<h1>Título Principal</h1>"), "H1 heading must be rendered as <h1>")
+        assertTrue(html.contains("<h1 id=\"título-principal\">Título Principal</h1>"), "H1 heading must be rendered with slug id attribute")
         assertTrue(html.contains("<strong>texto en negrita</strong>"), "Bold text must be rendered as <strong>")
         assertTrue(html.contains("<em>cursiva</em>"), "Italic text must be rendered as <em>")
         assertTrue(html.contains("<ul>"), "Unordered list must be rendered as <ul>")
         assertTrue(html.contains("<li>Elemento 1</li>"), "List item must be rendered as <li>")
         assertTrue(html.contains("<code"), "Code snippet must be rendered in <code> tag")
+    }
+
+    @Test
+    @DisplayName("Markdown headings receive GitHub-compatible unique slug IDs for anchor navigation")
+    fun testHeadingSlugGenerationAndDeduplication() {
+        val markdown = """
+            # Introducción General
+            ## 1. ¿Cómo empezar? (Guía Rápida)
+            ### Subsección
+            ### Subsección
+            ### Subsección
+            ## Enlaces y anclas: [Detalles](http://example.com)
+        """.trimIndent()
+
+        val html = builder.buildHtml(
+            markdown = markdown,
+            themeMode = AppThemeMode.PAPER,
+            isDark = false
+        )
+
+        assertTrue(html.contains("<h1 id=\"introducción-general\">"), "Should generate slug with unicode letters")
+        assertTrue(html.contains("<h2 id=\"1-cómo-empezar-guía-rápida\">"), "Should strip punctuation and symbols")
+        assertTrue(html.contains("<h3 id=\"subsección\">"), "First occurrence should have base slug")
+        assertTrue(html.contains("<h3 id=\"subsección-1\">"), "Second occurrence should have -1 suffix")
+        assertTrue(html.contains("<h3 id=\"subsección-2\">"), "Third occurrence should have -2 suffix")
+        assertTrue(html.contains("<h2 id=\"enlaces-y-anclas-detalles\">"), "Should extract text from nested nodes inside heading")
     }
 
     @Test

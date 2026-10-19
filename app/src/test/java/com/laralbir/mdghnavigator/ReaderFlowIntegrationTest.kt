@@ -50,8 +50,8 @@ class ReaderFlowIntegrationTest {
         )
 
         // Verify HTML semantic rendering
-        assertTrue(renderedHtml.contains("<h1>Clean Architecture Guide</h1>"), "H1 title must be rendered")
-        assertTrue(renderedHtml.contains("<h2>📐 Principios de Dominio</h2>"), "H2 section must be rendered")
+        assertTrue(renderedHtml.contains("<h1 id=\"clean-architecture-guide\">Clean Architecture Guide</h1>"), "H1 title must be rendered with slug id")
+        assertTrue(renderedHtml.contains("<h2 id=\"principios-de-dominio\">📐 Principios de Dominio</h2>"), "H2 section must be rendered with slug id")
         assertTrue(renderedHtml.contains("<strong>reglas de negocio</strong>"), "Bold text must be rendered as <strong>")
         assertTrue(renderedHtml.contains("<ul>"), "List must be rendered in <ul>")
         assertTrue(renderedHtml.contains("<li>Casos de uso atómicos (UseCases)</li>"), "List item must be rendered")

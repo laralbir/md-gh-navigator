@@ -24,9 +24,20 @@ class MarkdownLinkClassifierTest {
     @DisplayName("In-page anchors starting with # are classified as Anchor")
     fun testAnchorLinks() {
         val link = classifier.classify("#arquitectura-general")
-
         assertTrue(link is LinkTarget.Anchor)
         assertEquals("arquitectura-general", (link as LinkTarget.Anchor).anchorId)
+
+        val linkUnicode = classifier.classify("#guía-de-instalación")
+        assertTrue(linkUnicode is LinkTarget.Anchor)
+        assertEquals("guía-de-instalación", (linkUnicode as LinkTarget.Anchor).anchorId)
+
+        val linkEmpty = classifier.classify("#")
+        assertTrue(linkEmpty is LinkTarget.Anchor)
+        assertEquals("", (linkEmpty as LinkTarget.Anchor).anchorId)
+
+        val linkVirtualAppAssetsAnchor = classifier.classify("https://appassets.androidplatform.net/#seccion")
+        assertTrue(linkVirtualAppAssetsAnchor is LinkTarget.Anchor)
+        assertEquals("seccion", (linkVirtualAppAssetsAnchor as LinkTarget.Anchor).anchorId)
     }
 
     @Test
