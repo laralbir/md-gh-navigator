@@ -64,9 +64,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: RELEASE_NOTES.md
-          name: "MD GitHub Navigator ${{ github.ref_name }}"
+          name: "MD GitHub Navigator ${{ github.ref_name }}-beta (Beta)"
           draft: false
-          prerelease: false
+          prerelease: true
           files: |
             app/build/outputs/apk/release/*.apk
             app/build/outputs/apk/release/*.sha256

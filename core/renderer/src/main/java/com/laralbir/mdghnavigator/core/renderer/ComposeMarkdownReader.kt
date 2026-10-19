@@ -7,7 +7,11 @@ import android.webkit.WebView
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.laralbir.mdghnavigator.core.designsystem.theme.AppThemeMode
@@ -45,6 +49,21 @@ fun ComposeMarkdownReader(
         )
     }
 
+    var pendingScrollProgress by remember { mutableStateOf<Float?>(null) }
+    var pendingHeadingId by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(targetScrollProgress) {
+        if (targetScrollProgress != null) {
+            pendingScrollProgress = targetScrollProgress
+        }
+    }
+
+    LaunchedEffect(targetHeadingId) {
+        if (targetHeadingId != null) {
+            pendingHeadingId = targetHeadingId
+        }
+    }
+
     AndroidView(
         modifier = modifier.fillMaxSize(),
         factory = { context ->
@@ -78,7 +97,22 @@ fun ComposeMarkdownReader(
 
                 webViewClient = MarkdownWebViewClient(
                     context = context,
-                    onLinkTargetResolved = onLinkClicked
+                    onLinkTargetResolved = onLinkClicked,
+                    onPageFinishedCallback = { view ->
+                        if (pendingHeadingId != null) {
+                            view.evaluateJavascript(
+                                "window.ReaderApi && window.ReaderApi.scrollToHeading('$pendingHeadingId');",
+                                null
+                            )
+                            pendingHeadingId = null
+                        } else if (pendingScrollProgress != null) {
+                            view.evaluateJavascript(
+                                "window.ReaderApi && window.ReaderApi.scrollToProgress($pendingScrollProgress);",
+                                null
+                            )
+                            pendingScrollProgress = null
+                        }
+                    }
                 )
 
                 tag = htmlContent
@@ -94,6 +128,8 @@ fun ComposeMarkdownReader(
         update = { webView ->
             if (webView.tag != htmlContent) {
                 webView.tag = htmlContent
+                pendingScrollProgress = targetScrollProgress
+                pendingHeadingId = targetHeadingId
                 webView.loadDataWithBaseURL(
                     "https://appassets.androidplatform.net/",
                     htmlContent,
@@ -101,17 +137,18 @@ fun ComposeMarkdownReader(
                     "UTF-8",
                     null
                 )
-            }
-            if (targetHeadingId != null) {
-                webView.evaluateJavascript(
-                    "window.ReaderApi && window.ReaderApi.scrollToHeading('$targetHeadingId');",
-                    null
-                )
-            } else if (targetScrollProgress != null) {
-                webView.evaluateJavascript(
-                    "window.ReaderApi && window.ReaderApi.scrollToProgress($targetScrollProgress);",
-                    null
-                )
+            } else {
+                if (targetHeadingId != null) {
+                    webView.evaluateJavascript(
+                        "window.ReaderApi && window.ReaderApi.scrollToHeading('$targetHeadingId');",
+                        null
+                    )
+                } else if (targetScrollProgress != null) {
+                    webView.evaluateJavascript(
+                        "window.ReaderApi && window.ReaderApi.scrollToProgress($targetScrollProgress);",
+                        null
+                    )
+                }
             }
         }
     )

@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -149,9 +150,12 @@ fun ZoomableImageViewer(
     val context = LocalContext.current
     var controlsVisible by remember { mutableStateOf(true) }
 
-    val imageRequest = remember(imageUrl) {
+    val isDiagram = remember(imageUrl) { ImageDataUriParser.isSvgOrDiagram(imageUrl) }
+    val resolvedModel = remember(imageUrl) { ImageDataUriParser.resolveImageModel(imageUrl) }
+
+    val imageRequest = remember(resolvedModel) {
         ImageRequest.Builder(context)
-            .data(imageUrl)
+            .data(resolvedModel)
             .decoderFactory(SvgDecoder.Factory())
             .crossfade(true)
             .build()
@@ -188,16 +192,8 @@ fun ZoomableImageViewer(
                     )
                 }
         ) {
-            // Imagen central interactiva
-            SubcomposeAsyncImage(
-                model = imageRequest,
-                contentDescription = title ?: stringResource(R.string.image_viewer_title_default),
-                contentScale = ContentScale.Fit,
-                loading = {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = Color.White)
-                    }
-                },
+            // Imagen o diagrama central interactivo
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer {
@@ -205,8 +201,36 @@ fun ZoomableImageViewer(
                         scaleY = zoomState.scale
                         translationX = zoomState.offsetX
                         translationY = zoomState.offsetY
-                    }
-            )
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Surface(
+                    color = if (isDiagram) Color.White else Color.Transparent,
+                    shape = if (isDiagram) RoundedCornerShape(8.dp) else RectangleShape,
+                    shadowElevation = if (isDiagram) 8.dp else 0.dp,
+                    modifier = if (isDiagram) Modifier.padding(24.dp) else Modifier.fillMaxSize()
+                ) {
+                    SubcomposeAsyncImage(
+                        model = imageRequest,
+                        contentDescription = title ?: stringResource(R.string.image_viewer_title_default),
+                        contentScale = ContentScale.Fit,
+                        loading = {
+                            Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = Color(0xFF0969DA))
+                            }
+                        },
+                        error = {
+                            Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = stringResource(R.string.image_viewer_error),
+                                    color = if (isDiagram) Color(0xFF1F2328) else Color.White
+                                )
+                            }
+                        },
+                        modifier = if (isDiagram) Modifier.padding(16.dp) else Modifier.fillMaxSize()
+                    )
+                }
+            }
 
             // Barra de controles superior translúcida
             if (controlsVisible) {

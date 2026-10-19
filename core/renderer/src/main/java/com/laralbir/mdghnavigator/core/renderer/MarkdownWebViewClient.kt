@@ -9,7 +9,8 @@ import androidx.webkit.WebViewClientCompat
 
 class MarkdownWebViewClient(
     context: Context,
-    private val onLinkTargetResolved: (LinkTarget) -> Unit
+    private val onLinkTargetResolved: (LinkTarget) -> Unit,
+    private val onPageFinishedCallback: ((WebView) -> Unit)? = null
 ) : WebViewClientCompat() {
 
     private val assetLoader = WebViewAssetLoader.Builder()
@@ -40,5 +41,10 @@ class MarkdownWebViewClient(
                 true // Handled by app
             }
         }
+    }
+
+    override fun onPageFinished(view: WebView, url: String?) {
+        super.onPageFinished(view, url)
+        onPageFinishedCallback?.invoke(view)
     }
 }

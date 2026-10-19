@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2.0] - 2026-10-19 (Beta / Pre-release)
+
+> [!NOTE]
+> Versión Beta v1.2.0 con ampliación interactiva de diagramas Mermaid, navegación y selección de documentos en carpetas, y restauración precisa de la posición de lectura.
+
+### Fixed
+- **Visualización ampliada de diagramas Mermaid en modal interactivo** ([#18](https://github.com/laralbir/md-gh-navigator/issues/18)): Soporte para resolución de Data URIs SVG (`ImageDataUriParser`) decodificando Base64 y UTF-8 a `ByteArray` para Coil y `SvgDecoder`, incorporando un lienzo de alto contraste sobre fondo blanco con esquinas redondeadas para que los diagramas con líneas y textos oscuros sean legibles al 100%.
+- **Preservación y restauración de la posición de scroll al volver atrás** ([#20](https://github.com/laralbir/md-gh-navigator/issues/20)): Pila de navegación (`NavigationBackStackEntry`) que almacena la tupla `(documentId, scrollProgress)`. Al retroceder, el motor web restaura de manera precisa la posición de lectura en `onPageFinished` con sincronización en `requestAnimationFrame`.
+
+### Added
+- **Selector de documentos Markdown para enlaces a directorios** ([#19](https://github.com/laralbir/md-gh-navigator/issues/19)): Detección de enlaces relativos a carpetas y URLs de árbol de GitHub (`/tree/<branch>/<dir>`), desplegando el diálogo interactivo `DirectoryDocumentPickerDialog` para elegir a qué fichero Markdown del directorio navegar, priorizando archivos `README.md` / `index.md` con insignia destacada.
+
 ## [v1.1.0] - 2026-10-19 (Beta / Pre-release)
 
 > [!NOTE]
