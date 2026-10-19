@@ -68,5 +68,25 @@ class MarkdownLinkClassifierTest {
         assertTrue(link is LinkTarget.RelativeAsset)
         assertEquals("assets/diagram.png", (link as LinkTarget.RelativeAsset).assetPath)
     }
+
+    @Test
+    @DisplayName("GitHub tree directory URLs are classified as Directory")
+    fun testGitHubTreeLinks() {
+        val link1 = classifier.classify("https://github.com/laralbir/md-gh-navigator/tree/main/docs/architecture")
+        assertTrue(link1 is LinkTarget.Directory)
+        assertEquals("docs/architecture", (link1 as LinkTarget.Directory).directoryPath)
+
+        val link2 = classifier.classify("https://github.com/owner/repo/tree/develop/guides/")
+        assertTrue(link2 is LinkTarget.Directory)
+        assertEquals("guides", (link2 as LinkTarget.Directory).directoryPath)
+    }
+
+    @Test
+    @DisplayName("Relative directory paths with trailing slash are classified as Directory")
+    fun testRelativeDirectoryLinks() {
+        val link = classifier.classify("./docs/api/")
+        assertTrue(link is LinkTarget.Directory)
+        assertEquals("docs/api", (link as LinkTarget.Directory).directoryPath)
+    }
 }
 
