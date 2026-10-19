@@ -100,8 +100,9 @@ fun ComposeMarkdownReader(
                     onLinkTargetResolved = onLinkClicked,
                     onPageFinishedCallback = { view ->
                         if (pendingHeadingId != null) {
+                            val safeHeading = pendingHeadingId!!.replace("'", "\\'").replace("\"", "\\\"")
                             view.evaluateJavascript(
-                                "window.ReaderApi && window.ReaderApi.scrollToHeading('$pendingHeadingId');",
+                                "window.ReaderApi && window.ReaderApi.scrollToHeading('$safeHeading');",
                                 null
                             )
                             pendingHeadingId = null
@@ -139,8 +140,9 @@ fun ComposeMarkdownReader(
                 )
             } else {
                 if (targetHeadingId != null) {
+                    val safeHeading = targetHeadingId!!.replace("'", "\\'").replace("\"", "\\\"")
                     webView.evaluateJavascript(
-                        "window.ReaderApi && window.ReaderApi.scrollToHeading('$targetHeadingId');",
+                        "window.ReaderApi && window.ReaderApi.scrollToHeading('$safeHeading');",
                         null
                     )
                 } else if (targetScrollProgress != null) {

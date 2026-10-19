@@ -23,6 +23,102 @@
         }
     }
 
+    function safeEscapeCss(str) {
+        if (!str) return '';
+        if (window.CSS && window.CSS.escape) {
+            return window.CSS.escape(str);
+        }
+        return str.replace(/([ #;&,.+*~':"!^$[\]()=>|/@])/g, '\\$1');
+    }
+
+    function generateHeadingSlug(text) {
+        if (!text) return '';
+        let clean = text.trim()
+            .toLowerCase()
+            .replace(/[\s_]+/g, '-')
+            .replace(/[^\p{L}\p{N}-]/gu, '')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        return clean || 'section';
+    }
+
+    function removeAccents(str) {
+        if (!str) return '';
+        try {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        } catch (e) {
+            return str;
+        }
+    }
+
+    function findAnchorTarget(rawAnchor) {
+        if (!rawAnchor) return null;
+        let decoded = rawAnchor;
+        try {
+            decoded = decodeURIComponent(rawAnchor).trim();
+        } catch (e) {
+            decoded = rawAnchor.trim();
+        }
+
+        const slug = generateHeadingSlug(decoded);
+        const foldedSlug = removeAccents(slug);
+
+        // 1. Direct ID lookups
+        let target = document.getElementById(rawAnchor) ||
+                     document.getElementById(decoded) ||
+                     (slug ? document.getElementById(slug) : null) ||
+                     (foldedSlug ? document.getElementById(foldedSlug) : null);
+        if (target) return target;
+
+        // 2. Direct name attribute lookups (e.g. <a name="...">)
+        try {
+            target = document.querySelector(`[name="${safeEscapeCss(rawAnchor)}"]`) ||
+                     document.querySelector(`[name="${safeEscapeCss(decoded)}"]`) ||
+                     (slug ? document.querySelector(`[name="${safeEscapeCss(slug)}"]`) : null) ||
+                     (foldedSlug ? document.querySelector(`[name="${safeEscapeCss(foldedSlug)}"]`) : null);
+            if (target) return target;
+        } catch (e) {
+            // Ignore malformed selector
+        }
+
+        // 3. Match against headings (h1..h6)
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        for (let i = 0; i < headings.length; i++) {
+            const h = headings[i];
+            const hText = h.textContent.trim();
+            const hSlug = generateHeadingSlug(hText);
+            const hFolded = removeAccents(hSlug);
+
+            if (h.id === rawAnchor || h.id === decoded || (slug && h.id === slug) || (foldedSlug && h.id === foldedSlug)) {
+                return h;
+            }
+            if (slug && hSlug === slug) {
+                return h;
+            }
+            if (foldedSlug && hFolded === foldedSlug) {
+                return h;
+            }
+            if (h.getAttribute('name') === rawAnchor || h.getAttribute('name') === decoded) {
+                return h;
+            }
+        }
+
+        return null;
+    }
+
+    function scrollToAnchor(rawAnchor) {
+        if (!rawAnchor || rawAnchor === 'top') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return true;
+        }
+        const target = findAnchorTarget(rawAnchor);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+            return true;
+        }
+        return false;
+    }
+
     // Intercept link clicks
     function setupLinkInterception() {
         document.addEventListener('click', function (e) {
@@ -34,12 +130,9 @@
 
             // In-page anchor
             if (href.startsWith('#')) {
-                const anchorId = href.substring(1);
-                const elem = document.getElementById(anchorId) || document.querySelector(`[name="${anchorId}"]`);
-                if (elem) {
-                    e.preventDefault();
-                    elem.scrollIntoView({ behavior: 'smooth' });
-                }
+                e.preventDefault();
+                const rawAnchor = href.substring(1);
+                scrollToAnchor(rawAnchor);
                 return;
             }
 
@@ -55,10 +148,15 @@
     function extractHeadings() {
         const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
         const list = [];
+        const seenSlugs = {};
 
         headings.forEach(function (h, index) {
             if (!h.id) {
-                h.id = 'heading-' + index + '-' + encodeURIComponent(h.textContent.trim().toLowerCase().replace(/\s+/g, '-'));
+                const text = h.textContent.trim();
+                const baseSlug = generateHeadingSlug(text) || ('heading-' + index);
+                const count = seenSlugs[baseSlug] || 0;
+                h.id = count === 0 ? baseSlug : (baseSlug + '-' + count);
+                seenSlugs[baseSlug] = count + 1;
             }
             list.push({
                 id: h.id,
@@ -118,10 +216,7 @@
     // Public API accessible from Android WebView
     window.ReaderApi = {
         scrollToHeading: function (headingId) {
-            const elem = document.getElementById(headingId);
-            if (elem) {
-                elem.scrollIntoView({ behavior: 'smooth' });
-            }
+            scrollToAnchor(headingId);
         },
         scrollToProgress: function (percent) {
             function performScroll() {

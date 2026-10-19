@@ -6,6 +6,14 @@ import org.commonmark.ext.gfm.tables.TablesExtension
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 
+import org.commonmark.node.Code
+import org.commonmark.node.Heading
+import org.commonmark.node.Node
+import org.commonmark.node.Text
+import org.commonmark.renderer.html.AttributeProvider
+import org.commonmark.renderer.html.AttributeProviderContext
+import org.commonmark.renderer.html.AttributeProviderFactory
+
 class HtmlTemplateBuilder {
 
     private val extensions = listOf(
@@ -19,6 +27,7 @@ class HtmlTemplateBuilder {
 
     private val renderer = HtmlRenderer.builder()
         .extensions(extensions)
+        .attributeProviderFactory(HeadingIdAttributeProviderFactory())
         .build()
 
     fun renderMarkdownToHtml(markdown: String): String {
@@ -164,5 +173,53 @@ class HtmlTemplateBuilder {
         val primary: String,
         val border: String
     )
+
+    companion object {
+        fun generateHeadingSlug(text: String): String {
+            val clean = text.trim()
+                .lowercase()
+                .replace(Regex("[\\s_]+"), "-")
+                .replace(Regex("[^\\p{L}\\p{N}-]"), "")
+                .replace(Regex("-+"), "-")
+                .trim('-')
+            return if (clean.isEmpty()) "section" else clean
+        }
+
+        fun extractNodeText(node: Node): String {
+            val sb = StringBuilder()
+            var child = node.firstChild
+            while (child != null) {
+                when (child) {
+                    is Text -> sb.append(child.literal)
+                    is Code -> sb.append(child.literal)
+                    else -> sb.append(extractNodeText(child))
+                }
+                child = child.next
+            }
+            return sb.toString()
+        }
+    }
 }
+
+class HeadingIdAttributeProviderFactory : AttributeProviderFactory {
+    override fun create(context: AttributeProviderContext): AttributeProvider {
+        return HeadingIdAttributeProvider()
+    }
+}
+
+class HeadingIdAttributeProvider : AttributeProvider {
+    private val seenSlugs = mutableMapOf<String, Int>()
+
+    override fun setAttributes(node: Node, tagName: String, attributes: MutableMap<String, String>) {
+        if (node is Heading) {
+            val text = HtmlTemplateBuilder.extractNodeText(node)
+            val baseSlug = HtmlTemplateBuilder.generateHeadingSlug(text)
+            val count = seenSlugs.getOrDefault(baseSlug, 0)
+            val uniqueSlug = if (count == 0) baseSlug else "$baseSlug-$count"
+            seenSlugs[baseSlug] = count + 1
+            attributes["id"] = uniqueSlug
+        }
+    }
+}
+
 
