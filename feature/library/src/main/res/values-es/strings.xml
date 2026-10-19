@@ -32,5 +32,12 @@
     <string name="library_synced_at">Sincronizado: %1$s</string>
     <string name="library_not_synced">Sin sincronizar</string>
     <string name="library_settings_button">Ajustes</string>
+    <string name="library_alias_label">Alias / Nombre personalizado (opcional)</string>
+    <string name="library_alias_placeholder">ej. Docs de Trabajo, Apuntes Personales</string>
+    <string name="library_edit_alias_button">Editar Alias</string>
+    <string name="library_edit_alias_title">Editar Alias</string>
+    <string name="library_edit_alias_description">Configura un alias personalizado para identificar rápidamente este repositorio o carpeta en tu biblioteca:</string>
+    <string name="library_edit_alias_save">Guardar</string>
+    <string name="library_edit_alias_clear">Quitar Alias</string>
 </resources>
 

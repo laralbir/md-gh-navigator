@@ -27,7 +27,8 @@ class SelectiveCacheManager @Inject constructor(
         owner: String,
         repo: String,
         branch: String? = null,
-        startFilePath: String = "README.md"
+        startFilePath: String = "README.md",
+        alias: String? = null
     ): AppResult<RepositoryEntity> {
         val repoId = "github:$owner/$repo"
         val existingRepo = repositoryDao.getRepositoryByIdSync(repoId)
@@ -103,7 +104,8 @@ class SelectiveCacheManager @Inject constructor(
             startFilePath = resolvedStartFile,
             lastSyncTimestamp = System.currentTimeMillis(),
             eTag = newEtag,
-            isPinned = existingRepo?.isPinned ?: false
+            isPinned = existingRepo?.isPinned ?: false,
+            alias = alias ?: existingRepo?.alias
         )
 
         repositoryDao.upsertRepository(updatedRepo)
