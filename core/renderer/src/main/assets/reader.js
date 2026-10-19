@@ -124,11 +124,19 @@
             }
         },
         scrollToProgress: function (percent) {
-            const doc = document.documentElement;
-            const body = document.body;
-            const scrollHeight = (doc.scrollHeight || body.scrollHeight) - doc.clientHeight;
-            const target = Math.max(0, scrollHeight * percent);
-            window.scrollTo({ top: target, behavior: 'smooth' });
+            function performScroll() {
+                const doc = document.documentElement;
+                const body = document.body;
+                const scrollHeight = (doc.scrollHeight || body.scrollHeight) - doc.clientHeight;
+                if (scrollHeight > 0) {
+                    const target = Math.max(0, scrollHeight * percent);
+                    window.scrollTo({ top: target, behavior: 'auto' });
+                }
+            }
+            performScroll();
+            window.requestAnimationFrame(performScroll);
+            setTimeout(performScroll, 80);
+            setTimeout(performScroll, 200);
         },
         setFontSize: function (sizePx) {
             document.documentElement.style.setProperty('--reader-font-size', sizePx + 'px');

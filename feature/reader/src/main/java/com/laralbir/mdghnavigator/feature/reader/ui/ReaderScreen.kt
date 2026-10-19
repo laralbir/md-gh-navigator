@@ -72,6 +72,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+internal data class NavigationBackStackEntry(
+    val documentId: String,
+    val scrollProgress: Float
+)
+
 private data class DirectoryPickerState(
     val directoryName: String,
     val documents: List<DocumentEntity>
@@ -110,13 +115,19 @@ fun ReaderScreen(
     var targetHeadingId by remember { mutableStateOf<String?>(null) }
 
     var activeDocId by remember(documentId) { mutableStateOf(documentId) }
-    val documentBackStack = remember { mutableStateListOf<String>() }
+    val documentBackStack = remember { mutableStateListOf<NavigationBackStackEntry>() }
     var directoryPickerState by remember { mutableStateOf<DirectoryPickerState?>(null) }
 
     val navigateToDoc: (String) -> Unit = { newDocId ->
         if (newDocId != activeDocId) {
-            documentBackStack.add(activeDocId)
+            documentBackStack.add(
+                NavigationBackStackEntry(
+                    documentId = activeDocId,
+                    scrollProgress = readerUiState.scrollProgress
+                )
+            )
             activeDocId = newDocId
+            targetScrollProgress = null
             onNavigateToDocument(newDocId)
         }
     }
@@ -136,9 +147,10 @@ fun ReaderScreen(
                 isAnnotationsOpen = false
             }
             documentBackStack.isNotEmpty() -> {
-                val previousDocId = documentBackStack.removeAt(documentBackStack.lastIndex)
-                activeDocId = previousDocId
-                onNavigateToDocument(previousDocId)
+                val previousEntry = documentBackStack.removeAt(documentBackStack.lastIndex)
+                activeDocId = previousEntry.documentId
+                targetScrollProgress = previousEntry.scrollProgress
+                onNavigateToDocument(previousEntry.documentId)
             }
             else -> {
                 onBackClick()
@@ -156,7 +168,7 @@ fun ReaderScreen(
 
     LaunchedEffect(targetScrollProgress) {
         if (targetScrollProgress != null) {
-            delay(350)
+            delay(1200)
             targetScrollProgress = null
         }
     }
