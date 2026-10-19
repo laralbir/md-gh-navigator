@@ -425,6 +425,7 @@ fun ReaderScreen(
     } else {
         ModalNavigationDrawer(
             drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen,
             drawerContent = {
                 ModalDrawerSheet {
                     when (activeDrawerContent) {
