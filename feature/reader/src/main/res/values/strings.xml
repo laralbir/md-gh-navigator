@@ -16,5 +16,6 @@
     <string name="image_viewer_zoom_out">Zoom out</string>
     <string name="image_viewer_zoom_reset">Reset zoom</string>
     <string name="image_viewer_title_default">Image Preview</string>
+    <string name="image_viewer_error">Failed to load image or diagram</string>
 </resources>
 
