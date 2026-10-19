@@ -129,5 +129,26 @@ class HtmlTemplateBuilderTest {
         assertTrue(html.contains("<li>Elemento 1</li>"), "List item must be rendered as <li>")
         assertTrue(html.contains("<code"), "Code snippet must be rendered in <code> tag")
     }
+
+    @Test
+    @DisplayName("HTML template links mermaid.min.js and marks dark mode attribute for diagram rendering")
+    fun testMermaidScriptLinked() {
+        val markdown = """
+            ```mermaid
+            graph TD
+                A[Start] --> B[Finish]
+            ```
+        """.trimIndent()
+
+        val html = builder.buildHtml(
+            markdown = markdown,
+            themeMode = AppThemeMode.PAPER,
+            isDark = true
+        )
+
+        assertTrue(html.contains("mermaid.min.js"), "Must link mermaid.min.js")
+        assertTrue(html.contains("data-is-dark=\"true\""), "Must declare dark mode for mermaid theme")
+        assertTrue(html.contains("language-mermaid"), "Must contain mermaid code block")
+    }
 }
 

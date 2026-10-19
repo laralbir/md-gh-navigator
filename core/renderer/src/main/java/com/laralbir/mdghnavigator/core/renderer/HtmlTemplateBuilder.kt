@@ -121,9 +121,10 @@ class HtmlTemplateBuilder {
         }
     </style>
 </head>
-<body>
+<body data-is-dark="$isDark">
     <div id="content" class="markdown-body">$renderedContent</div>
 
+    <script src="https://appassets.androidplatform.net/assets/mermaid.min.js"></script>
     <script src="https://appassets.androidplatform.net/assets/reader.js"></script>
     <script>
         // Report initial scroll progress
