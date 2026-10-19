@@ -321,7 +321,10 @@ fun ReaderScreen(
                         onStop = controller::stop,
                         onNext = controller::nextSentence,
                         onPrevious = controller::previousSentence,
-                        onRateChange = controller::setSpeechRate
+                        onRateChange = controller::setSpeechRate,
+                        onLanguageSelected = controller::setLanguage,
+                        onVoiceSelected = controller::setVoice,
+                        onOpenVoiceSettings = controller::ensureInitialized
                     )
                 }
             }
