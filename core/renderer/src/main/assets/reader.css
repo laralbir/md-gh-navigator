@@ -106,19 +106,27 @@ blockquote {
 }
 
 /* Tablas */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5em 0;
+}
+
 table {
     border-collapse: collapse;
-    width: 100%;
-    margin: 1.5em 0;
+    width: max-content;
+    min-width: 100%;
+    margin: 0;
     font-size: 0.95em;
-    overflow-x: auto;
-    display: block;
+    display: table;
 }
 
 th, td {
     border: 1px solid var(--reader-border);
     padding: 10px 14px;
     text-align: left;
+    white-space: nowrap;
 }
 
 th {

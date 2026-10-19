@@ -123,6 +123,20 @@
         }
     };
 
+    // Wrap tables in responsive scrollable containers
+    function setupScrollableTables() {
+        const tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            if (table.parentElement && table.parentElement.classList.contains('table-wrapper')) {
+                return;
+            }
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+    }
+
     // Convert and render Mermaid diagram code blocks
     function renderMermaidDiagrams() {
         const mermaidCodeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code.language-mermaid-js, pre.mermaid');
@@ -163,6 +177,7 @@
         setupImageInterception();
         extractHeadings();
         renderMermaidDiagrams();
+        setupScrollableTables();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
