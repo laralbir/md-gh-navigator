@@ -75,7 +75,7 @@
     // Intercept image and diagram clicks to open full-screen zoomable viewer
     function setupImageInterception() {
         document.addEventListener('click', function (e) {
-            const img = e.target.closest('img, svg, .diagram-container');
+            const img = e.target.closest('img, svg, .diagram-container, .mermaid');
             if (!img) return;
 
             let src = '';
@@ -84,13 +84,26 @@
             if (img.tagName.toLowerCase() === 'img') {
                 src = img.currentSrc || img.src || img.getAttribute('src') || '';
                 alt = img.alt || img.title || '';
-            } else if (img.tagName.toLowerCase() === 'svg' || img.classList.contains('diagram-container')) {
+            } else if (img.tagName.toLowerCase() === 'svg' || img.classList.contains('diagram-container') || img.classList.contains('mermaid')) {
                 const svgElem = img.tagName.toLowerCase() === 'svg' ? img : img.querySelector('svg');
                 if (svgElem) {
-                    const serializer = new XMLSerializer();
-                    const svgString = serializer.serializeToString(svgElem);
-                    src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
-                    alt = svgElem.getAttribute('aria-label') || 'Diagram';
+                    try {
+                        const clone = svgElem.cloneNode(true);
+                        if (!clone.getAttribute('xmlns')) {
+                            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                        }
+                        if (!clone.getAttribute('xmlns:xlink')) {
+                            clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+                        }
+                        const serializer = new XMLSerializer();
+                        const svgString = serializer.serializeToString(clone);
+                        src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgString)));
+                        alt = svgElem.getAttribute('aria-label') || 'Diagram';
+                    } catch (err) {
+                        const serializer = new XMLSerializer();
+                        src = 'data:image/svg+xml;utf8,' + encodeURIComponent(serializer.serializeToString(svgElem));
+                        alt = 'Diagram';
+                    }
                 }
             }
 

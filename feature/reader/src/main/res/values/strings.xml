@@ -16,5 +16,11 @@
     <string name="image_viewer_zoom_out">Zoom out</string>
     <string name="image_viewer_zoom_reset">Reset zoom</string>
     <string name="image_viewer_title_default">Image Preview</string>
+    <string name="image_viewer_error">Failed to load image or diagram</string>
+    <string name="directory_picker_title">Documents in %1$s</string>
+    <string name="directory_picker_subtitle">Select a Markdown file to open</string>
+    <string name="directory_picker_empty">No Markdown documents found in this directory</string>
+    <string name="directory_picker_badge_readme">README</string>
+    <string name="directory_picker_close">Close</string>
 </resources>
 
