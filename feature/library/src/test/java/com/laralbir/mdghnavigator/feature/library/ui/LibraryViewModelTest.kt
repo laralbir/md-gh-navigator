@@ -94,7 +94,7 @@ class LibraryViewModelTest {
         )
 
         coEvery {
-            cacheManager.syncGitHubRepository("owner", "repo", null, "README.md")
+            cacheManager.syncGitHubRepository("owner", "repo", null, "README.md", null)
         } returns AppResult.Success(repo)
 
         viewModel.onIntent(LibraryIntent.OpenAddDialog)
@@ -114,14 +114,14 @@ class LibraryViewModelTest {
         assertFalse(viewModel.uiState.value.isAddDialogOpen)
         assertFalse(viewModel.uiState.value.isLoading)
         assertNull(viewModel.uiState.value.errorMessage)
-        coVerify(exactly = 1) { cacheManager.syncGitHubRepository("owner", "repo", null, "README.md") }
+        coVerify(exactly = 1) { cacheManager.syncGitHubRepository("owner", "repo", null, "README.md", null) }
     }
 
     @Test
     @DisplayName("addGitHubRepository populates error message on failure")
     fun testAddGitHubRepositoryFailure() = runTest {
         coEvery {
-            cacheManager.syncGitHubRepository("owner", "invalid-repo", null, "README.md")
+            cacheManager.syncGitHubRepository("owner", "invalid-repo", null, "README.md", null)
         } returns AppResult.Error(message = "Repositorio no encontrado", code = 404)
 
         viewModel.onIntent(
@@ -145,6 +145,24 @@ class LibraryViewModelTest {
 
         coVerify(exactly = 1) { repositoryDao.deleteRepository("github:owner/repo") }
         coVerify(exactly = 1) { documentDao.deleteDocumentsForRepo("github:owner/repo") }
+    }
+
+    @Test
+    @DisplayName("updateRepositoryAlias updates alias in repositoryDao")
+    fun testUpdateRepositoryAlias() = runTest {
+        viewModel.onIntent(LibraryIntent.UpdateRepositoryAlias("github:owner/repo", "Mi Alias"))
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        coVerify(exactly = 1) { repositoryDao.updateAlias("github:owner/repo", "Mi Alias") }
+    }
+
+    @Test
+    @DisplayName("updateRepositoryAlias with blank clears alias in repositoryDao")
+    fun testClearRepositoryAlias() = runTest {
+        viewModel.onIntent(LibraryIntent.UpdateRepositoryAlias("github:owner/repo", "   "))
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        coVerify(exactly = 1) { repositoryDao.updateAlias("github:owner/repo", null) }
     }
 }
 

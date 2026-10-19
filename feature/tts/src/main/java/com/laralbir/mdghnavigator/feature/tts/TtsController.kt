@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.SupervisorJob
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -66,6 +67,43 @@ class TtsController(
     }
 
     /**
+     * Ensures the speech engine is initialized and populates available languages and voices.
+     */
+    fun ensureInitialized(onReady: () -> Unit = {}) {
+        if (_uiState.value.isInitialized) {
+            onReady()
+            return
+        }
+
+        speechEngine.initialize(
+            onInitSuccess = {
+                val languages = speechEngine.getAvailableLanguages()
+                val currentLang = speechEngine.getCurrentLanguage() ?: Locale.getDefault()
+                val voices = speechEngine.getAvailableVoices(currentLang)
+                val currentVoice = speechEngine.getCurrentVoice()
+                _uiState.update {
+                    it.copy(
+                        isInitialized = true,
+                        availableLanguages = languages,
+                        selectedLanguage = currentLang,
+                        availableVoices = voices,
+                        selectedVoice = currentVoice
+                    )
+                }
+                onReady()
+            },
+            onInitError = { errorMsg ->
+                _uiState.update {
+                    it.copy(
+                        status = TtsPlaybackStatus.ERROR,
+                        errorMessage = errorMsg
+                    )
+                }
+            }
+        )
+    }
+
+    /**
      * Starts or resumes speech playback.
      */
     fun play() {
@@ -73,20 +111,9 @@ class TtsController(
         if (currentState.sentences.isEmpty()) return
 
         if (!currentState.isInitialized) {
-            speechEngine.initialize(
-                onInitSuccess = {
-                    _uiState.update { it.copy(isInitialized = true) }
-                    speakCurrentSentence()
-                },
-                onInitError = { errorMsg ->
-                    _uiState.update {
-                        it.copy(
-                            status = TtsPlaybackStatus.ERROR,
-                            errorMessage = errorMsg
-                        )
-                    }
-                }
-            )
+            ensureInitialized {
+                speakCurrentSentence()
+            }
         } else {
             speakCurrentSentence()
         }
@@ -146,6 +173,38 @@ class TtsController(
      */
     fun setSpeechRate(rate: Float) {
         _uiState.update { it.copy(speechRate = rate) }
+        if (_uiState.value.isPlaying) {
+            speakCurrentSentence()
+        }
+    }
+
+    /**
+     * Configures the active language for speech synthesis and refreshes available voices.
+     */
+    fun setLanguage(locale: Locale) {
+        speechEngine.setLanguage(locale)
+        val voices = speechEngine.getAvailableVoices(locale)
+        val currentVoice = speechEngine.getCurrentVoice()
+        _uiState.update {
+            it.copy(
+                selectedLanguage = locale,
+                availableVoices = voices,
+                selectedVoice = currentVoice
+            )
+        }
+        if (_uiState.value.isPlaying) {
+            speakCurrentSentence()
+        }
+    }
+
+    /**
+     * Configures the active voice for speech synthesis.
+     */
+    fun setVoice(voiceName: String) {
+        speechEngine.setVoice(voiceName)
+        _uiState.update {
+            it.copy(selectedVoice = voiceName)
+        }
         if (_uiState.value.isPlaying) {
             speakCurrentSentence()
         }

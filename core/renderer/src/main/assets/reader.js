@@ -123,10 +123,61 @@
         }
     };
 
+    // Wrap tables in responsive scrollable containers
+    function setupScrollableTables() {
+        const tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            if (table.parentElement && table.parentElement.classList.contains('table-wrapper')) {
+                return;
+            }
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+    }
+
+    // Convert and render Mermaid diagram code blocks
+    function renderMermaidDiagrams() {
+        const mermaidCodeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code.language-mermaid-js, pre.mermaid');
+        if (!mermaidCodeBlocks || mermaidCodeBlocks.length === 0) return;
+
+        mermaidCodeBlocks.forEach(function (codeElem, index) {
+            const preElem = codeElem.tagName.toLowerCase() === 'pre' ? codeElem : codeElem.closest('pre');
+            if (!preElem) return;
+
+            const diagramCode = codeElem.textContent.trim();
+            const container = document.createElement('div');
+            container.className = 'mermaid diagram-container';
+            container.id = 'mermaid-diagram-' + index;
+            container.textContent = diagramCode;
+
+            preElem.parentNode.replaceChild(container, preElem);
+        });
+
+        if (window.mermaid) {
+            try {
+                const isDark = document.body.getAttribute('data-is-dark') === 'true';
+                window.mermaid.initialize({
+                    startOnLoad: false,
+                    theme: isDark ? 'dark' : 'default',
+                    securityLevel: 'loose'
+                });
+                window.mermaid.run({
+                    querySelector: '.mermaid'
+                });
+            } catch (err) {
+                console.error('Failed to render mermaid diagram:', err);
+            }
+        }
+    }
+
     function initReader() {
         setupLinkInterception();
         setupImageInterception();
         extractHeadings();
+        renderMermaidDiagrams();
+        setupScrollableTables();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });

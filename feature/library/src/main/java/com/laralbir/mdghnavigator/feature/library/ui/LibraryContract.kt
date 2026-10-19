@@ -15,16 +15,19 @@ sealed interface LibraryIntent {
         val owner: String,
         val repo: String,
         val branch: String? = null,
-        val startFilePath: String = "README.md"
+        val startFilePath: String = "README.md",
+        val alias: String? = null
     ) : LibraryIntent
 
     data class ImportLocalDirectory(
         val name: String,
         val uriString: String,
         val files: List<LocalFilePayload>,
-        val startFilePath: String = "README.md"
+        val startFilePath: String = "README.md",
+        val alias: String? = null
     ) : LibraryIntent
 
+    data class UpdateRepositoryAlias(val repoId: String, val alias: String?) : LibraryIntent
     data class SyncRepository(val repository: RepositoryEntity) : LibraryIntent
     data class DeleteRepository(val repoId: String) : LibraryIntent
     data class TogglePinRepository(val repoId: String, val isPinned: Boolean) : LibraryIntent

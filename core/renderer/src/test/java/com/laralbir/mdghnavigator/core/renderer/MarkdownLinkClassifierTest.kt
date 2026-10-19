@@ -52,5 +52,21 @@ class MarkdownLinkClassifierTest {
         assertTrue(link is LinkTarget.RelativeAsset)
         assertEquals("assets/architecture-diagram.png", (link as LinkTarget.RelativeAsset).assetPath)
     }
+
+    @Test
+    @DisplayName("appassets domain URLs from WebView clicks are resolved to RelativeDocument")
+    fun testAppAssetsVirtualUrls() {
+        val link = classifier.classify("https://appassets.androidplatform.net/docs/architecture.md")
+        assertTrue(link is LinkTarget.RelativeDocument)
+        assertEquals("docs/architecture.md", (link as LinkTarget.RelativeDocument).relativePath)
+    }
+
+    @Test
+    @DisplayName("appassets asset URLs are resolved to RelativeAsset")
+    fun testAppAssetsVirtualAssetUrls() {
+        val link = classifier.classify("https://appassets.androidplatform.net/assets/diagram.png")
+        assertTrue(link is LinkTarget.RelativeAsset)
+        assertEquals("assets/diagram.png", (link as LinkTarget.RelativeAsset).assetPath)
+    }
 }
 

@@ -23,6 +23,9 @@ class AndroidTtsSpeechEngine @Inject constructor(
     private var onDoneListener: ((String) -> Unit)? = null
     private var onErrorListener: ((String) -> Unit)? = null
 
+    private var pendingLanguage: Locale? = null
+    private var pendingVoiceName: String? = null
+
     override fun initialize(onInitSuccess: () -> Unit, onInitError: (String) -> Unit) {
         if (isInitialized && textToSpeech != null) {
             onInitSuccess()
@@ -34,11 +37,17 @@ class AndroidTtsSpeechEngine @Inject constructor(
                 isInitialized = true
                 val tts = textToSpeech
                 if (tts != null) {
-                    val defaultLocale = Locale.getDefault()
-                    val langResult = tts.setLanguage(defaultLocale)
+                    val targetLocale = pendingLanguage ?: Locale.getDefault()
+                    val langResult = tts.setLanguage(targetLocale)
                     if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
                         // Fallback to English
                         tts.setLanguage(Locale.ENGLISH)
+                    }
+
+                    pendingVoiceName?.let { vName ->
+                        runCatching {
+                            tts.voices?.find { it.name == vName }?.let { tts.voice = it }
+                        }
                     }
 
                     tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -96,5 +105,92 @@ class AndroidTtsSpeechEngine @Inject constructor(
     override fun setUtteranceProgressListener(onDone: (String) -> Unit, onError: (String) -> Unit) {
         this.onDoneListener = onDone
         this.onErrorListener = onError
+    }
+
+    override fun getAvailableLanguages(): List<Locale> {
+        val tts = textToSpeech ?: return emptyList()
+        val engineLanguages = runCatching {
+            tts.availableLanguages
+                ?.filter { it.language.isNotBlank() && it.displayName.isNotBlank() }
+                ?.distinctBy { it.language to it.country }
+        }.getOrNull()
+
+        if (!engineLanguages.isNullOrEmpty()) {
+            return engineLanguages.sortedBy { it.displayName }
+        }
+
+        // Fallback: test common languages availability
+        val fallbackLocales = listOf(
+            Locale.forLanguageTag("es-ES"),
+            Locale.forLanguageTag("es-MX"),
+            Locale.US,
+            Locale.UK,
+            Locale.FRANCE,
+            Locale.GERMANY,
+            Locale.ITALY,
+            Locale.forLanguageTag("pt-BR"),
+            Locale.forLanguageTag("pt-PT"),
+            Locale.CHINA,
+            Locale.JAPAN
+        )
+        return fallbackLocales.filter { loc ->
+            runCatching {
+                tts.isLanguageAvailable(loc) >= TextToSpeech.LANG_AVAILABLE
+            }.getOrDefault(false)
+        }.sortedBy { it.displayName }
+    }
+
+    override fun getAvailableVoices(locale: Locale?): List<TtsVoiceInfo> {
+        val tts = textToSpeech ?: return emptyList()
+        return runCatching {
+            val allVoices = tts.voices ?: emptySet()
+            val filtered = if (locale != null) {
+                allVoices.filter { it.locale.language.equals(locale.language, ignoreCase = true) }
+            } else {
+                allVoices.toList()
+            }
+            filtered.mapIndexed { index, voice ->
+                val simpleName = voice.name
+                    .split("-", "_")
+                    .filter { it.isNotBlank() && it.length > 2 && it.lowercase() !in listOf("local", "network", "language") }
+                    .lastOrNull()
+                    ?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+                    ?: "Voz ${index + 1}"
+                val display = if (voice.isNetworkConnectionRequired) "$simpleName (Online)" else simpleName
+                TtsVoiceInfo(
+                    name = voice.name,
+                    displayName = display,
+                    locale = voice.locale,
+                    requiresNetwork = voice.isNetworkConnectionRequired
+                )
+            }
+        }.getOrNull() ?: emptyList()
+    }
+
+    override fun setLanguage(locale: Locale): Boolean {
+        pendingLanguage = locale
+        val tts = textToSpeech ?: return false
+        val result = runCatching { tts.setLanguage(locale) }.getOrDefault(TextToSpeech.LANG_NOT_SUPPORTED)
+        return result >= TextToSpeech.LANG_AVAILABLE
+    }
+
+    override fun setVoice(voiceName: String): Boolean {
+        pendingVoiceName = voiceName
+        val tts = textToSpeech ?: return false
+        return runCatching {
+            val voice = tts.voices?.find { it.name == voiceName } ?: return false
+            tts.voice = voice
+            true
+        }.getOrDefault(false)
+    }
+
+    override fun getCurrentLanguage(): Locale? {
+        val tts = textToSpeech ?: return pendingLanguage
+        return runCatching { tts.voice?.locale ?: tts.language ?: pendingLanguage }.getOrNull()
+    }
+
+    override fun getCurrentVoice(): String? {
+        val tts = textToSpeech ?: return pendingVoiceName
+        return runCatching { tts.voice?.name ?: pendingVoiceName }.getOrNull()
     }
 }

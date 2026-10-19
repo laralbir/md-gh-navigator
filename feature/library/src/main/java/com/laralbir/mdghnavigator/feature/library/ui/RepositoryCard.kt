@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Hub
 import androidx.compose.material.icons.filled.PushPin
@@ -46,7 +47,8 @@ fun RepositoryCard(
     onSyncClick: () -> Unit,
     onPinClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEditAliasClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier
@@ -80,7 +82,7 @@ fun RepositoryCard(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = repository.name,
+                        text = repository.alias ?: repository.name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -94,6 +96,13 @@ fun RepositoryCard(
                             imageVector = if (repository.isPinned) Icons.Default.PushPin else Icons.Outlined.PushPin,
                             contentDescription = if (repository.isPinned) stringResource(R.string.library_unpin) else stringResource(R.string.library_pin),
                             tint = if (repository.isPinned) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    IconButton(onClick = onEditAliasClick) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(R.string.library_edit_alias_button),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     IconButton(onClick = onSyncClick) {
@@ -113,9 +122,16 @@ fun RepositoryCard(
                 }
             }
 
-            if (repository.owner != null) {
+            val subtitleText = when {
+                repository.alias != null && repository.owner != null -> "${repository.owner}/${repository.name}"
+                repository.alias != null -> repository.name
+                repository.owner != null -> repository.owner
+                else -> null
+            }
+
+            if (subtitleText != null) {
                 Text(
-                    text = repository.owner!!,
+                    text = subtitleText,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.laralbir.mdghnavigator.feature.tts.R
 import com.laralbir.mdghnavigator.feature.tts.TtsState
+import java.util.Locale
 
 /**
  * Compact, floating playback bar for Text-to-Speech reading in the Markdown Reader.
@@ -58,6 +60,9 @@ fun TtsPlayerBar(
     onNext: () -> Unit,
     onPrevious: () -> Unit,
     onRateChange: (Float) -> Unit,
+    onLanguageSelected: (Locale) -> Unit = {},
+    onVoiceSelected: (String) -> Unit = {},
+    onOpenVoiceSettings: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
@@ -139,38 +144,76 @@ fun TtsPlayerBar(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
+                    var showVoiceDialog by remember { mutableStateOf(false) }
+
+                    if (showVoiceDialog) {
+                        TtsVoiceSettingsDialog(
+                            state = state,
+                            onDismiss = { showVoiceDialog = false },
+                            onLanguageSelected = onLanguageSelected,
+                            onVoiceSelected = onVoiceSelected,
+                            onRateChange = onRateChange
+                        )
+                    }
+
                     // Playback controls row
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Speed picker
-                        var showSpeedMenu by remember { mutableStateOf(false) }
-                        Box {
-                            OutlinedButton(
-                                onClick = { showSpeedMenu = true },
-                                shape = RoundedCornerShape(8.dp)
-                            ) {
-                                Text(
-                                    text = "${state.speechRate}x",
-                                    style = MaterialTheme.typography.labelMedium
-                                )
-                            }
-
-                            DropdownMenu(
-                                expanded = showSpeedMenu,
-                                onDismissRequest = { showSpeedMenu = false }
-                            ) {
-                                listOf(0.75f, 1.0f, 1.25f, 1.5f, 2.0f).forEach { rate ->
-                                    DropdownMenuItem(
-                                        text = { Text("${rate}x") },
-                                        onClick = {
-                                            onRateChange(rate)
-                                            showSpeedMenu = false
-                                        }
+                        // Left controls: Speed and Language/Voice
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Speed picker
+                            var showSpeedMenu by remember { mutableStateOf(false) }
+                            Box {
+                                OutlinedButton(
+                                    onClick = { showSpeedMenu = true },
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text(
+                                        text = "${state.speechRate}x",
+                                        style = MaterialTheme.typography.labelMedium
                                     )
                                 }
+
+                                DropdownMenu(
+                                    expanded = showSpeedMenu,
+                                    onDismissRequest = { showSpeedMenu = false }
+                                ) {
+                                    listOf(0.75f, 1.0f, 1.25f, 1.5f, 2.0f).forEach { rate ->
+                                        DropdownMenuItem(
+                                            text = { Text("${rate}x") },
+                                            onClick = {
+                                                onRateChange(rate)
+                                                showSpeedMenu = false
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+
+                            // Voice & Language button
+                            OutlinedButton(
+                                onClick = {
+                                    onOpenVoiceSettings()
+                                    showVoiceDialog = true
+                                },
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Language,
+                                    contentDescription = stringResource(R.string.tts_select_voice_and_language),
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = (state.selectedLanguage?.language ?: "ES").uppercase(Locale.ROOT),
+                                    style = MaterialTheme.typography.labelMedium
+                                )
                             }
                         }
 

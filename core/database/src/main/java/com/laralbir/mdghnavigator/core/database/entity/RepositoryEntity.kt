@@ -20,5 +20,6 @@ data class RepositoryEntity(
     val localUri: String? = null,
     val lastSyncTimestamp: Long = 0L,
     val eTag: String? = null,
-    val isPinned: Boolean = false
+    val isPinned: Boolean = false,
+    val alias: String? = null
 )

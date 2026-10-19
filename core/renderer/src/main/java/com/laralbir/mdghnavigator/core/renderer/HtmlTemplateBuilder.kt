@@ -106,24 +106,38 @@ class HtmlTemplateBuilder {
             height: auto;
             border-radius: 8px;
         }
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 16px 0;
+        }
         table {
             border-collapse: collapse;
-            width: 100%;
-            margin: 16px 0;
+            width: max-content;
+            min-width: 100%;
+            margin: 0;
+            display: table;
         }
         th, td {
             border: 1px solid var(--reader-border);
-            padding: 8px 12px;
+            padding: 8px 14px;
             text-align: left;
+            white-space: nowrap;
         }
         th {
             background-color: var(--reader-surface);
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(128, 128, 128, 0.05);
         }
     </style>
 </head>
-<body>
+<body data-is-dark="$isDark">
     <div id="content" class="markdown-body">$renderedContent</div>
 
+    <script src="https://appassets.androidplatform.net/assets/mermaid.min.js"></script>
     <script src="https://appassets.androidplatform.net/assets/reader.js"></script>
     <script>
         // Report initial scroll progress

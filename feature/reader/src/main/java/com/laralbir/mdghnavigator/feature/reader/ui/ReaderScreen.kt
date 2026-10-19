@@ -32,10 +32,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberDrawerState
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -100,10 +102,45 @@ fun ReaderScreen(
     var targetScrollProgress by remember { mutableStateOf<Float?>(null) }
     var targetHeadingId by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(documentId, repoId) {
-        readerViewModel.onIntent(ReaderIntent.LoadDocument(documentId))
-        navigatorViewModel.loadRepository(repoId = repoId, initialDocId = documentId)
-        annotationsViewModel.onIntent(AnnotationsIntent.Load(documentId = documentId, repoId = repoId))
+    var activeDocId by remember(documentId) { mutableStateOf(documentId) }
+    val documentBackStack = remember { mutableStateListOf<String>() }
+
+    val navigateToDoc: (String) -> Unit = { newDocId ->
+        if (newDocId != activeDocId) {
+            documentBackStack.add(activeDocId)
+            activeDocId = newDocId
+            onNavigateToDocument(newDocId)
+        }
+    }
+
+    val handleBack: () -> Unit = {
+        when {
+            readerUiState.selectedImageUrl != null -> {
+                readerViewModel.onIntent(ReaderIntent.CloseImageViewer)
+            }
+            drawerState.isOpen -> {
+                coroutineScope.launch { drawerState.close() }
+            }
+            isAnnotationsOpen -> {
+                isAnnotationsOpen = false
+            }
+            documentBackStack.isNotEmpty() -> {
+                val previousDocId = documentBackStack.removeAt(documentBackStack.lastIndex)
+                activeDocId = previousDocId
+                onNavigateToDocument(previousDocId)
+            }
+            else -> {
+                onBackClick()
+            }
+        }
+    }
+
+    BackHandler(enabled = true, onBack = handleBack)
+
+    LaunchedEffect(activeDocId, repoId) {
+        readerViewModel.onIntent(ReaderIntent.LoadDocument(activeDocId))
+        navigatorViewModel.loadRepository(repoId = repoId, initialDocId = activeDocId)
+        annotationsViewModel.onIntent(AnnotationsIntent.Load(documentId = activeDocId, repoId = repoId))
     }
 
     LaunchedEffect(targetScrollProgress) {
@@ -148,7 +185,7 @@ fun ReaderScreen(
                     MdTopAppBar(
                         title = readerUiState.document?.title?.ifBlank { defaultTitle } ?: defaultTitle,
                         subtitle = readerUiState.document?.filePath,
-                        onNavigationClick = onBackClick,
+                        onNavigationClick = handleBack,
                         actions = {
                             // TTS Playback toggle
                             IconButton(onClick = {
@@ -284,7 +321,10 @@ fun ReaderScreen(
                         onStop = controller::stop,
                         onNext = controller::nextSentence,
                         onPrevious = controller::previousSentence,
-                        onRateChange = controller::setSpeechRate
+                        onRateChange = controller::setSpeechRate,
+                        onLanguageSelected = controller::setLanguage,
+                        onVoiceSelected = controller::setVoice,
+                        onOpenVoiceSettings = controller::ensureInitialized
                     )
                 }
             }
@@ -315,7 +355,7 @@ fun ReaderScreen(
                                         uiState = navUiState,
                                         onIntent = navigatorViewModel::onIntent,
                                         onDocumentSelected = { selectedDoc ->
-                                            onNavigateToDocument(selectedDoc.id)
+                                            navigateToDoc(selectedDoc.id)
                                         },
                                         onTocItemSelected = { heading ->
                                             targetHeadingId = heading.id
@@ -348,7 +388,7 @@ fun ReaderScreen(
                                                 context = context,
                                                 target = target,
                                                 navUiState = navUiState,
-                                                onNavigateToDocument = onNavigateToDocument
+                                                onNavigateToDocument = navigateToDoc
                                             )
                                         },
                                         onImageClicked = { imageUrl, title ->
@@ -403,7 +443,7 @@ fun ReaderScreen(
                                             context = context,
                                             target = target,
                                             navUiState = navUiState,
-                                            onNavigateToDocument = onNavigateToDocument
+                                            onNavigateToDocument = navigateToDoc
                                         )
                                     },
                                     onImageClicked = { imageUrl, title ->
@@ -425,6 +465,7 @@ fun ReaderScreen(
     } else {
         ModalNavigationDrawer(
             drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen,
             drawerContent = {
                 ModalDrawerSheet {
                     when (activeDrawerContent) {
@@ -434,7 +475,7 @@ fun ReaderScreen(
                                 onIntent = navigatorViewModel::onIntent,
                                 onDocumentSelected = { selectedDoc ->
                                     coroutineScope.launch { drawerState.close() }
-                                    onNavigateToDocument(selectedDoc.id)
+                                    navigateToDoc(selectedDoc.id)
                                 },
                                 onTocItemSelected = { heading ->
                                     targetHeadingId = heading.id
@@ -518,9 +559,12 @@ private fun handleLinkTarget(
             }
         }
         is LinkTarget.RelativeDocument -> {
+            val cleanPath = target.relativePath.trimStart('.', '/')
             val matchingDoc = navUiState.documents.find { doc ->
-                doc.filePath.endsWith(target.relativePath) ||
-                        doc.filePath.equals(target.relativePath, ignoreCase = true)
+                doc.filePath.equals(cleanPath, ignoreCase = true) ||
+                        doc.filePath.endsWith("/$cleanPath", ignoreCase = true) ||
+                        doc.filePath.endsWith(cleanPath, ignoreCase = true) ||
+                        doc.filePath.substringAfterLast('/').equals(cleanPath.substringAfterLast('/'), ignoreCase = true)
             }
             if (matchingDoc != null) {
                 onNavigateToDocument(matchingDoc.id)

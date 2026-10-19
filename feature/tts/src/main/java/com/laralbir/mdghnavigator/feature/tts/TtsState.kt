@@ -1,5 +1,7 @@
 package com.laralbir.mdghnavigator.feature.tts
 
+import java.util.Locale
+
 /**
  * Status of TTS audio playback.
  */
@@ -21,7 +23,11 @@ data class TtsState(
     val speechRate: Float = 1.0f,
     val pitch: Float = 1.0f,
     val isInitialized: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val availableLanguages: List<Locale> = emptyList(),
+    val selectedLanguage: Locale? = null,
+    val availableVoices: List<TtsVoiceInfo> = emptyList(),
+    val selectedVoice: String? = null
 ) {
     val currentSentence: String?
         get() = sentences.getOrNull(currentSentenceIndex)

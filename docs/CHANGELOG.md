@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.1.0] - 2026-10-19 (Beta / Pre-release)
+
+> [!NOTE]
+> Versión Beta v1.1.0 con resolución activa de incidencias comunitarias y mejoras significativas de navegación y accesibilidad.
+
+### Fixed
+- **Scroll fluido y eliminación de bloqueos** ([#4](https://github.com/laralbir/md-gh-navigator/issues/4)): Desactivados los gestos táctiles de apertura de paneles modales (`gesturesEnabled = false`) para evitar interferencias y bloqueos al deslizar verticalmente el contenido del lector.
+- **Renderizado de diagramas Mermaid offline** ([#5](https://github.com/laralbir/md-gh-navigator/issues/5)): Inclusión de `mermaid.min.js` embebido localmente en los assets del motor web, inicialización dinámica con soporte para temas claro/oscuro y extracción de bloques `language-mermaid`.
+- **Desplazamiento horizontal de tablas anchas** ([#8](https://github.com/laralbir/md-gh-navigator/issues/8)): Contenedor responsivo con `.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }` y `white-space: nowrap` para permitir desplazamiento táctil suave en tablas de datos extensas.
+- **Navegación fluida entre documentos del repositorio** ([#9](https://github.com/laralbir/md-gh-navigator/issues/9)): Detección e intercepción de enlaces Markdown internos relativos (`.md`) para navegar directamente entre ficheros del mismo repositorio o carpeta local con pila de historial (`backstack`) preservada.
+
+### Added
+- **Selector de idioma y voz para Text-to-Speech (TTS)** ([#6](https://github.com/laralbir/md-gh-navigator/issues/6)): Diálogo de configuración `TtsVoiceSettingsDialog` integrado en la barra de reproducción del lector para inspeccionar motores TTS instalados, listar y cambiar idiomas disponibles (Español, Inglés, Francés, Alemán, etc.) y seleccionar variantes de voz.
+- **Alias personalizados para repositorios y carpetas** ([#7](https://github.com/laralbir/md-gh-navigator/issues/7)): Soporte para asignar, editar y eliminar nombres amigables (alias) para colecciones locales y repositorios de GitHub mediante `EditAliasDialog` y persistencia en Room (`RepositoryEntity.alias`).
+
 ## [v1.0.0-beta] - 2026-10-18 (Beta / Pre-release)
 
 > [!WARNING]

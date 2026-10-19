@@ -129,5 +129,51 @@ class HtmlTemplateBuilderTest {
         assertTrue(html.contains("<li>Elemento 1</li>"), "List item must be rendered as <li>")
         assertTrue(html.contains("<code"), "Code snippet must be rendered in <code> tag")
     }
+
+    @Test
+    @DisplayName("Markdown tables are rendered with table-wrapper and overflow-x CSS for wide horizontal scrolling")
+    fun testMarkdownTableScrollable() {
+        val markdown = """
+            | Cabecera 1 | Cabecera 2 | Cabecera 3 | Cabecera 4 |
+            | :--- | :--- | :--- | :--- |
+            | Dato 1 | Dato 2 | Dato 3 | Dato 4 |
+        """.trimIndent()
+
+        val html = builder.buildHtml(
+            markdown = markdown,
+            themeMode = AppThemeMode.PAPER,
+            isDark = false
+        )
+
+        assertTrue(html.contains("<table>"), "Must contain table tag")
+        assertTrue(html.contains("<th"), "Must render table header tag")
+        assertTrue(html.contains("Cabecera 1"), "Must render header text")
+        assertTrue(html.contains("<td"), "Must render table cell tag")
+        assertTrue(html.contains("Dato 1"), "Must render cell text")
+        assertTrue(html.contains(".table-wrapper"), "Must define table-wrapper style")
+        assertTrue(html.contains("overflow-x: auto"), "Must enable horizontal scrolling")
+        assertTrue(html.contains("white-space: nowrap"), "Must prevent cell text wrapping on wide tables")
+    }
+
+    @Test
+    @DisplayName("HTML template links mermaid.min.js and marks dark mode attribute for diagram rendering")
+    fun testMermaidScriptLinked() {
+        val markdown = """
+            ```mermaid
+            graph TD
+                A[Start] --> B[Finish]
+            ```
+        """.trimIndent()
+
+        val html = builder.buildHtml(
+            markdown = markdown,
+            themeMode = AppThemeMode.PAPER,
+            isDark = true
+        )
+
+        assertTrue(html.contains("mermaid.min.js"), "Must link mermaid.min.js")
+        assertTrue(html.contains("data-is-dark=\"true\""), "Must declare dark mode for mermaid theme")
+        assertTrue(html.contains("language-mermaid"), "Must contain mermaid code block")
+    }
 }
 
